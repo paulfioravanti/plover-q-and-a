@@ -1,0 +1,9 @@
+{
+  "speaker": {
+    "plaintiff_1": "PLAINTIFF 1",
+    "formatting": {
+      "pre": "> ",
+      "post": " ->"
+    }
+  }
+}
