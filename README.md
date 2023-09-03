@@ -1,5 +1,7 @@
 # Plover Q&A
 
+[![Build Status][Build Status image]][Build Status url]
+
 This [Plover][] [extension][] [plugin][] contains [metas][] for your
 dictionaries that can assist with [Q&A][] (Question and Answer): the process of
 recording lines of questioning in a conversation involving multiple people,
@@ -296,6 +298,8 @@ plover -s plover_plugins install .
 > of Plover. See the [Invoke Plover from the command line][] page for details on
 > how to create that reference.
 
+[Build Status image]: https://github.com/paulfioravanti/plover-q-and-a/actions/workflows/ci.yml/badge.svg
+[Build Status url]: https://github.com/paulfioravanti/plover-q-and-a/actions/workflows/ci.yml
 [`examples`]: ./examples
 [extension]: https://plover.readthedocs.io/en/latest/plugin-dev/extensions.html
 [git]: https://git-scm.com/
