@@ -63,8 +63,8 @@ class QAndA:
         """
         Delegates to meta module to generate the sign to assign to an action.
         """
-        action = ctx.new_action()
         sign = meta.sign(args, self._config)
+        action = ctx.new_action()
         action.text = sign
         if sign[0] in self._config["PREV_ATTACH_MARKERS"]:
             action.prev_attach = True
