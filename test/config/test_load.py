@@ -8,7 +8,6 @@ _NON_LAMBDA_CONFIG_KEYS = [
     "ANSWER_FOLLOWING_INTERRUPT",
     "ANSWER_FOLLOWING_QUESTION",
     "ANSWER_FOLLOWING_STATEMENT",
-    "BYLINE_SPEAKER_NAMES",
     "PREV_ATTACH_MARKERS",
     "QUESTION",
     "QUESTION_FOLLOWING_INTERRUPT",
@@ -18,14 +17,14 @@ _NON_LAMBDA_CONFIG_KEYS = [
     "STATEMENT_ELABORATE"
 ]
 _LAMBDA_CONFIG_KEYS = [
-    "BYLINE",
-    "BYLINE_FOLLOWING_INTERRUPT",
-    "BYLINE_FOLLOWING_QUESTION",
-    "BYLINE_FOLLOWING_STATEMENT",
-    "SPEAKER",
-    "SPEAKER_FOLLOWING_INTERRUPT",
-    "SPEAKER_FOLLOWING_QUESTION",
-    "SPEAKER_FOLLOWING_STATEMENT"
+    "BYLINE_FOR",
+    "BYLINE_FOLLOWING_INTERRUPT_FOR",
+    "BYLINE_FOLLOWING_QUESTION_FOR",
+    "BYLINE_FOLLOWING_STATEMENT_FOR",
+    "SPEAKER_FOR",
+    "SPEAKER_FOLLOWING_INTERRUPT_FOR",
+    "SPEAKER_FOLLOWING_QUESTION_FOR",
+    "SPEAKER_FOLLOWING_STATEMENT_FOR"
 ]
 
 @pytest.fixture
@@ -76,10 +75,14 @@ def test_specified_config_overwrites_defaults(
 ):
     loaded_config = config.load(overrides_config_path)
     loaded_config_speaker_name = loaded_config["SPEAKER_NAMES"]["PLAINTIFF_1"]
-    loaded_config_speaker = loaded_config["SPEAKER"](loaded_config_speaker_name)
+    loaded_config_speaker = (
+        loaded_config["SPEAKER_FOR"](loaded_config_speaker_name)
+    )
     default_config = config.load(default_config_path)
     default_config_speaker_name = default_config["SPEAKER_NAMES"]["PLAINTIFF_1"]
-    default_config_speaker = default_config["SPEAKER"](default_config_speaker_name)
+    default_config_speaker = (
+        default_config["SPEAKER_FOR"](default_config_speaker_name)
+    )
 
     assert loaded_config_speaker == "> PLAINTIFF 1 ->"
     assert not loaded_config_speaker == default_config_speaker

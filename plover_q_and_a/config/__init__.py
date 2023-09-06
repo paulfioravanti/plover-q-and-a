@@ -31,7 +31,6 @@ def load(config_filepath: Path) -> dict:
     interrupt = _interrupt(data)
     formatted_byline = _formatted_byline(data)
     speaker = data.get("speaker", {})
-    byline_speaker_names = _byline_speaker_names(speaker)
     speaker_names = _speaker_names(speaker)
     formatted_speaker = _formatted_speaker(speaker)
 
@@ -39,17 +38,16 @@ def load(config_filepath: Path) -> dict:
         "ANSWER_FOLLOWING_INTERRUPT": interrupt + formatted_answer,
         "ANSWER_FOLLOWING_QUESTION": question_end + formatted_answer,
         "ANSWER_FOLLOWING_STATEMENT": statement_end + formatted_answer,
-        "BYLINE": formatted_byline,
-        "BYLINE_FOLLOWING_INTERRUPT": lambda speaker_name: (
+        "BYLINE_FOR": formatted_byline,
+        "BYLINE_FOLLOWING_INTERRUPT_FOR": lambda speaker_name: (
             interrupt + formatted_byline(speaker_name)
         ),
-        "BYLINE_FOLLOWING_QUESTION": lambda speaker_name: (
+        "BYLINE_FOLLOWING_QUESTION_FOR": lambda speaker_name: (
             question_end + formatted_byline(speaker_name)
         ),
-        "BYLINE_FOLLOWING_STATEMENT": lambda speaker_name: (
+        "BYLINE_FOLLOWING_STATEMENT_FOR": lambda speaker_name: (
             statement_end + formatted_byline(speaker_name)
         ),
-        "BYLINE_SPEAKER_NAMES": byline_speaker_names,
         "PREV_ATTACH_MARKERS": [
             _question_end_marker(data),
             _statement_end_marker(data)
@@ -58,30 +56,18 @@ def load(config_filepath: Path) -> dict:
         "QUESTION_FOLLOWING_INTERRUPT": interrupt + formatted_question,
         "QUESTION_FOLLOWING_QUESTION": question_end + formatted_question,
         "QUESTION_FOLLOWING_STATEMENT": statement_end + formatted_question,
-        "SPEAKER": formatted_speaker,
-        "SPEAKER_FOLLOWING_INTERRUPT": lambda speaker_name: (
+        "SPEAKER_FOR": formatted_speaker,
+        "SPEAKER_FOLLOWING_INTERRUPT_FOR": lambda speaker_name: (
             interrupt + formatted_speaker(speaker_name)
         ),
-        "SPEAKER_FOLLOWING_QUESTION": lambda speaker_name: (
+        "SPEAKER_FOLLOWING_QUESTION_FOR": lambda speaker_name: (
             question_end + formatted_speaker(speaker_name)
         ),
-        "SPEAKER_FOLLOWING_STATEMENT": lambda speaker_name: (
+        "SPEAKER_FOLLOWING_STATEMENT_FOR": lambda speaker_name: (
             statement_end + formatted_speaker(speaker_name)
         ),
         "SPEAKER_NAMES": speaker_names,
         "STATEMENT_ELABORATE": statement_elaborate,
-    }
-
-def _byline_speaker_names(speaker):
-    return {
-        "DEFENSE_1": speaker.get("defense_1", defaults.LAWYER_DEFENSE_1_NAME),
-        "DEFENSE_2": speaker.get("defense_2", defaults.LAWYER_DEFENSE_2_NAME),
-        "PLAINTIFF_1": speaker.get(
-            "plaintiff_1", defaults.LAWYER_PLAINTIFF_1_NAME
-        ),
-        "PLAINTIFF_2": speaker.get(
-            "plaintiff_2", defaults.LAWYER_PLAINTIFF_2_NAME
-        )
     }
 
 def _formatted_answer(data):
@@ -142,12 +128,20 @@ def _question_end_marker(data):
     return data.get("question_end", defaults.QUESTION_END_MARKER)
 
 def _speaker_names(speaker):
-    return _byline_speaker_names(speaker) | {
+    return {
         "BAILIFF": speaker.get("bailiff", defaults.BAILIFF_NAME),
         "CLERK": speaker.get("clerk", defaults.CLERK_NAME),
         "COURT": speaker.get("court", defaults.COURT_NAME),
         "COURT_REPORTER": speaker.get(
             "court_reporter", defaults.COURT_REPORTER_NAME
+        ),
+        "DEFENSE_1": speaker.get("defense_1", defaults.LAWYER_DEFENSE_1_NAME),
+        "DEFENSE_2": speaker.get("defense_2", defaults.LAWYER_DEFENSE_2_NAME),
+        "PLAINTIFF_1": speaker.get(
+            "plaintiff_1", defaults.LAWYER_PLAINTIFF_1_NAME
+        ),
+        "PLAINTIFF_2": speaker.get(
+            "plaintiff_2", defaults.LAWYER_PLAINTIFF_2_NAME
         ),
         "VIDEOGRAPHER": speaker.get("videographer", defaults.VIDEOGRAPHER_NAME),
         "WITNESS": speaker.get("witness", defaults.WITNESS_NAME)

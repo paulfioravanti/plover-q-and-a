@@ -9,6 +9,7 @@ Byline module to handle commands that look like:
 from typing import List
 
 from .arguments import (
+    BYLINE_SPEAKER_TYPES,
     FOLLOWING_QUESTION,
     FOLLOWING_STATEMENT,
     INITIAL,
@@ -34,22 +35,27 @@ def sign(args: List[str], config: dict) -> str:
     if not speaker_type:
         raise ValueError("No speaker type provided")
 
+    if not speaker_type in BYLINE_SPEAKER_TYPES:
+        raise ValueError(
+            f"Unknown byline speaker type provided: {speaker_type}"
+        )
+
     if not sign_type:
         raise ValueError("No sign type provided")
 
     try:
-        speaker_name = config["BYLINE_SPEAKER_NAMES"][speaker_type]
+        speaker_name = config["SPEAKER_NAMES"][speaker_type]
     except KeyError as exc:
         raise ValueError(
-            f"Unknown speaker type for byline provided: {speaker_type}"
+            f"No speaker name entry for: {speaker_type}"
         ) from exc
 
     if sign_type == INITIAL:
-        byline = config["BYLINE"](speaker_name)
+        byline = config["BYLINE_FOR"](speaker_name)
     elif sign_type == INTERRUPTING:
-        byline = config["BYLINE_FOLLOWING_INTERRUPT"](speaker_name)
+        byline = config["BYLINE_FOLLOWING_INTERRUPT_FOR"](speaker_name)
     elif sign_type in (FOLLOWING_STATEMENT, FOLLOWING_QUESTION):
-        byline = config[f"BYLINE_{sign_type}"](speaker_name)
+        byline = config[f"BYLINE_{sign_type}_FOR"](speaker_name)
     else:
         raise ValueError(
             f"Unknown sign type provided for {speaker_type} byline: {sign_type}"

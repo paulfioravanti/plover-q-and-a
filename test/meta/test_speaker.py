@@ -57,13 +57,13 @@ def speaker_config():
 @pytest.fixture
 def initial_speaker_config(speaker_config):
     return speaker_config | {
-        "SPEAKER": lambda speaker_name: f"\t{speaker_name}:  "
+        "SPEAKER_FOR": lambda speaker_name: f"\t{speaker_name}:  "
     }
 
 @pytest.fixture
 def interrupting_speaker_config(speaker_config):
     return speaker_config | {
-        "SPEAKER_FOLLOWING_INTERRUPT": lambda speaker_name: (
+        "SPEAKER_FOLLOWING_INTERRUPT_FOR": lambda speaker_name: (
             f"--\n\t{speaker_name}:  "
         )
     }
@@ -71,7 +71,7 @@ def interrupting_speaker_config(speaker_config):
 @pytest.fixture
 def speaker_following_statement_config(speaker_config):
     return speaker_config | {
-        "SPEAKER_FOLLOWING_STATEMENT": lambda speaker_name: (
+        "SPEAKER_FOLLOWING_STATEMENT_FOR": lambda speaker_name: (
             f".\n\t{speaker_name}:  "
         )
     }
@@ -79,7 +79,7 @@ def speaker_following_statement_config(speaker_config):
 @pytest.fixture
 def speaker_following_question_config(speaker_config):
     return speaker_config | {
-        "SPEAKER_FOLLOWING_QUESTION": lambda speaker_name: (
+        "SPEAKER_FOLLOWING_QUESTION_FOR": lambda speaker_name: (
             f"?\n\t{speaker_name}:  "
         )
     }

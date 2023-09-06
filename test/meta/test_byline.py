@@ -57,21 +57,29 @@ def blank_config():
 @pytest.fixture
 def byline_speaker_config():
     return {
-        "BYLINE_SPEAKER_NAMES": {
+        "SPEAKER_NAMES": {
             "PLAINTIFF_1": "MR. STPHAO"
+        }
+    }
+
+@pytest.fixture
+def no_byline_speaker_name_config_for_speaker_type():
+    return {
+        "SPEAKER_NAMES": {
+            "PLAINTIFF_2": "MR. SKWRAO"
         }
     }
 
 @pytest.fixture
 def initial_byline_config(byline_speaker_config):
     return byline_speaker_config | {
-        "BYLINE": lambda speaker_name: f"BY {speaker_name}:\n\tQ\t"
+        "BYLINE_FOR": lambda speaker_name: f"BY {speaker_name}:\n\tQ\t"
     }
 
 @pytest.fixture
 def interrupting_byline_config(byline_speaker_config):
     return byline_speaker_config | {
-        "BYLINE_FOLLOWING_INTERRUPT": lambda speaker_name: (
+        "BYLINE_FOLLOWING_INTERRUPT_FOR": lambda speaker_name: (
             f"--\nBY {speaker_name}:\n\tQ\t"
         )
     }
@@ -79,7 +87,7 @@ def interrupting_byline_config(byline_speaker_config):
 @pytest.fixture
 def byline_following_statement_config(byline_speaker_config):
     return byline_speaker_config | {
-        "BYLINE_FOLLOWING_STATEMENT": lambda speaker_name: (
+        "BYLINE_FOLLOWING_STATEMENT_FOR": lambda speaker_name: (
             f".\nBY {speaker_name}:\n\tQ\t"
         )
     }
@@ -87,7 +95,7 @@ def byline_following_statement_config(byline_speaker_config):
 @pytest.fixture
 def byline_following_question_config(byline_speaker_config):
     return byline_speaker_config | {
-        "BYLINE_FOLLOWING_QUESTION": lambda speaker_name: (
+        "BYLINE_FOLLOWING_QUESTION_FOR": lambda speaker_name: (
             f"?\nBY {speaker_name}:\n\tQ\t"
         )
     }
@@ -129,7 +137,7 @@ def test_unknown_speaker_type_args(
 ):
     with pytest.raises(
         ValueError,
-        match="Unknown speaker type for byline provided: WITNESS"
+        match="Unknown byline speaker type provided: WITNESS"
     ):
         meta.sign(unknown_speaker_type_byline_args, byline_speaker_config)
 
@@ -142,6 +150,19 @@ def test_unknown_sign_type_args(
         match="Unknown sign type provided for PLAINTIFF_1 byline: UNKNOWN"
     ):
         meta.sign(unknown_sign_type_byline_args, byline_speaker_config)
+
+def test_no_speaker_name_config_for_speaker_type(
+    initial_byline_type,
+    no_byline_speaker_name_config_for_speaker_type
+):
+    with pytest.raises(
+        ValueError,
+        match="No speaker name entry for: PLAINTIFF_1"
+    ):
+        meta.sign(
+            initial_byline_type,
+            no_byline_speaker_name_config_for_speaker_type
+        )
 
 def test_initial_byline(initial_byline_type, initial_byline_config):
     assert (

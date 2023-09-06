@@ -39,11 +39,11 @@ def sign(args: List[str], config: dict) -> str:
         ) from exc
 
     if sign_type == INITIAL:
-        speaker = config["SPEAKER"](speaker_name)
+        speaker = config["SPEAKER_FOR"](speaker_name)
     elif sign_type == INTERRUPTING:
-        speaker = config["SPEAKER_FOLLOWING_INTERRUPT"](speaker_name)
+        speaker = config["SPEAKER_FOLLOWING_INTERRUPT_FOR"](speaker_name)
     elif sign_type in (FOLLOWING_STATEMENT, FOLLOWING_QUESTION):
-        speaker = config[f"SPEAKER_{sign_type}"](speaker_name)
+        speaker = config[f"SPEAKER_{sign_type}_FOR"](speaker_name)
     else:
         raise ValueError(
             f"Unknown sign type provided for {speaker_type}: {sign_type}"
