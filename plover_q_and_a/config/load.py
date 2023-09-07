@@ -1,3 +1,6 @@
+"""
+Module to handle reading in the application JSON config file.
+"""
 import json
 from pathlib import Path
 
@@ -6,8 +9,8 @@ from . import defaults
 
 def load(config_filepath: Path) -> dict[str, any]:
     """
-    Reads in the config JSON file, munges the data into outputtable signs and
-    provides defaults in case values aren't specified.
+    Reads in the config JSON file, munges the data into application-wide config,
+    and provides defaults in case values aren't specified.
 
     Raises an error if the specified config file is not JSON format.
     """
