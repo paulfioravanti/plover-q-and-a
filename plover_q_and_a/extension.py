@@ -127,7 +127,11 @@ class QAndA:
 
         return action
 
-    def _machine_state_changed(self, _machine_type: str, machine_state: str) -> None:
+    def _machine_state_changed(
+        self,
+        _machine_type: str,
+        machine_state: str
+    ) -> None:
         """
         This hook will be called when when the Plover UI "Reconnect" button is
         pressed, so re-read in the config when that happens.
