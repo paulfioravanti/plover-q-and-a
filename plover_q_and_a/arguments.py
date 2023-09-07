@@ -2,13 +2,8 @@
 This is the set of valid arguments that can be included in a top-level command.
 """
 
-# Name
-
-SET_NAME = "SET_NAME"
-
-# All
-
 ARGUMENT_DIVIDER = ":"
+SET_NAME = "SET_NAME"
 
 BYLINE_SPEAKER_TYPES = [
     "DEFENSE_1",

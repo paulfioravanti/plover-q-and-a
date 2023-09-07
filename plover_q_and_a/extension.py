@@ -95,21 +95,21 @@ class QAndA:
     ) -> None:
         """
         This hook will be called when when the Plover UI "Reconnect" button is
-        pressed, so re-read in the config when that happens.
+        pressed, so also reload the config when that happens.
         """
         if machine_state == STATE_RUNNING:
-            self._config = config.load(_CONFIG_FILEPATH)
+            self._config = config.reload(_CONFIG_FILEPATH, self._config)
 
     def _translated(self, _old: list[_Action], new: list[_Action]) -> None:
         """
         This hook is called whenever a chord produces a translation.
         Here, we are listening out for {:COMMAND:SET_CONFIG} commands. This
         command forces dictionaries to be reloaded, so we want the Q&A config
-        to also be re-read in at the same time.
+        to also be reloaded at the same time.
         """
         if len(new) == 0:
             return
 
         action = new[0]
         if action.command and action.command.upper() == "SET_CONFIG":
-            self._config = config.load(_CONFIG_FILEPATH)
+            self._config = config.reload(_CONFIG_FILEPATH, self._config)
