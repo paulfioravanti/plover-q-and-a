@@ -13,11 +13,8 @@ from plover.registry import registry
 
 from . import config
 from . import sign
-from .arguments import (
-    ARGUMENT_DIVIDER,
-    SET_NAME,
-    SPEAKER_TYPES
-)
+from . import speaker
+from .arguments import ARGUMENT_DIVIDER, SET_NAME
 
 
 _CONFIG_FILEPATH = Path(CONFIG_DIR) / "q_and_a.json"
@@ -80,43 +77,7 @@ class QAndA:
         action = ctx.new_action()
 
         if command == SET_NAME:
-            if not command_args:
-                raise ValueError("No SET_NAME command arguments provided")
-
-            set_name_command = command_args[0].strip().upper()
-
-            if set_name_command in SPEAKER_TYPES:
-                current_speaker_name = (
-                    self._config["speaker_names"][set_name_command]
-                )
-                action.text = (
-                    f"[Set {set_name_command} ({current_speaker_name}) =>] "
-                )
-                action.set_name_speaker_type = set_name_command.strip()
-                action.next_attach = True
-            elif set_name_command == "DONE":
-                begin_action = None
-                name = ""
-                for action, fragment in self._iter_last_fragments(ctx):
-                    if fragment:
-                        name = fragment + name
-
-                    if hasattr(action, "set_name_speaker_type"):
-                        begin_action = action
-                        break
-
-                text_to_delete = f"{begin_action.text} {name}"
-
-                speaker_type = action.set_name_speaker_type
-                self._config["speaker_names"][speaker_type] = name
-
-                action.prev_replace = text_to_delete
-                action.prev_attach = True
-                action.text = ""
-            else:
-                raise ValueError(
-                    f"Unknown SET_NAME command provided: {set_name_command}"
-                )
+            speaker.set_name(command_args, ctx, action, self._config)
         else:
             text = sign.text(args, self._config)
             action.text = text
@@ -152,48 +113,3 @@ class QAndA:
         action = new[0]
         if action.command and action.command.upper() == "SET_CONFIG":
             self._config = config.load(_CONFIG_FILEPATH)
-
-    # Modified from Plover's
-    # plover.formatting.RetroFormatter.iter_last_fragments() function
-    # to yield up the action as well as the fragment.
-    # pylint: disable=line-too-long
-    # REF: https://github.com/openstenoproject/plover/blob/e6516275ca67105639537b7089913a893a2a495b/plover/formatting.py#L174
-    # pylint: enable=line-too-long
-    def _iter_last_fragments(self, ctx: _Context):
-        """
-        Iterate over last text fragments (last first).
-
-        A text fragment is a series of non-whitespace characters
-        followed by zero or more trailing whitespace characters.
-        """
-        replace = 0
-        next_action = None
-        current_fragment = ""
-        for action in ctx.iter_last_actions():
-            part = "" if action.text is None else action.text
-            if (
-                next_action is not None
-                and next_action.text is not None
-                and not next_action.prev_attach
-            ):
-                part += next_action.space_char
-            if replace:
-                # Ignore replaced content.
-                if len(part) > replace:
-                    part = part[:-replace]
-                    replace = 0
-                else:
-                    replace -= len(part)
-                    part = ''
-            if part:
-                # Find out new complete fragments.
-                fragments = ctx.FRAGMENT_RX.findall(part + current_fragment)
-                for fragment in reversed(fragments[1:]):
-                    yield action, fragment
-                current_fragment = fragments[0]
-            replace += len(action.prev_replace)
-            next_action = action
-
-        # Don't forget to process the current (first) fragment.
-        if not current_fragment.isspace():
-            yield next_action, current_fragment.lstrip()

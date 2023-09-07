@@ -12,8 +12,6 @@ Examples:
 
 In the final example above, COURT_REPORTER is included in the recognised
 list of `SPEAKER_TYPES`.
-
-Raises an error in the sign type is not recognised.
 """
 from ..arguments import SPEAKER_TYPES
 from . import (
