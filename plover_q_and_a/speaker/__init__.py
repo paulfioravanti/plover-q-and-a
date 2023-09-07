@@ -52,7 +52,7 @@ def _begin_set_speaker_name(
     Opens up a prompt to set the speaker name, and marks an action as the place
     where the prompt started so it can be searched for later.
     """
-    action.set_name_speaker_type = speaker_type.strip()
+    setattr(action, _SET_NAME_SPEAKER_TYPE_ATTR, speaker_type.strip())
     current_speaker_name = config["speaker_names"][speaker_type]
     action.text = f"[Set {speaker_type} ({current_speaker_name}) =>] "
     action.next_attach = True
@@ -79,7 +79,7 @@ def _end_set_speaker_name(
 
     text_to_delete = f"{begin_action.text} {name}"
 
-    speaker_type = begin_action.set_name_speaker_type
+    speaker_type = getattr(begin_action, _SET_NAME_SPEAKER_TYPE_ATTR)
     name = name.upper() if config["SPEAKER_UPCASE"] else name
     config["speaker_names"][speaker_type] = name
 
