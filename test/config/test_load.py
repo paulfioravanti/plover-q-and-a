@@ -31,32 +31,32 @@ _LAMBDA_CONFIG_KEYS = [
 
 @pytest.fixture
 def bad_config_path():
-    return (Path(__file__).parent / "bad_json_data.json").resolve()
+    return (Path(__file__).parent / "files/bad_json_data.json").resolve()
 
 @pytest.fixture
 def non_existent_config_path():
-    return (Path(__file__).parent / "non_existent.json").resolve()
+    return (Path(__file__).parent / "files/non_existent.json").resolve()
 
 @pytest.fixture
 def overrides_config_path():
-    return (Path(__file__).parent / "overrides.json").resolve()
+    return (Path(__file__).parent / "files/overrides.json").resolve()
 
 @pytest.fixture
 def lower_case_with_no_upcase_config_path():
     return (
-      Path(__file__).parent / "lower_case_with_no_upcase_formatting.json"
+      Path(__file__).parent / "files/lower_case_with_no_upcase_formatting.json"
     ).resolve()
 
 @pytest.fixture
 def lower_case_with_upcase_config_path():
     return (
-      Path(__file__).parent / "lower_case_with_upcase_formatting.json"
+      Path(__file__).parent / "files/lower_case_with_upcase_formatting.json"
     ).resolve()
 
 @pytest.fixture
 def lower_case_without_upcase_config_path():
     return (
-      Path(__file__).parent / "lower_case_without_upcase_formatting.json"
+      Path(__file__).parent / "files/lower_case_without_upcase_formatting.json"
     ).resolve()
 
 @pytest.fixture
