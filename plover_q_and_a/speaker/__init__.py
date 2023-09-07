@@ -80,6 +80,7 @@ def _end_set_speaker_name(
     text_to_delete = f"{begin_action.text} {name}"
 
     speaker_type = begin_action.set_name_speaker_type
+    name = name.upper() if config["SPEAKER_UPCASE"] else name
     config["speaker_names"][speaker_type] = name
 
     action.prev_replace = text_to_delete

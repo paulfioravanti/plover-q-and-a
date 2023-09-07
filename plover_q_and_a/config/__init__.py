@@ -6,6 +6,7 @@ from pathlib import Path
 
 from . import defaults
 
+
 def reload(
     config_filepath: Path,
     current_config: dict[str, any]
@@ -27,6 +28,7 @@ def load(config_filepath: Path) -> dict[str, any]:
 
     Raises an error if the specified config file is not JSON format.
     """
+    # pylint: disable-msg=too-many-locals
     try:
         with (config_filepath).open(encoding="utf-8") as file:
             data = json.load(file)
@@ -44,8 +46,15 @@ def load(config_filepath: Path) -> dict[str, any]:
     interrupt = _interrupt(data)
     formatted_byline = _formatted_byline(data)
     speaker = data.get("speaker", {})
-    speaker_names = _speaker_names(speaker)
-    formatted_speaker = _formatted_speaker(speaker)
+    speaker_formatting = speaker.get("formatting", {})
+    speaker_upcase = (
+        speaker_formatting.get(
+            "upcase",
+            defaults.SPEAKER_NAME_UPCASE_FORMATTING
+        )
+    )
+    speaker_names = _speaker_names(speaker, speaker_upcase)
+    formatted_speaker = _formatted_speaker(speaker_formatting)
 
     return {
         "ANSWER_FOLLOWING_INTERRUPT": interrupt + formatted_answer,
@@ -80,6 +89,7 @@ def load(config_filepath: Path) -> dict[str, any]:
             statement_end + formatted_speaker(speaker_name)
         ),
         "speaker_names": speaker_names,
+        "SPEAKER_UPCASE": speaker_upcase,
         "STATEMENT_ELABORATE": statement_elaborate,
     }
 
@@ -120,8 +130,7 @@ def _formatted_question(data):
         )
     )
 
-def _formatted_speaker(speaker):
-    speaker_formatting = speaker.get("formatting", {})
+def _formatted_speaker(speaker_formatting):
     return lambda speaker_name: (
         speaker_formatting.get("pre", defaults.SPEAKER_NAME_PRE_FORMATTING)
         + speaker_name
@@ -140,8 +149,8 @@ def _question_end(data):
 def _question_end_marker(data):
     return data.get("question_end", defaults.QUESTION_END_MARKER)
 
-def _speaker_names(speaker):
-    return {
+def _speaker_names(speaker, speaker_upcase):
+    speaker_names = {
         "BAILIFF": speaker.get("bailiff", defaults.BAILIFF_NAME),
         "CLERK": speaker.get("clerk", defaults.CLERK_NAME),
         "COURT": speaker.get("court", defaults.COURT_NAME),
@@ -159,6 +168,16 @@ def _speaker_names(speaker):
         "VIDEOGRAPHER": speaker.get("videographer", defaults.VIDEOGRAPHER_NAME),
         "WITNESS": speaker.get("witness", defaults.WITNESS_NAME)
     }
+
+    if speaker_upcase:
+        upcased_speaker_names = speaker_names.copy()
+
+        for key, value in speaker_names.items():
+            upcased_speaker_names[key] = value.upper()
+
+        return upcased_speaker_names
+
+    return speaker_names
 
 def _statement_elaborate(data):
     return (
