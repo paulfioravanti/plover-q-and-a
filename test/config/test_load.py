@@ -27,6 +27,8 @@ _LAMBDA_CONFIG_KEYS = [
     "SPEAKER_FOLLOWING_STATEMENT_FOR"
 ]
 
+# Files
+
 @pytest.fixture
 def bad_config_path():
     return (Path(__file__).parent / "bad_json_data.json").resolve()
@@ -40,12 +42,34 @@ def overrides_config_path():
     return (Path(__file__).parent / "overrides.json").resolve()
 
 @pytest.fixture
+def lower_case_with_no_upcase_config_path():
+    return (
+      Path(__file__).parent / "lower_case_with_no_upcase_formatting.json"
+    ).resolve()
+
+@pytest.fixture
+def lower_case_with_upcase_config_path():
+    return (
+      Path(__file__).parent / "lower_case_with_upcase_formatting.json"
+    ).resolve()
+
+@pytest.fixture
+def lower_case_without_upcase_config_path():
+    return (
+      Path(__file__).parent / "lower_case_without_upcase_formatting.json"
+    ).resolve()
+
+@pytest.fixture
 def default_config_path():
     return (Path(__file__).parent / "../../examples/q_and_a.json").resolve()
+
+# Arguments
 
 @pytest.fixture
 def speaker_name():
     return "SPEAKER_NAME"
+
+# Tests
 
 def test_bad_config(bad_config_path):
     with pytest.raises(
@@ -86,3 +110,21 @@ def test_specified_config_overwrites_defaults(
 
     assert loaded_config_speaker == "> PLAINTIFF 1 ->"
     assert not loaded_config_speaker == default_config_speaker
+
+def test_lower_case_speaker_names_get_upcased_when_no_formatting_upcase_given(
+    lower_case_with_no_upcase_config_path
+):
+    loaded_config = config.load(lower_case_with_no_upcase_config_path)
+    assert loaded_config["speaker_names"]["PLAINTIFF_1"] == "MR. JOHNSON"
+
+def test_lower_case_speaker_names_get_upcased_when_formatting_upcase_true(
+    lower_case_with_upcase_config_path
+):
+    loaded_config = config.load(lower_case_with_upcase_config_path)
+    assert loaded_config["speaker_names"]["PLAINTIFF_1"] == "MR. JOHNSON"
+
+def test_lower_case_speaker_names_stay_lowercased_when_formatting_upcase_false(
+    lower_case_without_upcase_config_path
+):
+    loaded_config = config.load(lower_case_without_upcase_config_path)
+    assert loaded_config["speaker_names"]["PLAINTIFF_1"] == "mr. johnson"
