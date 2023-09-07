@@ -15,6 +15,7 @@ list of `SPEAKER_TYPES`.
 
 Raises an error in the sign type is not recognised.
 """
+from ..arguments import SPEAKER_TYPES
 from . import (
     answer,
     byline,
@@ -24,8 +25,7 @@ from . import (
 from .arguments import (
     ANSWER,
     BYLINE,
-    QUESTION,
-    SPEAKER_TYPES
+    QUESTION
 )
 
 

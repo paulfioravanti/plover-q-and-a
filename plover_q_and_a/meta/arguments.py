@@ -1,6 +1,5 @@
 """
-This is the set of valid arguments that can be included in a command in order to
-output a valid sign.
+This is the set of valid arguments that can be included in a meta command.
 """
 
 ANSWER = "ANSWER"
@@ -12,19 +11,3 @@ INITIAL = "INITIAL"
 INTERRUPTING = "INTERRUPTING"
 QUESTION = "QUESTION"
 YIELD_AFTER = "YIELD_AFTER"
-
-BYLINE_SPEAKER_TYPES = [
-    "DEFENSE_1",
-    "DEFENSE_2",
-    "PLAINTIFF_1",
-    "PLAINTIFF_2"
-]
-
-SPEAKER_TYPES = BYLINE_SPEAKER_TYPES + [
-    "BAILIFF",
-    "CLERK",
-    "COURT",
-    "COURT_REPORTER",
-    "VIDEOGRAPHER",
-    "WITNESS"
-]

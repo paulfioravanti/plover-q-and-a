@@ -13,6 +13,11 @@ from plover.registry import registry
 
 from . import meta
 from . import config
+from .arguments import (
+    ARGUMENT_DIVIDER,
+    SET_NAME,
+    SPEAKER_TYPES
+)
 
 
 _CONFIG_FILEPATH = Path(CONFIG_DIR) / "q_and_a.json"
@@ -65,7 +70,7 @@ class QAndA:
         if not args:
             raise ValueError("No command provided")
 
-        args = args.split(":")
+        args = args.split(ARGUMENT_DIVIDER)
         command, *command_args = args
         command = command.strip().upper()
 
@@ -74,13 +79,13 @@ class QAndA:
 
         action = ctx.new_action()
 
-        if command == "SET_NAME":
+        if command == SET_NAME:
             if not command_args:
                 raise ValueError("No SET_NAME command arguments provided")
 
             set_name_command = command_args[0].strip().upper()
 
-            if set_name_command in meta.arguments.SPEAKER_TYPES:
+            if set_name_command in SPEAKER_TYPES:
                 current_speaker_name = (
                     self._config["speaker_names"][set_name_command]
                 )
