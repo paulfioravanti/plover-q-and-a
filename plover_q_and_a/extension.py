@@ -14,7 +14,11 @@ from plover.registry import registry
 from . import config
 from . import sign
 from . import speaker
-from .arguments import ARGUMENT_DIVIDER, SET_NAME
+from .arguments import (
+    ARGUMENT_DIVIDER,
+    RESET_CONFIG,
+    SET_NAME
+)
 
 
 _CONFIG_FILEPATH = Path(CONFIG_DIR) / "q_and_a.json"
@@ -76,7 +80,9 @@ class QAndA:
 
         action = ctx.new_action()
 
-        if command == SET_NAME:
+        if command == RESET_CONFIG:
+            self._config = config.load(_CONFIG_FILEPATH)
+        elif command == SET_NAME:
             speaker.set_name(command_args, ctx, action, self._config)
         else:
             text = sign.text(args, self._config)

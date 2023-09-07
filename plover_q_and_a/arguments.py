@@ -3,6 +3,7 @@ This is the set of valid arguments that can be included in a top-level command.
 """
 
 ARGUMENT_DIVIDER = ":"
+RESET_CONFIG = "RESET_CONFIG"
 SET_NAME = "SET_NAME"
 
 BYLINE_SPEAKER_TYPES = [
