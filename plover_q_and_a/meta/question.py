@@ -11,8 +11,6 @@ Question module to handle commands that look like:
 ELABORATE_AFTER and YIELD_AFTER are considered follow on arguments, and are
 handled by the `follow_on` module.
 """
-from typing import List
-
 from .arguments import (
     FOLLOWING_QUESTION,
     FOLLOWING_STATEMENT,
@@ -22,7 +20,7 @@ from .arguments import (
 from .follow_on import handle_follow_on
 
 
-def sign(args: List[str], config: dict) -> None:
+def sign(args: list[str], config: dict[str, any]) -> None:
     """
     Assigns the text for a question type.
 

@@ -9,8 +9,6 @@ Speaker module to handle commands that look like:
     - {:Q_AND_A:CLERK:FOLLOWING_QUESTION}
     - {:Q_AND_A:BAILIFF:FOLLOWING_STATEMENT}
 """
-from typing import List
-
 from .arguments import (
     FOLLOWING_QUESTION,
     FOLLOWING_STATEMENT,
@@ -19,17 +17,14 @@ from .arguments import (
 )
 
 
-def sign(args: List[str], config: dict) -> str:
+def sign(args: list[str], config: dict[str, any]) -> str:
     """
     Returns the text for a known speaker.
 
     Raises an error if the speaker is not recognised, or if the sign type is
     blank or not recognised.
     """
-    speaker_type, sign_type = [arg.strip().upper() for arg in args]
-
-    if not sign_type:
-        raise ValueError("No sign type provided")
+    speaker_type, sign_type = extract_speaker_and_sign(args)
 
     try:
         speaker_name = config["speaker_names"][speaker_type]
@@ -50,3 +45,19 @@ def sign(args: List[str], config: dict) -> str:
         )
 
     return speaker
+
+def extract_speaker_and_sign(args: list[str]) -> tuple[str, str]:
+    """
+    Parses and returns speaker and sign types from a set of args.
+
+    Raises an error if no speaker or sign type provided.
+    """
+    speaker_type, sign_type = [arg.strip().upper() for arg in args]
+
+    if not speaker_type:
+        raise ValueError("No speaker type provided")
+
+    if not sign_type:
+        raise ValueError("No sign type provided")
+
+    return speaker_type, sign_type

@@ -6,8 +6,6 @@ Byline module to handle commands that look like:
     - {:Q_AND_A:BYLINE:DEFENSE_1:FOLLOWING_QUESTION}
     - {:Q_AND_A:BYLINE:DEFENSE_2:FOLLOWING_STATEMENT}
 """
-from typing import List
-
 from .arguments import (
     BYLINE_SPEAKER_TYPES,
     FOLLOWING_QUESTION,
@@ -15,9 +13,10 @@ from .arguments import (
     INITIAL,
     INTERRUPTING
 )
+from .speaker import extract_speaker_and_sign
 
 
-def sign(args: List[str], config: dict) -> str:
+def sign(args: list[str], config: dict[str, any]) -> str:
     """
     Returns the text for a byline type.
 
@@ -30,18 +29,12 @@ def sign(args: List[str], config: dict) -> str:
             f"Two byline arguments must be provided. You gave: {given_args}"
         )
 
-    speaker_type, sign_type = [arg.strip().upper() for arg in args]
-
-    if not speaker_type:
-        raise ValueError("No speaker type provided")
+    speaker_type, sign_type = extract_speaker_and_sign(args)
 
     if not speaker_type in BYLINE_SPEAKER_TYPES:
         raise ValueError(
             f"Unknown byline speaker type provided: {speaker_type}"
         )
-
-    if not sign_type:
-        raise ValueError("No sign type provided")
 
     try:
         speaker_name = config["speaker_names"][speaker_type]

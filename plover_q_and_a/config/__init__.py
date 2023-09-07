@@ -7,7 +7,7 @@ from pathlib import Path
 from . import defaults
 
 
-def load(config_filepath: Path) -> dict:
+def load(config_filepath: Path) -> dict[str, any]:
     """
     Reads in the config JSON file, munges the data into outputtable signs and
     provides defaults in case values aren't specified.

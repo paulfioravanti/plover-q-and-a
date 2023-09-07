@@ -4,7 +4,6 @@ Plover Q&A - A Plover extension to assist with writing Question and Answer
 in a conversation.
 """
 from pathlib import Path
-from typing import List
 
 from plover.engine import StenoEngine
 from plover.formatting import _Action, Case, _Context
@@ -131,7 +130,7 @@ class QAndA:
         if machine_state == STATE_RUNNING:
             self._config = config.load(_CONFIG_FILEPATH)
 
-    def _translated(self, _old: List[_Action], new: List[_Action]) -> None:
+    def _translated(self, _old: list[_Action], new: list[_Action]) -> None:
         """
         This hook is called whenever a chord produces a translation.
         Here, we are listening out for {:COMMAND:SET_CONFIG} commands. This
@@ -148,8 +147,10 @@ class QAndA:
     # Modified from Plover's
     # plover.formatting.RetroFormatter.iter_last_fragments() function
     # to yield up the action as well as the fragment.
+    # pylint: disable=line-too-long
     # REF: https://github.com/openstenoproject/plover/blob/e6516275ca67105639537b7089913a893a2a495b/plover/formatting.py#L174
-    def _iter_last_fragments(self, ctx):
+    # pylint: enable=line-too-long
+    def _iter_last_fragments(self, ctx: _Context):
         """
         Iterate over last text fragments (last first).
 
@@ -186,4 +187,4 @@ class QAndA:
 
         # Don't forget to process the current (first) fragment.
         if not current_fragment.isspace():
-            yield action, current_fragment.lstrip()
+            yield next_action, current_fragment.lstrip()

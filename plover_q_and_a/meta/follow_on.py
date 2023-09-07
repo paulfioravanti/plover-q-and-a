@@ -6,8 +6,6 @@ Follow on module to handle the final part of commands that look like:
     - {:Q_AND_A:ANSWER:FOLLOWING_QUESTION:ELABORATE_AFTER:Uh-huh}
     - {:Q_AND_A:ANSWER:FOLLOWING_QUESTION:YIELD_AFTER:Correct}
 """
-from typing import List
-
 from .arguments import (
     ELABORATE_AFTER,
     YIELD_AFTER
@@ -15,9 +13,9 @@ from .arguments import (
 
 
 def handle_follow_on(
-    follow_on_args: List[str],
+    follow_on_args: list[str],
     sign: str,
-    config: dict,
+    config: dict[str, any],
     yield_key: str
 ) -> None:
     """

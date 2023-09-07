@@ -10,8 +10,6 @@ Answer module to handle commands that look like:
 ELABORATE_AFTER and YIELD_AFTER are considered follow on arguments, and are
 handled by the `follow_on` module.
 """
-from typing import List
-
 from .arguments import (
     FOLLOWING_QUESTION,
     FOLLOWING_STATEMENT,
@@ -20,7 +18,7 @@ from .arguments import (
 from .follow_on import handle_follow_on
 
 
-def sign(args: List[str], config: dict) -> str:
+def sign(args: list[str], config: dict[str, any]) -> str:
     """
     Returns the text for an answer type.
 
