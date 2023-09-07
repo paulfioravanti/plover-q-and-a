@@ -8,11 +8,11 @@ def blank_config():
 
 @pytest.fixture
 def blank_args():
-    return ""
+    return [""]
 
 @pytest.fixture
 def unknown_args():
-    return "UNKNOWN"
+    return ["UNKNOWN"]
 
 def test_blank_args(blank_args, blank_config):
     with pytest.raises(ValueError, match="No sign type provided"):

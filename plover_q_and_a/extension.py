@@ -63,13 +63,64 @@ class QAndA:
         """
         Delegates to meta module to generate the sign to assign to an action.
         """
-        sign = meta.sign(args, self._config)
+        if not args:
+            raise ValueError("No command provided")
+
+        args = args.split(":")
+        command, *command_args = args
+        command = command.strip().upper()
+
+        if not command:
+            raise ValueError("No command arguments provided")
+
         action = ctx.new_action()
-        action.text = sign
-        if sign[0] in self._config["PREV_ATTACH_MARKERS"]:
-            action.prev_attach = True
-        action.next_attach = True
-        action.next_case = Case.CAP_FIRST_WORD
+
+        if command == "SET_NAME":
+            if not command_args:
+                raise ValueError("No SET_NAME command arguments provided")
+
+            set_name_command = command_args[0].strip().upper()
+
+            if set_name_command in meta.arguments.SPEAKER_TYPES:
+                current_speaker_name = (
+                    self._config["speaker_names"][set_name_command]
+                )
+                action.text = (
+                    f"[Set {set_name_command} ({current_speaker_name}) =>] "
+                )
+                action.set_name_speaker_type = set_name_command.strip()
+                action.next_attach = True
+            elif set_name_command == "DONE":
+                begin_action = None
+                name = ""
+                for action, fragment in self._iter_last_fragments(ctx):
+                    if fragment:
+                        name = fragment + name
+
+                    if hasattr(action, "set_name_speaker_type"):
+                        begin_action = action
+                        break
+
+                text_to_delete = f"{begin_action.text} {name}"
+
+                speaker_type = action.set_name_speaker_type
+                self._config["speaker_names"][speaker_type] = name
+
+                action.prev_replace = text_to_delete
+                action.prev_attach = True
+                action.text = ""
+            else:
+                raise ValueError(
+                    f"Unknown SET_NAME command provided: {set_name_command}"
+                )
+        else:
+            sign = meta.sign(args, self._config)
+            action.text = sign
+            if sign[0] in self._config["PREV_ATTACH_MARKERS"]:
+                action.prev_attach = True
+            action.next_attach = True
+            action.next_case = Case.CAP_FIRST_WORD
+
         return action
 
     def _machine_state_changed(self, _machine_type: str, machine_state: str) -> None:
@@ -93,3 +144,46 @@ class QAndA:
         action = new[0]
         if action.command and action.command.upper() == "SET_CONFIG":
             self._config = config.load(_CONFIG_FILEPATH)
+
+    # Modified from Plover's
+    # plover.formatting.RetroFormatter.iter_last_fragments() function
+    # to yield up the action as well as the fragment.
+    # REF: https://github.com/openstenoproject/plover/blob/e6516275ca67105639537b7089913a893a2a495b/plover/formatting.py#L174
+    def _iter_last_fragments(self, ctx):
+        """
+        Iterate over last text fragments (last first).
+
+        A text fragment is a series of non-whitespace characters
+        followed by zero or more trailing whitespace characters.
+        """
+        replace = 0
+        next_action = None
+        current_fragment = ""
+        for action in ctx.iter_last_actions():
+            part = "" if action.text is None else action.text
+            if (
+                next_action is not None
+                and next_action.text is not None
+                and not next_action.prev_attach
+            ):
+                part += next_action.space_char
+            if replace:
+                # Ignore replaced content.
+                if len(part) > replace:
+                    part = part[:-replace]
+                    replace = 0
+                else:
+                    replace -= len(part)
+                    part = ''
+            if part:
+                # Find out new complete fragments.
+                fragments = ctx.FRAGMENT_RX.findall(part + current_fragment)
+                for fragment in reversed(fragments[1:]):
+                    yield action, fragment
+                current_fragment = fragments[0]
+            replace += len(action.prev_replace)
+            next_action = action
+
+        # Don't forget to process the current (first) fragment.
+        if not current_fragment.isspace():
+            yield action, current_fragment.lstrip()

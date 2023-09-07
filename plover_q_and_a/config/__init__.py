@@ -66,7 +66,7 @@ def load(config_filepath: Path) -> dict:
         "SPEAKER_FOLLOWING_STATEMENT_FOR": lambda speaker_name: (
             statement_end + formatted_speaker(speaker_name)
         ),
-        "SPEAKER_NAMES": speaker_names,
+        "speaker_names": speaker_names,
         "STATEMENT_ELABORATE": statement_elaborate,
     }
 

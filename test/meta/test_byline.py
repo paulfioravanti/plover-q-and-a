@@ -6,47 +6,47 @@ from plover_q_and_a import meta
 
 @pytest.fixture
 def byline_arg():
-    return "BYLINE"
+    return ["BYLINE"]
 
 @pytest.fixture
 def too_few_byline_args(byline_arg):
-    return byline_arg + ":PLAINTIFF_1"
+    return byline_arg + ["PLAINTIFF_1"]
 
 @pytest.fixture
 def too_many_byline_args(too_few_byline_args):
-    return too_few_byline_args + ":Foo:Bar"
+    return too_few_byline_args + ["Foo", "Bar"]
 
 @pytest.fixture
 def blank_speaker_type_byline_args(byline_arg):
-    return byline_arg + "::INITIAL"
+    return byline_arg + ["", "INITIAL"]
 
 @pytest.fixture
 def blank_sign_type_byline_args(byline_arg):
-    return byline_arg + ":PLAINTIFF_1:"
+    return byline_arg + ["PLAINTIFF_1", ""]
 
 @pytest.fixture
 def unknown_speaker_type_byline_args(byline_arg):
-    return byline_arg + ":WITNESS:INITIAL"
+    return byline_arg + ["WITNESS", "INITIAL"]
 
 @pytest.fixture
-def unknown_sign_type_byline_args(blank_sign_type_byline_args):
-    return blank_sign_type_byline_args + "UNKNOWN"
+def unknown_sign_type_byline_args(byline_arg):
+    return byline_arg + ["PLAINTIFF_1", "UNKNOWN"]
 
 @pytest.fixture
-def initial_byline_type(blank_sign_type_byline_args):
-    return blank_sign_type_byline_args + "INITIAL"
+def initial_byline_type(byline_arg):
+    return byline_arg + ["PLAINTIFF_1", "INITIAL"]
 
 @pytest.fixture
-def interrupting_byline_type(blank_sign_type_byline_args):
-    return blank_sign_type_byline_args + "INTERRUPTING"
+def interrupting_byline_type(byline_arg):
+    return byline_arg + ["PLAINTIFF_1", "INTERRUPTING"]
 
 @pytest.fixture
-def byline_following_statement_type(blank_sign_type_byline_args):
-    return blank_sign_type_byline_args + "FOLLOWING_STATEMENT"
+def byline_following_statement_type(byline_arg):
+    return byline_arg + ["PLAINTIFF_1", "FOLLOWING_STATEMENT"]
 
 @pytest.fixture
-def byline_following_question_type(blank_sign_type_byline_args):
-    return blank_sign_type_byline_args + "FOLLOWING_QUESTION"
+def byline_following_question_type(byline_arg):
+    return byline_arg + ["PLAINTIFF_1", "FOLLOWING_QUESTION"]
 
 # Config
 
@@ -57,7 +57,7 @@ def blank_config():
 @pytest.fixture
 def byline_speaker_config():
     return {
-        "SPEAKER_NAMES": {
+        "speaker_names": {
             "PLAINTIFF_1": "MR. STPHAO"
         }
     }
@@ -65,7 +65,7 @@ def byline_speaker_config():
 @pytest.fixture
 def no_byline_speaker_name_config_for_speaker_type():
     return {
-        "SPEAKER_NAMES": {
+        "speaker_names": {
             "PLAINTIFF_2": "MR. SKWRAO"
         }
     }

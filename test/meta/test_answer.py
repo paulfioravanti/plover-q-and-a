@@ -6,51 +6,51 @@ from plover_q_and_a import meta
 
 @pytest.fixture
 def answer_arg():
-    return "ANSWER"
+    return ["ANSWER"]
 
 @pytest.fixture
 def blank_answer_type(answer_arg):
-    return answer_arg + ":"
+    return answer_arg + [""]
 
 @pytest.fixture
-def unknown_answer_type(blank_answer_type):
-    return blank_answer_type + "UNKNOWN"
+def unknown_answer_type(answer_arg):
+    return answer_arg + ["UNKNOWN"]
 
 @pytest.fixture
-def interrupting_answer_type(blank_answer_type):
-    return blank_answer_type + "INTERRUPTING"
+def interrupting_answer_type(answer_arg):
+    return answer_arg + ["INTERRUPTING"]
 
 @pytest.fixture
-def answer_following_statement_type(blank_answer_type):
-    return blank_answer_type + "FOLLOWING_STATEMENT"
+def answer_following_statement_type(answer_arg):
+    return answer_arg + ["FOLLOWING_STATEMENT"]
 
 @pytest.fixture
 def answer_following_statement_then_yield_to_question_type(
     answer_following_statement_type
 ):
-    return answer_following_statement_type + ":YIELD_AFTER:Okay"
+    return answer_following_statement_type + ["YIELD_AFTER", "Okay"]
 
 @pytest.fixture
 def answer_following_statement_then_elaborate_type(
     answer_following_statement_type
 ):
-    return answer_following_statement_type + ":ELABORATE_AFTER:All right"
+    return answer_following_statement_type + ["ELABORATE_AFTER", "All right"]
 
 @pytest.fixture
-def answer_following_question_type(blank_answer_type):
-    return blank_answer_type + "FOLLOWING_QUESTION"
+def answer_following_question_type(answer_arg):
+    return answer_arg + ["FOLLOWING_QUESTION"]
 
 @pytest.fixture
 def answer_following_question_then_yield_to_question_type(
     answer_following_question_type
 ):
-    return answer_following_question_type + ":YIELD_AFTER:Okay"
+    return answer_following_question_type + ["YIELD_AFTER", "Okay"]
 
 @pytest.fixture
 def answer_following_question_then_elaborate_type(
     answer_following_question_type
 ):
-    return answer_following_question_type + ":ELABORATE_AFTER:All right"
+    return answer_following_question_type + ["ELABORATE_AFTER", "All right"]
 
 # Config
 

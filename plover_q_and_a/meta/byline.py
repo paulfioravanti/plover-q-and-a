@@ -44,7 +44,7 @@ def sign(args: List[str], config: dict) -> str:
         raise ValueError("No sign type provided")
 
     try:
-        speaker_name = config["SPEAKER_NAMES"][speaker_type]
+        speaker_name = config["speaker_names"][speaker_type]
     except KeyError as exc:
         raise ValueError(
             f"No speaker name entry for: {speaker_type}"

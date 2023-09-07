@@ -6,31 +6,31 @@ from plover_q_and_a import meta
 
 @pytest.fixture
 def speaker_arg():
-    return "WITNESS"
+    return ["WITNESS"]
 
 @pytest.fixture
 def blank_sign_type_speaker_args(speaker_arg):
-    return speaker_arg + ":"
+    return speaker_arg + [""]
 
 @pytest.fixture
-def unknown_sign_type_speaker_args(blank_sign_type_speaker_args):
-    return blank_sign_type_speaker_args + "UNKNOWN"
+def unknown_sign_type_speaker_args(speaker_arg):
+    return speaker_arg + ["UNKNOWN"]
 
 @pytest.fixture
-def initial_speaker_type(blank_sign_type_speaker_args):
-    return blank_sign_type_speaker_args + "INITIAL"
+def initial_speaker_type(speaker_arg):
+    return speaker_arg + ["INITIAL"]
 
 @pytest.fixture
-def interrupting_speaker_type(blank_sign_type_speaker_args):
-    return blank_sign_type_speaker_args + "INTERRUPTING"
+def interrupting_speaker_type(speaker_arg):
+    return speaker_arg + ["INTERRUPTING"]
 
 @pytest.fixture
-def speaker_following_statement_type(blank_sign_type_speaker_args):
-    return blank_sign_type_speaker_args + "FOLLOWING_STATEMENT"
+def speaker_following_statement_type(speaker_arg):
+    return speaker_arg + ["FOLLOWING_STATEMENT"]
 
 @pytest.fixture
-def speaker_following_question_type(blank_sign_type_speaker_args):
-    return blank_sign_type_speaker_args + "FOLLOWING_QUESTION"
+def speaker_following_question_type(speaker_arg):
+    return speaker_arg + ["FOLLOWING_QUESTION"]
 
 # Config
 
@@ -41,7 +41,7 @@ def blank_config():
 @pytest.fixture
 def unknown_speaker_config():
     return {
-        "SPEAKER_NAMES": {
+        "speaker_names": {
             "COURT": "THE COURT"
         }
     }
@@ -49,7 +49,7 @@ def unknown_speaker_config():
 @pytest.fixture
 def speaker_config():
     return {
-        "SPEAKER_NAMES": {
+        "speaker_names": {
             "WITNESS": "THE WITNESS"
         }
     }

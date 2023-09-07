@@ -13,7 +13,7 @@ _NON_LAMBDA_CONFIG_KEYS = [
     "QUESTION_FOLLOWING_INTERRUPT",
     "QUESTION_FOLLOWING_QUESTION",
     "QUESTION_FOLLOWING_STATEMENT",
-    "SPEAKER_NAMES",
+    "speaker_names",
     "STATEMENT_ELABORATE"
 ]
 _LAMBDA_CONFIG_KEYS = [
@@ -74,12 +74,12 @@ def test_specified_config_overwrites_defaults(
     default_config_path
 ):
     loaded_config = config.load(overrides_config_path)
-    loaded_config_speaker_name = loaded_config["SPEAKER_NAMES"]["PLAINTIFF_1"]
+    loaded_config_speaker_name = loaded_config["speaker_names"]["PLAINTIFF_1"]
     loaded_config_speaker = (
         loaded_config["SPEAKER_FOR"](loaded_config_speaker_name)
     )
     default_config = config.load(default_config_path)
-    default_config_speaker_name = default_config["SPEAKER_NAMES"]["PLAINTIFF_1"]
+    default_config_speaker_name = default_config["speaker_names"]["PLAINTIFF_1"]
     default_config_speaker = (
         default_config["SPEAKER_FOR"](default_config_speaker_name)
     )

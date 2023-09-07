@@ -6,55 +6,55 @@ from plover_q_and_a import meta
 
 @pytest.fixture
 def question_arg():
-    return "QUESTION"
+    return ["QUESTION"]
 
 @pytest.fixture
 def blank_question_type(question_arg):
-    return question_arg + ":"
+    return question_arg + [""]
 
 @pytest.fixture
-def unknown_question_type(blank_question_type):
-    return blank_question_type + "UNKNOWN"
+def unknown_question_type(question_arg):
+    return question_arg + ["UNKNOWN"]
 
 @pytest.fixture
-def initial_question_type(blank_question_type):
-    return blank_question_type + "INITIAL"
+def initial_question_type(question_arg):
+    return question_arg + ["INITIAL"]
 
 @pytest.fixture
-def interrupting_question_type(blank_question_type):
-    return blank_question_type + "INTERRUPTING"
+def interrupting_question_type(question_arg):
+    return question_arg + ["INTERRUPTING"]
 
 @pytest.fixture
-def question_following_statement_type(blank_question_type):
-    return blank_question_type + "FOLLOWING_STATEMENT"
+def question_following_statement_type(question_arg):
+    return question_arg + ["FOLLOWING_STATEMENT"]
 
 @pytest.fixture
 def question_following_statement_then_yield_to_answer_type(
     question_following_statement_type
 ):
-    return question_following_statement_type + ":YIELD_AFTER:Okay"
+    return question_following_statement_type + ["YIELD_AFTER", "Okay"]
 
 @pytest.fixture
 def question_following_statement_then_elaborate_type(
     question_following_statement_type
 ):
-    return question_following_statement_type + ":ELABORATE_AFTER:All right"
+    return question_following_statement_type + ["ELABORATE_AFTER", "All right"]
 
 @pytest.fixture
-def question_following_question_type(blank_question_type):
-    return blank_question_type + "FOLLOWING_QUESTION"
+def question_following_question_type(question_arg):
+    return question_arg + ["FOLLOWING_QUESTION"]
 
 @pytest.fixture
 def question_following_question_then_yield_to_answer_type(
     question_following_question_type
 ):
-    return question_following_question_type + ":YIELD_AFTER:Okay"
+    return question_following_question_type + ["YIELD_AFTER", "Okay"]
 
 @pytest.fixture
 def question_following_question_then_elaborate_type(
     question_following_question_type
 ):
-    return question_following_question_type + ":ELABORATE_AFTER:All right"
+    return question_following_question_type + ["ELABORATE_AFTER", "All right"]
 
 # Config
 

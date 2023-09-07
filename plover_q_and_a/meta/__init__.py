@@ -15,6 +15,8 @@ list of `SPEAKER_TYPES`.
 
 Raises an error in the sign type is not recognised.
 """
+from typing import List
+
 from . import (
     answer,
     byline,
@@ -29,15 +31,13 @@ from .arguments import (
 )
 
 
-def sign(args: str, config: dict) -> str:
+def sign(args: List[str], config: dict) -> str:
     """
     Checks the sign type and delegates handling to the appropriate module to
     generate the correct sign.
 
     Raises an error if the sign type is blank or not recognised.
     """
-    args = args.split(":")
-
     sign_type, *sign_type_args = args
     sign_type = sign_type.strip().upper()
 
