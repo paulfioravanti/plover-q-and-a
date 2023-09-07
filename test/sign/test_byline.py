@@ -1,6 +1,6 @@
 import pytest
 
-from plover_q_and_a import meta
+from plover_q_and_a import sign
 
 # Command Arguments
 
@@ -107,29 +107,29 @@ def test_missing_byline_args(byline_arg, blank_config):
         ValueError,
         match="Two byline arguments must be provided. You gave: "
     ):
-        meta.sign(byline_arg, blank_config)
+        sign.text(byline_arg, blank_config)
 
 def test_too_few_byline_args(too_few_byline_args, blank_config):
     with pytest.raises(
         ValueError,
         match="Two byline arguments must be provided. You gave: PLAINTIFF_1"
     ):
-        meta.sign(too_few_byline_args, blank_config)
+        sign.text(too_few_byline_args, blank_config)
 
 def test_too_many_byline_args(too_many_byline_args, blank_config):
     with pytest.raises(
         ValueError,
         match="Two byline arguments must be provided. You gave: PLAINTIFF_1:Foo:Bar"
     ):
-        meta.sign(too_many_byline_args, blank_config)
+        sign.text(too_many_byline_args, blank_config)
 
 def test_blank_speaker_type_args(blank_speaker_type_byline_args, blank_config):
     with pytest.raises(ValueError, match="No speaker type provided"):
-        meta.sign(blank_speaker_type_byline_args, blank_config)
+        sign.text(blank_speaker_type_byline_args, blank_config)
 
 def test_blank_sign_type_args(blank_sign_type_byline_args, blank_config):
     with pytest.raises(ValueError, match="No sign type provided"):
-        meta.sign(blank_sign_type_byline_args, blank_config)
+        sign.text(blank_sign_type_byline_args, blank_config)
 
 def test_unknown_speaker_type_args(
     unknown_speaker_type_byline_args,
@@ -139,7 +139,7 @@ def test_unknown_speaker_type_args(
         ValueError,
         match="Unknown byline speaker type provided: WITNESS"
     ):
-        meta.sign(unknown_speaker_type_byline_args, byline_speaker_config)
+        sign.text(unknown_speaker_type_byline_args, byline_speaker_config)
 
 def test_unknown_sign_type_args(
     unknown_sign_type_byline_args,
@@ -149,7 +149,7 @@ def test_unknown_sign_type_args(
         ValueError,
         match="Unknown sign type provided for PLAINTIFF_1 byline: UNKNOWN"
     ):
-        meta.sign(unknown_sign_type_byline_args, byline_speaker_config)
+        sign.text(unknown_sign_type_byline_args, byline_speaker_config)
 
 def test_no_speaker_name_config_for_speaker_type(
     initial_byline_type,
@@ -159,14 +159,14 @@ def test_no_speaker_name_config_for_speaker_type(
         ValueError,
         match="No speaker name entry for: PLAINTIFF_1"
     ):
-        meta.sign(
+        sign.text(
             initial_byline_type,
             no_byline_speaker_name_config_for_speaker_type
         )
 
 def test_initial_byline(initial_byline_type, initial_byline_config):
     assert (
-        meta.sign(
+        sign.text(
             initial_byline_type,
             initial_byline_config
         ) == "BY MR. STPHAO:\n\tQ\t"
@@ -177,7 +177,7 @@ def test_interrupting_byline(
     interrupting_byline_config
 ):
     assert (
-        meta.sign(
+        sign.text(
             interrupting_byline_type,
             interrupting_byline_config
         ) == "--\nBY MR. STPHAO:\n\tQ\t"
@@ -188,7 +188,7 @@ def test_byline_following_statement(
     byline_following_statement_config
 ):
     assert (
-        meta.sign(
+        sign.text(
             byline_following_statement_type,
             byline_following_statement_config
         ) == ".\nBY MR. STPHAO:\n\tQ\t"
@@ -199,7 +199,7 @@ def test_byline_following_question(
     byline_following_question_config
 ):
     assert (
-        meta.sign(
+        sign.text(
             byline_following_question_type,
             byline_following_question_config
         ) == "?\nBY MR. STPHAO:\n\tQ\t"

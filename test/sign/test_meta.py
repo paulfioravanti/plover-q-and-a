@@ -1,6 +1,6 @@
 import pytest
 
-from plover_q_and_a import meta
+from plover_q_and_a import sign
 
 @pytest.fixture
 def blank_config():
@@ -16,8 +16,8 @@ def unknown_args():
 
 def test_blank_args(blank_args, blank_config):
     with pytest.raises(ValueError, match="No sign type provided"):
-        meta.sign(blank_args, blank_config)
+        sign.text(blank_args, blank_config)
 
 def test_unknown_args(unknown_args, blank_config):
     with pytest.raises(ValueError, match="Unknown sign type provided: UNKNOWN"):
-        meta.sign(unknown_args, blank_config)
+        sign.text(unknown_args, blank_config)

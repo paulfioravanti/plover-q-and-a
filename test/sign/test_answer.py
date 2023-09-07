@@ -1,6 +1,6 @@
 import pytest
 
-from plover_q_and_a import meta
+from plover_q_and_a import sign
 
 # Command Arguments
 
@@ -116,24 +116,24 @@ def answer_following_question_then_elaborate_config(
 
 def test_missing_answer_args(answer_arg, blank_config):
     with pytest.raises(ValueError, match="No answer args provided"):
-        meta.sign(answer_arg, blank_config)
+        sign.text(answer_arg, blank_config)
 
 def test_blank_answer_type(blank_answer_type, blank_config):
     with pytest.raises(ValueError, match="No answer type provided"):
-        meta.sign(blank_answer_type, blank_config)
+        sign.text(blank_answer_type, blank_config)
 
 def test_unknown_answer_type(unknown_answer_type, blank_config):
     with pytest.raises(
         ValueError, match="Unknown answer type provided: UNKNOWN"
     ):
-        meta.sign(unknown_answer_type, blank_config)
+        sign.text(unknown_answer_type, blank_config)
 
 def test_answer_following_interrupt(
     interrupting_answer_type,
     interrupting_answer_config
 ):
     assert (
-        meta.sign(
+        sign.text(
             interrupting_answer_type,
             interrupting_answer_config
         ) == "--\n\tA\t"
@@ -144,7 +144,7 @@ def test_answer_following_statement(
     answer_following_statement_config
 ):
     assert (
-        meta.sign(
+        sign.text(
           answer_following_statement_type,
           answer_following_statement_config
         ) == ".\n\tA\t"
@@ -155,7 +155,7 @@ def test_answer_following_statement_then_yield_to_question(
     answer_following_statement_then_yield_to_question_config
 ):
     assert (
-        meta.sign(
+        sign.text(
           answer_following_statement_then_yield_to_question_type,
           answer_following_statement_then_yield_to_question_config
         ) == ".\n\tA\tOkay.\n\tQ\t"
@@ -166,7 +166,7 @@ def test_answer_following_statement_then_elaborate(
     answer_following_statement_then_elaborate_config
 ):
     assert (
-        meta.sign(
+        sign.text(
             answer_following_statement_then_elaborate_type,
             answer_following_statement_then_elaborate_config
         ) == ".\n\tA\tAll right. "
@@ -177,7 +177,7 @@ def test_answer_following_question(
     answer_following_question_config
 ):
     assert (
-        meta.sign(
+        sign.text(
           answer_following_question_type,
           answer_following_question_config
         ) == "?\n\tA\t"
@@ -188,7 +188,7 @@ def test_answer_following_question_then_yield_to_question(
     answer_following_question_then_yield_to_question_config
 ):
     assert (
-        meta.sign(
+        sign.text(
           answer_following_question_then_yield_to_question_type,
           answer_following_question_then_yield_to_question_config
         ) == "?\n\tA\tOkay.\n\tQ\t"

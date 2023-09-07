@@ -29,10 +29,10 @@ from .arguments import (
 )
 
 
-def sign(args: list[str], config: dict[str, any]) -> str:
+def text(args: list[str], config: dict[str, any]) -> str:
     """
     Checks the sign type and delegates handling to the appropriate module to
-    generate the correct sign.
+    generate the correct sign text.
 
     Raises an error if the sign type is blank or not recognised.
     """
@@ -43,14 +43,14 @@ def sign(args: list[str], config: dict[str, any]) -> str:
         raise ValueError("No sign type provided")
 
     if sign_type == QUESTION:
-        meta = question.sign(sign_type_args, config)
+        sign_text = question.sign(sign_type_args, config)
     elif sign_type == ANSWER:
-        meta = answer.sign(sign_type_args, config)
+        sign_text = answer.sign(sign_type_args, config)
     elif sign_type == BYLINE:
-        meta = byline.sign(sign_type_args, config)
+        sign_text = byline.sign(sign_type_args, config)
     elif sign_type in SPEAKER_TYPES:
-        meta = speaker.sign(args, config)
+        sign_text = speaker.sign(args, config)
     else:
         raise ValueError(f"Unknown sign type provided: {sign_type}")
 
-    return meta
+    return sign_text

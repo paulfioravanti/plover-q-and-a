@@ -11,8 +11,8 @@ from plover.machine.base import STATE_RUNNING
 from plover.oslayer.config import CONFIG_DIR
 from plover.registry import registry
 
-from . import meta
 from . import config
+from . import sign
 from .arguments import (
     ARGUMENT_DIVIDER,
     SET_NAME,
@@ -118,9 +118,9 @@ class QAndA:
                     f"Unknown SET_NAME command provided: {set_name_command}"
                 )
         else:
-            sign = meta.sign(args, self._config)
-            action.text = sign
-            if sign[0] in self._config["PREV_ATTACH_MARKERS"]:
+            text = sign.text(args, self._config)
+            action.text = text
+            if text[0] in self._config["PREV_ATTACH_MARKERS"]:
                 action.prev_attach = True
             action.next_attach = True
             action.next_case = Case.CAP_FIRST_WORD

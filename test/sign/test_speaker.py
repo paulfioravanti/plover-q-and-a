@@ -1,6 +1,6 @@
 import pytest
 
-from plover_q_and_a import meta
+from plover_q_and_a import sign
 
 # Command Arguments
 
@@ -88,14 +88,14 @@ def speaker_following_question_config(speaker_config):
 
 def test_blank_sign_type_args(blank_sign_type_speaker_args, blank_config):
     with pytest.raises(ValueError, match="No sign type provided"):
-        meta.sign(blank_sign_type_speaker_args, blank_config)
+        sign.text(blank_sign_type_speaker_args, blank_config)
 
 def test_unknown_speaker_type(initial_speaker_type, unknown_speaker_config):
     with pytest.raises(
         ValueError,
         match="Unknown speaker type provided: WITNESS"
     ):
-        meta.sign(initial_speaker_type, unknown_speaker_config)
+        sign.text(initial_speaker_type, unknown_speaker_config)
 
 def test_unknown_sign_type_args(
     unknown_sign_type_speaker_args,
@@ -105,11 +105,11 @@ def test_unknown_sign_type_args(
         ValueError,
         match="Unknown sign type provided for WITNESS: UNKNOWN"
     ):
-        meta.sign(unknown_sign_type_speaker_args, speaker_config)
+        sign.text(unknown_sign_type_speaker_args, speaker_config)
 
 def test_initial_speaker(initial_speaker_type, initial_speaker_config):
     assert (
-        meta.sign(
+        sign.text(
             initial_speaker_type,
             initial_speaker_config
         ) == "\tTHE WITNESS:  "
@@ -120,7 +120,7 @@ def test_interrupting_speaker(
     interrupting_speaker_config
 ):
     assert (
-        meta.sign(
+        sign.text(
             interrupting_speaker_type,
             interrupting_speaker_config
         ) == "--\n\tTHE WITNESS:  "
@@ -131,7 +131,7 @@ def test_speaker_following_statement(
     speaker_following_statement_config
 ):
     assert (
-        meta.sign(
+        sign.text(
             speaker_following_statement_type,
             speaker_following_statement_config
         ) == ".\n\tTHE WITNESS:  "
@@ -142,7 +142,7 @@ def test_speaker_following_question(
     speaker_following_question_config
 ):
     assert (
-        meta.sign(
+        sign.text(
             speaker_following_question_type,
             speaker_following_question_config
         ) == "?\n\tTHE WITNESS:  "

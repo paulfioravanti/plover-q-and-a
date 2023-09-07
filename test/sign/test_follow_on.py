@@ -1,6 +1,6 @@
 import pytest
 
-from plover_q_and_a import meta
+from plover_q_and_a import sign
 
 # Command Arguments
 
@@ -36,7 +36,7 @@ def follow_on_args_config(no_follow_on_args_config):
 
 def test_no_follow_on_args(no_follow_on_args_type, no_follow_on_args_config):
     assert (
-        meta.sign(no_follow_on_args_type, no_follow_on_args_config)
+        sign.text(no_follow_on_args_type, no_follow_on_args_config)
         == ".\n\tQ\t"
     )
 
@@ -48,7 +48,7 @@ def test_too_few_follow_on_args(
         ValueError,
         match="Two follow on arguments must be provided. You gave: ELABORATE_AFTER"
     ):
-        meta.sign(too_few_follow_on_args_type, follow_on_args_config)
+        sign.text(too_few_follow_on_args_type, follow_on_args_config)
 
 def test_too_many_follow_on_args(
     too_many_follow_on_args_type,
@@ -58,7 +58,7 @@ def test_too_many_follow_on_args(
         ValueError,
         match="Two follow on arguments must be provided. You gave: ELABORATE_AFTER:Foo:Bar"
     ):
-        meta.sign(too_many_follow_on_args_type, follow_on_args_config)
+        sign.text(too_many_follow_on_args_type, follow_on_args_config)
 
 def unknown_follow_on_action(
     unknown_follow_on_action_type,
@@ -68,4 +68,4 @@ def unknown_follow_on_action(
         ValueError,
         match="Unknown follow on action provided: SHOUT"
     ):
-        meta.sign(unknown_follow_on_action_type, follow_on_args_config)
+        sign.text(unknown_follow_on_action_type, follow_on_args_config)
