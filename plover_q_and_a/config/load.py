@@ -147,13 +147,13 @@ def _question_end_marker(data):
 def _set_name_prompt(data):
     prompt = data.get("set_name_prompt", defaults.SET_NAME_PROMPT)
 
-    if re.match(_SET_NAME_PROMPT_MATCH_CONDITION, prompt):
-        return prompt
-    else:
+    if not re.match(_SET_NAME_PROMPT_MATCH_CONDITION, prompt):
         raise ValueError(
             "Both {speaker_type} and {current_speaker_name} must be "
             "present in the set_name_prompt."
         )
+
+    return prompt
 
 def _speaker_names(speaker, speaker_upcase):
     speaker_names = {
