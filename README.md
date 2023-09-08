@@ -171,6 +171,47 @@ example outlines):
 |`{:Q_AND_A:CLERK:INITIAL}`         |Signs in The Clerk as the first speaker          |`STPHAOEFPLT`,`KHRERBG/KHRERBG`|
 |`{:Q_AND_A:BAILIFF:INITIAL}`       |Signs in The Bailiff as the first speaker        |`STPHAOUFPLT`,`PWHR-F/PWHR-F`  |
 
+### Changing Speaker Names
+
+> :tophat: Hat tip to [Plover Speaker ID][] for inspiration behind performing
+> speaker name changes via a text prompt.
+
+Although it is possible to change the default values for speaker names via the
+[config][`examples`], there may be times where you want to change speaker names
+on the fly, but not necessarily have them be saved as the defaults.
+
+This is where the `SET_NAME` command comes in: it allows you to set a speaker
+name via a text prompt that looks something like this:
+
+`[Set PLAINTIFF_1 (MR. STPHAO) =>] _`
+
+> `_` represents the cursor position
+
+Once you have finished defining the new speaker name, you send a `SET_NAME:DONE`
+command to "save" it, and the prompt is automatically deleted.
+
+The names you set using `SET_NAME` persist even when you press the "Reconnect"
+button on the Plover application, or when you send a `{:COMMAND:SET_CONFIG}`
+command to reload dictionaries. You can, though, reset all the names back to
+their defaults by sending a `RESET_CONFIG` command.
+
+The following is a list of some example `SET_NAME`-related commands, and some
+suggested outlines:
+
+| Command                         | Meaning                                                            | Suggested Outlines        |
+|:--------------------------------|:-------------------------------------------------------------------|:--------------------------|
+|`{:Q_AND_A:SET_NAME:PLAINTIFF_1}`|Shows the current Plaintiff lawyer 1 name, and a prompt to change it|`SET/STPHAO` ("Set Snoo")  |
+|`{:Q_AND_A:SET_NAME:PLAINTIFF_2}`|Shows the current Plaintiff lawyer 2 name, and a prompt to change it|`SET/SKWRAO` ("Set Screw") |
+|`{:Q_AND_A:SET_NAME:DEFENSE_1}`  |Shows the current Defense lawyer 1 name, and a prompt to change it  |`SET/EUFPLT` ("Set Ifpelt")|
+|`{:Q_AND_A:SET_NAME:DEFENSE_2}`  |Shows the current Defense lawyer 2 name, and a prompt to change it  |`SET/EURBGS` ("Set Irbs")  |
+|`{:Q_AND_A:SET_NAME:DONE}`       |Saves the specified new speaker name, given after the prompt        |`STKPWHRAO`,`EUFRPBLGTS`   |
+|`{:Q_AND_A:RESET_CONFIG}`        |Resets all speaker names back to their defaults                     |`R-FT/R-FT` ("ReSeT")      |
+
+The `SET_NAME` command supports setting names of any known speaker
+(`COURT_REPORTER`, `BAILIFF` etc), but the examples above were given because in
+Q&A, typically only the lawyers are referred to by their given names, rather
+than just their titles.
+
 ### Bylines
 
 Bylines are used to indicate the lawyer that owns, or is in charge of, the
@@ -319,6 +360,7 @@ plover -s plover_plugins install .
 [Platinum Steno Lesson 27 QA video]: https://www.youtube.com/watch?v=tEgaJ7hWIvg
 [Plover]: https://www.openstenoproject.org/
 [Plover For the Record]: https://www.paulfioravanti.com/blog/plover-for-the-record/
+[Plover Speaker ID]: https://github.com/sammdot/plover-speaker-id
 [plugin]: https://plover.readthedocs.io/en/latest/plugins.html#types-of-plugins
 [Pylint]: https://github.com/pylint-dev/pylint
 [Pytest]: https://pytest.org/

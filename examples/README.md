@@ -47,10 +47,11 @@ could potentially become speakers (or discussion participants) during Q&A:
 Each speaker has formatting that goes either side of the speaker name. You can
 find these values under the `"formatting"` key inside the `"speaker"`:
 
-| Key    | Meaning            | Default Value                |
-|:-------|:-------------------|:-----------------------------|
-|`"pre"` |Pre-name formatting |`\t` (a Tab character)        |
-|`"post"`|Post-name formatting|`:  ` (colon, then two spaces)|
+| Key      | Meaning            | Default Value                |
+|:---------|:-------------------|:-----------------------------|
+|`"pre"`   |Pre-name formatting |`\t` (a Tab character)        |
+|`"post"`  |Post-name formatting|`:  ` (colon, then two spaces)|
+|`"upcase"`|Upcase formatting   |`true`                        |
 
 Putting them all together, a back and forth between a lawyer and a judge using
 default values could look like the following:
@@ -62,6 +63,16 @@ default values could look like the following:
 
 > `⇥···` here represents a Tab character, and would not typically be visible on
 > screen
+
+#### Upcasing
+
+Platinum Steno Q&A formatting has all names uppercased. By default, this plugin
+follows that convention: when you either specify a speaker name in config, or
+change it yourself using the `SET_NAME` command, the resulting value will
+automatically be upcased.
+
+If you want to keep lowercase characters in your speaker names, set
+`"upcase": false` in your config inside the speaker formatting.
 
 ### Questions, Answers, and Bylines
 
