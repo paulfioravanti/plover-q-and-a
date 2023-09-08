@@ -16,6 +16,7 @@ from .arguments import DONE
 
 
 _SET_NAME_SPEAKER_TYPE_ATTR = "set_name_speaker_type"
+_SET_NAME_PROMPT = "[Set %s (%s) =>] "
 
 def set_name(
     command_args: list[str],
@@ -54,7 +55,7 @@ def _begin_set_speaker_name(
     """
     setattr(action, _SET_NAME_SPEAKER_TYPE_ATTR, speaker_type.strip())
     current_speaker_name = config["speaker_names"][speaker_type]
-    action.text = f"[Set {speaker_type} ({current_speaker_name}) =>] "
+    action.text = _SET_NAME_PROMPT % (speaker_type, current_speaker_name)
     action.next_attach = True
 
 def _end_set_speaker_name(
