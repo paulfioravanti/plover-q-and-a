@@ -18,7 +18,6 @@ from .formatting import iter_last_fragments
 
 
 _SET_NAME_SPEAKER_TYPE_ATTR = "set_name_speaker_type"
-_SET_NAME_PROMPT = "[Set %s (%s) =>] "
 
 def set_name(
     command_args: list[str],
