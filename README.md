@@ -1,6 +1,6 @@
 # Plover Q&A
 
-[![Build Status][Build Status image]][Build Status url]
+[![Build Status][Build Status image]][Build Status url] [![linting: pylint][linting image]][linting url]
 
 This [Plover][] [extension][] [plugin][] contains [metas][] for your
 dictionaries that can assist with [Q&A][] (Question and Answer): the process of
@@ -119,6 +119,8 @@ plover -s plover_plugins install .
 [`INSTRUCTIONS`]: ./INSTRUCTIONS.md
 [`immediate-responses.json`]: ./examples/immediate-responses.json
 [`lawyers.json`]: ./examples/lawyers.json
+[linting image]: https://img.shields.io/badge/linting-pylint-yellowgreen
+[linting url]: https://github.com/pylint-dev/pylint
 [metas]: https://plover.readthedocs.io/en/latest/plugin-dev/metas.html
 [`other-speakers-ncra-style.json`]: ./examples/other-speakers-ncra-style.json
 [`other-speakers.json`]: ./examples/other-speakers.json
