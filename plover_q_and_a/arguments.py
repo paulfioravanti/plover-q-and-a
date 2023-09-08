@@ -2,7 +2,12 @@
 This is the set of valid arguments that can be included in a top-level command.
 """
 
+# Config
+
 ARGUMENT_DIVIDER = ":"
+
+# Arguments
+
 RESET_CONFIG = "RESET_CONFIG"
 SET_NAME = "SET_NAME"
 

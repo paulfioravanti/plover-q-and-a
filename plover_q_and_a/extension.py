@@ -1,8 +1,10 @@
 """
-Plover Q&A - A Plover extension to assist with writing Question and Answer
-(Q&A): the process of switching between different people or lines of questioning
-in a conversation.
+Plover entry point extension module.
+
+    - https://plover.readthedocs.io/en/latest/plugin-dev/extensions.html
+    - https://plover.readthedocs.io/en/latest/plugin-dev/metas.html
 """
+
 from pathlib import Path
 
 from plover.engine import StenoEngine
@@ -25,10 +27,7 @@ _CONFIG_FILEPATH = Path(CONFIG_DIR) / "q_and_a.json"
 
 class QAndA:
     """
-    Plover entry point extension class that also registers a meta plugin.
-    - https://plover.readthedocs.io/en/latest/plugin-dev/extensions.html
-    - https://plover.readthedocs.io/en/latest/plugin-dev/metas.html
-
+    Extension class that also registers a meta plugin.
     The meta deals with creating the Q&A sign outputs, and the extension wrapper
     around it is needed in order to:
 

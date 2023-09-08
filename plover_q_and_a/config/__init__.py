@@ -1,21 +1,7 @@
 """
-Config module that imports JSON data containing sign output customisations.
+Config - a package dealing with importing JSON data containing sign output
+customisations, munging it into app configuration, and then managing it.
 """
-from pathlib import Path
 
 from .load import load
-
-
-def reload(
-    config_filepath: Path,
-    current_config: dict[str, any]
-) -> dict[str, any]:
-    """
-    Reloads config from defaults, but making sure to keep any speaker name
-    changes that have been made.
-    """
-    new_config = load(config_filepath)
-    new_config["speaker_names"] = (
-        new_config["speaker_names"] | current_config["speaker_names"]
-    )
-    return new_config
+from .reload import reload
