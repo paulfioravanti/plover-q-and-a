@@ -84,6 +84,9 @@ command:
 pytest
 ```
 
+Currently, the only parts able to be testing are ones that do not rely directly
+on Plover.
+
 ### Linting
 
 Attempts have been made to have at least some kind of code quality baseline with
