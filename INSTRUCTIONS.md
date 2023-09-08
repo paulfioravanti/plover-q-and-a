@@ -248,5 +248,9 @@ Some examples of using these commands could be the following (see the
 |`{:Q_AND_A:ANSWER:FOLLOWING_QUESTION:YIELD_AFTER:I don't know}`    |Ends a lawyer question, signs in a witness answer, outputs statement "I don't know.", then signs in question|`KWRO*EFRPBLGTS`    |
 
 [`examples`]: ./examples
+[`immediate-responses.json`]: ./examples/immediate-responses.json
+[`lawyers.json`]: ./examples/lawyers.json
+[`other-speakers-ncra-style.json`]: ./examples/other-speakers-ncra-style.json
+[`other-speakers.json`]: ./examples/other-speakers.json
 [Platinum Steno]: https://www.youtube.com/@PlatinumSteno
 [Plover Speaker ID]: https://github.com/sammdot/plover-speaker-id

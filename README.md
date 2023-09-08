@@ -117,13 +117,9 @@ plover -s plover_plugins install .
 [git]: https://git-scm.com/
 [Invoke Plover from the command line]: https://github.com/openstenoproject/plover/wiki/Invoke-Plover-from-the-command-line
 [`INSTRUCTIONS`]: ./INSTRUCTIONS.md
-[`immediate-responses.json`]: ./examples/immediate-responses.json
-[`lawyers.json`]: ./examples/lawyers.json
 [linting image]: https://img.shields.io/badge/linting-pylint-yellowgreen
 [linting url]: https://github.com/pylint-dev/pylint
 [metas]: https://plover.readthedocs.io/en/latest/plugin-dev/metas.html
-[`other-speakers-ncra-style.json`]: ./examples/other-speakers-ncra-style.json
-[`other-speakers.json`]: ./examples/other-speakers.json
 [Platinum Steno]: https://www.youtube.com/@PlatinumSteno
 [Platinum Steno Lesson 27 QA video]: https://www.youtube.com/watch?v=tEgaJ7hWIvg
 [Plover]: https://www.openstenoproject.org/
