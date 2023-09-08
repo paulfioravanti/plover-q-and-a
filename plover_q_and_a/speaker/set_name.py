@@ -83,12 +83,11 @@ def _end_set_speaker_name(
             begin_action = prev_action
             break
 
-    text_to_delete = f"{begin_action.text} {name}"
-
     speaker_type = getattr(begin_action, _SET_NAME_SPEAKER_TYPE_ATTR)
     name = name.upper() if config["SPEAKER_UPCASE"] else name
     config["speaker_names"][speaker_type] = name
 
-    action.prev_replace = text_to_delete
+    # NOTE: prev_replace text gets deleted.
+    action.prev_replace = f"{begin_action.text} {name}"
     action.prev_attach = True
     action.text = ""
