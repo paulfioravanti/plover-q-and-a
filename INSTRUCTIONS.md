@@ -3,6 +3,19 @@
 This document outlines how to use the Plover Q&A plugin, what commands are
 available, and some suggested configuration.
 
+<!-- vim-markdown-toc GFM -->
+
+* [Background](#background)
+* [Commands](#commands)
+    - [Questions](#questions)
+    - [Answers](#answers)
+    - [Named Speakers](#named-speakers)
+    - [Changing Speaker Names](#changing-speaker-names)
+    - [Bylines](#bylines)
+    - [Immediate Responses](#immediate-responses)
+
+<!-- vim-markdown-toc -->
+
 ## Background
 
 Whenever someone starts speaking, you indicate this by "signing them in", either

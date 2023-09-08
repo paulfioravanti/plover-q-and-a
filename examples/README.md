@@ -10,6 +10,19 @@ to your liking.
 Config and dictionary entries form the backbone of being able to use this
 plugin, so examples of each are provided here in hopes they can get you started.
 
+<!-- vim-markdown-toc GFM -->
+
+* [Config](#config)
+    - [Speaker](#speaker)
+        + [Upcasing](#upcasing)
+    - [Questions, Answers, and Bylines](#questions-answers-and-bylines)
+    - [Other Formatting](#other-formatting)
+    - [Prompts](#prompts)
+    - [Customisation](#customisation)
+* [Dictionaries](#dictionaries)
+
+<!-- vim-markdown-toc -->
+
 ## Config
 
 [`q_and_a.json`][] is an example config [JSON][] file containing all the
