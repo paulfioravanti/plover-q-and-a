@@ -3,9 +3,16 @@ Module to handle reading in the application JSON config file.
 """
 import json
 from pathlib import Path
+import re
 
 from . import defaults
 
+
+# Prompt must contain both {speaker_type} and {current_speaker_name} in the
+# string, otherwise it is invalid.
+_SET_NAME_PROMPT_MATCH_CONDITION = re.compile(
+    r"(?=.*{speaker_type})(?=.*{current_speaker_name})"
+)
 
 def load(config_filepath: Path) -> dict[str, any]:
     """
@@ -31,6 +38,7 @@ def load(config_filepath: Path) -> dict[str, any]:
     statement_elaborate = _statement_elaborate(data)
     interrupt = _interrupt(data)
     formatted_byline = _formatted_byline(data)
+    set_name_prompt = _set_name_prompt(data)
     speaker = data.get("speaker", {})
     speaker_formatting = speaker.get("formatting", {})
     speaker_upcase = (
@@ -64,6 +72,7 @@ def load(config_filepath: Path) -> dict[str, any]:
         "QUESTION_FOLLOWING_INTERRUPT": interrupt + formatted_question,
         "QUESTION_FOLLOWING_QUESTION": question_end + formatted_question,
         "QUESTION_FOLLOWING_STATEMENT": statement_end + formatted_question,
+        "SET_NAME_PROMPT": set_name_prompt,
         "SPEAKER_FOR": formatted_speaker,
         "SPEAKER_FOLLOWING_INTERRUPT_FOR": lambda speaker_name: (
             interrupt + formatted_speaker(speaker_name)
@@ -134,6 +143,17 @@ def _question_end(data):
 
 def _question_end_marker(data):
     return data.get("question_end", defaults.QUESTION_END_MARKER)
+
+def _set_name_prompt(data):
+    prompt = data.get("set_name_prompt", defaults.SET_NAME_PROMPT)
+
+    if re.match(_SET_NAME_PROMPT_MATCH_CONDITION, prompt):
+        return prompt
+    else:
+        raise ValueError(
+            "Both {speaker_type} and {current_speaker_name} must be "
+            "present in the set_name_prompt."
+        )
 
 def _speaker_names(speaker, speaker_upcase):
     speaker_names = {

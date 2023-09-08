@@ -13,6 +13,7 @@ _NON_LAMBDA_CONFIG_KEYS = [
     "QUESTION_FOLLOWING_INTERRUPT",
     "QUESTION_FOLLOWING_QUESTION",
     "QUESTION_FOLLOWING_STATEMENT",
+    "SET_NAME_PROMPT",
     "speaker_names",
     "STATEMENT_ELABORATE"
 ]
@@ -60,6 +61,25 @@ def lower_case_without_upcase_config_path():
     ).resolve()
 
 @pytest.fixture
+def set_name_prompt_custom_config_path():
+    return (
+      Path(__file__).parent / "files/set_name_prompt_custom.json"
+    ).resolve()
+
+@pytest.fixture
+def set_name_prompt_no_speaker_type_config_path():
+    return (
+      Path(__file__).parent / "files/set_name_prompt_no_speaker_type.json"
+    ).resolve()
+
+@pytest.fixture
+def set_name_prompt_no_current_speaker_name_config_path():
+    return (
+      Path(__file__).parent
+      / "files/set_name_prompt_no_current_speaker_name.json"
+    ).resolve()
+
+@pytest.fixture
 def default_config_path():
     return (Path(__file__).parent / "../../examples/q_and_a.json").resolve()
 
@@ -77,6 +97,30 @@ def test_bad_config(bad_config_path):
         match="Config file must contain a JSON object"
     ):
         config.load(bad_config_path)
+
+def test_no_speaker_type_in_set_name_prompt(
+    set_name_prompt_no_speaker_type_config_path
+):
+    with pytest.raises(
+        ValueError,
+        match=(
+            "Both {speaker_type} and {current_speaker_name} must be "
+            "present in the set_name_prompt."
+        )
+    ):
+        config.load(set_name_prompt_no_speaker_type_config_path)
+
+def test_no_current_speaker_name_in_set_name_prompt(
+    set_name_prompt_no_current_speaker_name_config_path
+):
+    with pytest.raises(
+        ValueError,
+        match=(
+            "Both {speaker_type} and {current_speaker_name} must be "
+            "present in the set_name_prompt."
+        )
+    ):
+        config.load(set_name_prompt_no_current_speaker_name_config_path)
 
 def test_non_existent_config_loads_defaults(
     non_existent_config_path,

@@ -110,6 +110,32 @@ BY MR. CHAMBERS:
 ⇥···THE WITNESS:  Yes, your Honor.
 ```
 
+### Prompts
+
+When you [change a speaker name][], you will see a text prompt that looks
+something like this:
+
+`[Set PLAINTIFF_1 (MR. STPHAO) =>] _`
+
+> `_` represents the cursor position
+
+This is how the prompt displays by default, but it is customisable via
+configuration. In the config file, the prompt looks like this:
+
+`"[Set {speaker_type} ({current_speaker_name}) =>] "`
+
+The `{speaker_type}` and `{current_speaker_name}` parts are placeholders for the
+speaker type (e.g. `PLAINTIFF_1`), and the current speaker name (e.g.
+`MR. STPHAO`). If you customise your prompt, both of these parts **must** be
+present in your custom prompt, or you will get an error when you try and reload
+your config.
+
+Configuration details for the prompt are:
+
+| Key               | Meaning                                         | Default Value                                       |
+|:------------------|:------------------------------------------------|:----------------------------------------------------|
+|`"set_name_prompt"`|The prompt to display when setting a speaker name|`"[Set {speaker_type} ({current_speaker_name}) =>] "`|
+
 ### Customisation
 
 If you want to customise how the signs output, create your own `q_and_a.json`
@@ -167,6 +193,9 @@ blog post _[Plover For the Record][]_. But, to summarise:
   common responses given at the end of questions and answers. See [here][] for a
   detailed rationale.
 
+Other dictionaries that may be of reference are:
+
+- [Paul's Q&A dictionary][]: Custom dictionary by the author of this plugin.
 
 For completeness' sake, support for other speakers who do not typically come up
 in Q&A, but are used by court reporters (The Videographer, The Court Reporter,
@@ -182,6 +211,7 @@ trial participants come from two sources:
 
 Use whichever outlines feel comfortable to you, or make up entirely new ones!
 
+[change a speaker name]: ../INSTRUCTIONS.md#changing-speaker-names
 [`dictionaries`]: ./dictionaries
 [here]: https://www.paulfioravanti.com/blog/plover-for-the-record/#update-25-november-2021-immediate-responses
 [`immediate-responses.json`]: ./dictionaries/immediate-responses.json
@@ -191,6 +221,7 @@ Use whichever outlines feel comfortable to you, or make up entirely new ones!
 [NCRA Theory Dictionary]: https://platinumsteno.com/downloads/platinum-steno-ncrs-theory-dictionary/
 [`other-speakers.json`]: ./dictionaries/other-speakers.json
 [`other-speakers-ncra-style.json`]: ./dictionaries/other-speakers-ncra-style.json
+[Paul's Q&A dictionary]: https://github.com/paulfioravanti/steno-dictionaries/blob/main/dictionaries/q-and-a.md
 [Platinum Steno]: https://www.youtube.com/@PlatinumSteno
 [Platinum Steno Lesson 27 lesson materials]: https://platinumsteno.com/downloads/theory-lesson-27/
 [Platinum Steno Theory Dictionary (NCRS Theory)]: https://platinumsteno.com/downloads/platinum-steno-ncrs-theory-dictionary/
