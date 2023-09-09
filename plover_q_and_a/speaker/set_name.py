@@ -86,7 +86,10 @@ def _end_set_speaker_name(
             break
 
     speaker_type = getattr(begin_action, _SET_NAME_SPEAKER_TYPE_ATTR)
-    name = name.upper() if config["SPEAKER_UPCASE"] else name
+
+    if config["SPEAKER_UPCASE"]:
+        name = name.upper()
+
     config["speaker_names"][speaker_type] = name
 
     # NOTE: prev_replace text gets deleted.
