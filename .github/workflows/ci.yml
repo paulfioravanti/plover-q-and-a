@@ -10,12 +10,19 @@ concurrency:
   group: ci-tests-${{ github.ref }}-1
   cancel-in-progress: true
 jobs:
-  setup:
-    uses: ./.github/workflows/setup.yml
-  build:
-    name: Lint and Test
+  ci:
+    if: ${{ !startsWith(github.ref, 'refs/tags') }}
+    name: Build, Lint, Test
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: 3.9
+
       - name: Install test/lint dependencies
         run: pip install pytest pylint
 
