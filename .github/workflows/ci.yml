@@ -15,7 +15,7 @@ jobs:
     name: Build, Lint, Test
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout repository
+      - name: Checkout Repository
         uses: actions/checkout@v3
 
       - name: Set up Python
@@ -23,11 +23,11 @@ jobs:
         with:
           python-version: 3.9
 
-      - name: Install test/lint dependencies
+      - name: Install Test/Lint Dependencies
         run: pip install pytest pylint
 
-      - name: Run linter
+      - name: Run Linter
         run: pylint plover_q_and_a
 
-      - name: Run tests
+      - name: Run Tests
         run: pytest
