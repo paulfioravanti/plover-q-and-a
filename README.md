@@ -64,7 +64,7 @@ command:
 pytest
 ```
 
-Currently, the only parts able to be testing are ones that do not rely directly
+Currently, the only parts able to be tested are ones that do not rely directly
 on Plover.
 
 ### Linting
