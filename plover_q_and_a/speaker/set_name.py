@@ -85,6 +85,10 @@ def _end_set_speaker_name(
             begin_action = prev_action
             break
 
+    # Ignore SET_NAME:DONE command if called before SET_NAME:<SPEAKER>
+    if not begin_action:
+        return
+
     speaker_type = getattr(begin_action, _SET_NAME_SPEAKER_TYPE_ATTR)
 
     if config["SPEAKER_UPCASE"]:
