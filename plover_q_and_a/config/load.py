@@ -64,10 +64,6 @@ def load(config_filepath: Path) -> dict[str, any]:
         "BYLINE_FOLLOWING_STATEMENT_FOR": lambda speaker_name: (
             statement_end + formatted_byline(speaker_name)
         ),
-        "PREV_ATTACH_MARKERS": [
-            _question_end_marker(data),
-            _statement_end_marker(data)
-        ],
         "QUESTION": formatted_question,
         "QUESTION_FOLLOWING_INTERRUPT": interrupt + formatted_question,
         "QUESTION_FOLLOWING_QUESTION": question_end + formatted_question,

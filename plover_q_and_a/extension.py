@@ -86,8 +86,7 @@ class QAndA:
         else:
             text = sign.text(args, self._config)
             action.text = text
-            if text[0] in self._config["PREV_ATTACH_MARKERS"]:
-                action.prev_attach = True
+            action.prev_attach = True
             action.next_attach = True
             action.next_case = Case.CAP_FIRST_WORD
 
