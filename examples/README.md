@@ -105,7 +105,7 @@ the following values:
 |:-----------------|:----------------------------------------|:-----------------|
 |`"question_end"`  |Marks the end of a question              |`?`               |
 |`"statement_end"` |Marks the end of a statement             |`.`               |
-|`"interrupt"`     |Marks a speaker interruption             |`--`              |
+|`"interrupt"`     |Marks a speaker interruption             |` --`             |
 |`"yield"`         |Marks yielding control to another speaker|`\n` (line break) |
 |`"sentence_space"`|Marker for directly after a sentence end |` ` (single space)|
 

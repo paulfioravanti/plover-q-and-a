@@ -60,7 +60,7 @@ def blank_config():
 
 @pytest.fixture
 def interrupting_answer_config():
-    return { "ANSWER_FOLLOWING_INTERRUPT": "--\n\tA\t" }
+    return { "ANSWER_FOLLOWING_INTERRUPT": " --\n\tA\t" }
 
 @pytest.fixture
 def answer_following_statement_config():
@@ -136,7 +136,7 @@ def test_answer_following_interrupt(
         sign.text(
             interrupting_answer_type,
             interrupting_answer_config
-        ) == "--\n\tA\t"
+        ) == " --\n\tA\t"
    )
 
 def test_answer_following_statement(

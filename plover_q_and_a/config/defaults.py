@@ -37,7 +37,7 @@ ANSWER_BEGIN_MARKER_POST_FORMATTING = "\t"
 ## Other formatting
 STATEMENT_END_MARKER = "."
 QUESTION_END_MARKER = "?"
-INTERRUPT_MARKER = "--"
+INTERRUPT_MARKER = " --"
 YIELD_MARKER = "\n"
 SENTENCE_SPACE = " "
 SET_NAME_PROMPT = "[Set {speaker_type} ({current_speaker_name}) =>] "
