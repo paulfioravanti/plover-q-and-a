@@ -16,6 +16,13 @@ originally informed this plugin can be found at the following blog post:
 
 - _[Plover For the Record][]_
 
+You can see a video of the plugin in action here:
+
+- [Steno Legal Q&A Test with Plover and Vim][]
+
+(And if you are a [Vim][] user and want the syntax highlighting, you can find it
+in the [Vim Steno Q&A][] plugin)
+
 ## Install
 
 1. In the Plover application, open the Plugins Manager (either click the Plugins
@@ -107,4 +114,7 @@ plover -s plover_plugins install .
 [Pylint]: https://github.com/pylint-dev/pylint
 [Pytest]: https://pytest.org/
 [Q&A]: http://ilovesteno.com/2014/02/03/the-different-types-of-q-a/
+[Steno Legal Q&A Test with Plover and Vim]: https://www.youtube.com/watch?v=wZFj0q0d9uo
+[Vim]: https://www.vim.org/
+[Vim Steno Q&A]: https://github.com/paulfioravanti/vim-steno-q-and-a
 [`workflow_context.yml`]: https://github.com/openstenoproject/plover/blob/master/.github/workflows/ci/workflow_context.yml
