@@ -46,7 +46,7 @@ class QAndA:
         """
         Sets up the meta plugin and steno engine hooks
         """
-        registry.register_plugin("meta", "q_and_a", self._q_and_a)
+        registry.register_plugin("meta", "Q_AND_A", self._q_and_a)
         self._engine.hook_connect("translated", self._translated)
         self._engine.hook_connect(
             "machine_state_changed",
