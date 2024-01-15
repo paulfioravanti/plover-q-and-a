@@ -64,26 +64,32 @@ make sure your local development environment also uses Python 3.9.x.
 
 ### Testing
 
-Tests in this plugin were created with [Pytest][]. Run them with the following
-command:
-
-```sh
-pytest
-```
+- [Pytest][] is used for testing in this plugin.
+- [Coverage.py][] and [pytest-cov][] are used for test coverage, and to run
+  coverage within Pytest
+- [Pylint][] is used for code quality
+- [Mypy][] is used for static type checking
 
 Currently, the only parts able to be tested are ones that do not rely directly
 on Plover.
 
-### Linting
+Run tests, coverage, and linting with the following commands:
 
-Attempts have been made to have at least some kind of code quality baseline with
-[Pylint][]. Run the linter over the codebase with the following command:
-
-```sh
+```console
+pytest --cov --cov-report=term-missing
 pylint plover_q_and_a
+mypy plover_q_and_a
 ```
 
-### Testing Changes
+To get a HTML test coverage report:
+
+```console
+coverage run --module pytest
+coverage html
+open htmlcov/index.html
+```
+
+### Deploying Changes
 
 After making any code changes, install the plugin into Plover with the following
 command:
@@ -98,6 +104,7 @@ plover -s plover_plugins install .
 
 [Build Status image]: https://github.com/paulfioravanti/plover-q-and-a/actions/workflows/ci.yml/badge.svg
 [Build Status url]: https://github.com/paulfioravanti/plover-q-and-a/actions/workflows/ci.yml
+[Coverage.py]: https://github.com/nedbat/coveragepy 
 [`examples`]: ./examples
 [extension]: https://plover.readthedocs.io/en/latest/plugin-dev/extensions.html
 [git]: https://git-scm.com/
@@ -106,6 +113,7 @@ plover -s plover_plugins install .
 [linting image]: https://img.shields.io/badge/linting-pylint-yellowgreen
 [linting url]: https://github.com/pylint-dev/pylint
 [metas]: https://plover.readthedocs.io/en/latest/plugin-dev/metas.html
+[Mypy]: https://github.com/python/mypy
 [Platinum Steno]: https://www.youtube.com/@PlatinumSteno
 [Platinum Steno Lesson 27 QA video]: https://www.youtube.com/watch?v=tEgaJ7hWIvg
 [Plover]: https://www.openstenoproject.org/
@@ -113,6 +121,7 @@ plover -s plover_plugins install .
 [plugin]: https://plover.readthedocs.io/en/latest/plugins.html#types-of-plugins
 [Pylint]: https://github.com/pylint-dev/pylint
 [Pytest]: https://pytest.org/
+[pytest-cov]: https://github.com/pytest-dev/pytest-cov/
 [Q&A]: http://ilovesteno.com/2014/02/03/the-different-types-of-q-a/
 [Steno Legal Q&A Test with Plover and Vim]: https://www.youtube.com/watch?v=wZFj0q0d9uo
 [Vim]: https://www.vim.org/
