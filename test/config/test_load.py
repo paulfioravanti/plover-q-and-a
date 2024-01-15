@@ -60,12 +60,6 @@ def lower_case_without_upcase_config_path():
     ).resolve()
 
 @pytest.fixture
-def set_name_prompt_custom_config_path():
-    return (
-      Path(__file__).parent / "files/set_name_prompt_custom.json"
-    ).resolve()
-
-@pytest.fixture
 def set_name_prompt_no_speaker_type_config_path():
     return (
       Path(__file__).parent / "files/set_name_prompt_no_speaker_type.json"

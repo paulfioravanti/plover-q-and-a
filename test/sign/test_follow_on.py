@@ -60,7 +60,7 @@ def test_too_many_follow_on_args(
     ):
         sign.text(too_many_follow_on_args_type, follow_on_args_config)
 
-def unknown_follow_on_action(
+def test_unknown_follow_on_action(
     unknown_follow_on_action_type,
     follow_on_args_config
 ):

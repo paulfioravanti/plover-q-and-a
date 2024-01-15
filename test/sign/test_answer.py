@@ -193,3 +193,14 @@ def test_answer_following_question_then_yield_to_question(
           answer_following_question_then_yield_to_question_config
         ) == "?\n\tA\tOkay.\n\tQ\t"
    )
+
+def test_answer_following_question_then_elaborate(
+    answer_following_question_then_elaborate_type,
+    answer_following_question_then_elaborate_config
+):
+    assert (
+        sign.text(
+          answer_following_question_then_elaborate_type,
+          answer_following_question_then_elaborate_config
+        ) == "?\n\tA\tAll right. "
+   )
