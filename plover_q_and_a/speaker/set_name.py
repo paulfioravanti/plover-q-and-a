@@ -9,6 +9,7 @@ Examples:
 In the first example above, PLAINTIFF_1 is included in the recognised
 list of `SPEAKER_TYPES`.
 """
+from typing import Any
 
 from plover.formatting import _Action, _Context
 
@@ -23,7 +24,7 @@ def set_name(
     command_args: list[str],
     ctx: _Context,
     action: _Action,
-    config: dict[str, any]
+    config: dict[str, Any]
 ) -> None:
     """
     Checks the set name command and delegates handling to the appropriate
@@ -48,7 +49,7 @@ def set_name(
 def _begin_set_speaker_name(
     speaker_type: str,
     action: _Action,
-    config: dict[str, any]
+    config: dict[str, Any]
 ) -> None:
     """
     Opens up a prompt to set the speaker name, and marks an action as the place
@@ -68,7 +69,7 @@ def _begin_set_speaker_name(
 def _end_set_speaker_name(
     ctx: _Context,
     action: _Action,
-    config: dict[str, any]
+    config: dict[str, Any]
 ) -> None:
     """
     Searches the previous actions in a context for the place where a set speaker

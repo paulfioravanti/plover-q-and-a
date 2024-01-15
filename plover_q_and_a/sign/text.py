@@ -13,6 +13,8 @@ Examples:
 In the final example above, COURT_REPORTER is included in the recognised
 list of `SPEAKER_TYPES`.
 """
+from typing import Any
+
 from ..arguments import SPEAKER_TYPES
 from . import (
     answer,
@@ -27,7 +29,7 @@ from .arguments import (
 )
 
 
-def text(args: list[str], config: dict[str, any]) -> str:
+def text(args: list[str], config: dict[str, Any]) -> str:
     """
     Checks the sign type and delegates handling to the appropriate module to
     generate the correct sign text.

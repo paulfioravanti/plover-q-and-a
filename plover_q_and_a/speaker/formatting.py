@@ -4,10 +4,12 @@ The only change made was to to `yield` up the `action`, as well as the
 `fragment`, in order to determine whether a `set_name_speaker_type` property
 had been set.
 """
-
 from plover.formatting import _Context
 
-def iter_last_fragments(ctx: _Context):
+
+# NOTE: Function mostly lifted directly from Plover's codebase, so ignore the
+# types that it does not define itself.
+def iter_last_fragments(ctx: _Context): # type: ignore[no-untyped-def]
     """
     Iterate over last text fragments (last first).
 

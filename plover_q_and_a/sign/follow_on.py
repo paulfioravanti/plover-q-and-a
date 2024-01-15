@@ -6,6 +6,8 @@ Follow on module to handle the final part of commands that look like:
     - {:Q_AND_A:ANSWER:FOLLOWING_QUESTION:ELABORATE_AFTER:Uh-huh}
     - {:Q_AND_A:ANSWER:FOLLOWING_QUESTION:YIELD_AFTER:Correct}
 """
+from typing import Any
+
 from .arguments import (
     ELABORATE_AFTER,
     YIELD_AFTER
@@ -15,9 +17,9 @@ from .arguments import (
 def handle_follow_on(
     follow_on_args: list[str],
     sign: str,
-    config: dict[str, any],
+    config: dict[str, Any],
     yield_key: str
-) -> None:
+) -> str:
     """
     Generates the text for when there is an extra action performed after a
     question or answer sign change.

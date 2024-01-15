@@ -6,6 +6,8 @@ Byline module to handle commands that look like:
     - {:Q_AND_A:BYLINE:DEFENSE_1:FOLLOWING_QUESTION}
     - {:Q_AND_A:BYLINE:DEFENSE_2:FOLLOWING_STATEMENT}
 """
+from typing import Any, cast
+
 from ..arguments import BYLINE_SPEAKER_TYPES
 from .arguments import (
     FOLLOWING_QUESTION,
@@ -16,7 +18,7 @@ from .arguments import (
 from .speaker import extract_speaker_and_sign
 
 
-def sign(args: list[str], config: dict[str, any]) -> str:
+def sign(args: list[str], config: dict[str, Any]) -> str:
     """
     Returns the text for a byline type.
 
@@ -54,4 +56,4 @@ def sign(args: list[str], config: dict[str, any]) -> str:
             f"Unknown sign type provided for {speaker_type} byline: {sign_type}"
         )
 
-    return byline
+    return cast(str, byline)

@@ -9,6 +9,8 @@ Speaker module to handle commands that look like:
     - {:Q_AND_A:CLERK:FOLLOWING_QUESTION}
     - {:Q_AND_A:BAILIFF:FOLLOWING_STATEMENT}
 """
+from typing import Any, Tuple, cast
+
 from .arguments import (
     FOLLOWING_QUESTION,
     FOLLOWING_STATEMENT,
@@ -17,7 +19,7 @@ from .arguments import (
 )
 
 
-def sign(args: list[str], config: dict[str, any]) -> str:
+def sign(args: list[str], config: dict[str, Any]) -> str:
     """
     Returns the text for a known speaker.
 
@@ -44,9 +46,9 @@ def sign(args: list[str], config: dict[str, any]) -> str:
             f"Unknown sign type provided for {speaker_type}: {sign_type}"
         )
 
-    return speaker
+    return cast(str, speaker)
 
-def extract_speaker_and_sign(args: list[str]) -> tuple[str, str]:
+def extract_speaker_and_sign(args: list[str]) -> Tuple[str, str]:
     """
     Parses and returns speaker and sign types from a set of args.
 

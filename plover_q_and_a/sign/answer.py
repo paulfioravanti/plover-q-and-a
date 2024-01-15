@@ -10,6 +10,8 @@ Answer module to handle commands that look like:
 ELABORATE_AFTER and YIELD_AFTER are considered follow on arguments, and are
 handled by the `follow_on` module.
 """
+from typing import Any, cast
+
 from .arguments import (
     FOLLOWING_QUESTION,
     FOLLOWING_STATEMENT,
@@ -18,7 +20,7 @@ from .arguments import (
 from .follow_on import handle_follow_on
 
 
-def sign(args: list[str], config: dict[str, any]) -> str:
+def sign(args: list[str], config: dict[str, Any]) -> str:
     """
     Returns the text for an answer type.
 
@@ -43,4 +45,4 @@ def sign(args: list[str], config: dict[str, any]) -> str:
     else:
         raise ValueError(f"Unknown answer type provided: {answer_type}")
 
-    return answer
+    return cast(str, answer)

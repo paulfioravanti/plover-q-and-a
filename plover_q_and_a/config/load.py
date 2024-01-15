@@ -2,8 +2,9 @@
 Module to handle reading in the application JSON config file.
 """
 import json
-from pathlib import Path
 import re
+from pathlib import Path
+from typing import Any, Callable, cast
 
 from . import defaults
 
@@ -14,7 +15,7 @@ _SET_NAME_PROMPT_MATCH_CONDITION = re.compile(
     r"(?=.*{speaker_type})(?=.*{current_speaker_name})"
 )
 
-def load(config_filepath: Path) -> dict[str, any]:
+def load(config_filepath: Path) -> dict[str, Any]:
     """
     Reads in the config JSON file, munges the data into application-wide config,
     and provides defaults in case values aren't specified.
@@ -84,10 +85,10 @@ def load(config_filepath: Path) -> dict[str, any]:
         "STATEMENT_ELABORATE": statement_elaborate,
     }
 
-def _formatted_answer(data):
+def _formatted_answer(data: dict[str, Any]) -> str:
     answer = data.get("answer", {})
     answer_formatting = answer.get("formatting", {})
-    return (
+    return cast(str, (
         answer_formatting.get(
             "pre", defaults.ANSWER_BEGIN_MARKER_PRE_FORMATTING
         )
@@ -95,9 +96,9 @@ def _formatted_answer(data):
         + answer_formatting.get(
             "post", defaults.ANSWER_BEGIN_MARKER_POST_FORMATTING
         )
-    )
+    ))
 
-def _formatted_byline(data):
+def _formatted_byline(data: dict[str, Any]) -> Callable[[str], str]:
     byline = data.get("byline", {})
     byline_formatting = byline.get("formatting", {})
     return lambda speaker_name: (
@@ -108,10 +109,10 @@ def _formatted_byline(data):
         + _formatted_question(data)
     )
 
-def _formatted_question(data):
+def _formatted_question(data: dict[str, Any]) -> str:
     question = data.get("question", {})
     question_formatting = question.get("formatting", {})
-    return (
+    return cast(str, (
         question_formatting.get(
             "pre", defaults.QUESTION_BEGIN_MARKER_PRE_FORMATTING
         )
@@ -119,29 +120,31 @@ def _formatted_question(data):
         + question_formatting.get(
             "post", defaults.QUESTION_BEGIN_MARKER_POST_FORMATTING
         )
-    )
+    ))
 
-def _formatted_speaker(speaker_formatting):
+def _formatted_speaker(
+    speaker_formatting: dict[str, str]
+) -> Callable[[str], str]:
     return lambda speaker_name: (
         speaker_formatting.get("pre", defaults.SPEAKER_NAME_PRE_FORMATTING)
         + speaker_name
         + speaker_formatting.get("post", defaults.SPEAKER_NAME_POST_FORMATTING)
     )
 
-def _interrupt(data):
+def _interrupt(data: dict[str, Any]) -> str:
     return (
-        data.get("interrupt", defaults.INTERRUPT_MARKER)
+        cast(str, data.get("interrupt", defaults.INTERRUPT_MARKER))
         + _yield_marker(data)
     )
 
-def _question_end(data):
+def _question_end(data: dict[str, Any]) -> str:
     return _question_end_marker(data) + _yield_marker(data)
 
-def _question_end_marker(data):
-    return data.get("question_end", defaults.QUESTION_END_MARKER)
+def _question_end_marker(data: dict[str, Any]) -> str:
+    return cast(str, data.get("question_end", defaults.QUESTION_END_MARKER))
 
-def _set_name_prompt(data):
-    prompt = data.get("set_name_prompt", defaults.SET_NAME_PROMPT)
+def _set_name_prompt(data: dict[str, Any]) -> str:
+    prompt = cast(str, data.get("set_name_prompt", defaults.SET_NAME_PROMPT))
 
     if not re.match(_SET_NAME_PROMPT_MATCH_CONDITION, prompt):
         raise ValueError(
@@ -151,7 +154,10 @@ def _set_name_prompt(data):
 
     return prompt
 
-def _speaker_names(speaker, speaker_upcase):
+def _speaker_names(
+    speaker: dict[str, str],
+    speaker_upcase: bool
+) -> dict[str, str]:
     speaker_names = {
         "BAILIFF": speaker.get("bailiff", defaults.BAILIFF_NAME),
         "CLERK": speaker.get("clerk", defaults.CLERK_NAME),
@@ -181,17 +187,17 @@ def _speaker_names(speaker, speaker_upcase):
 
     return speaker_names
 
-def _statement_elaborate(data):
+def _statement_elaborate(data: dict[str, Any]) -> str:
     return (
         _statement_end_marker(data)
-        + data.get("sentence_space", defaults.SENTENCE_SPACE)
+        + cast(str, data.get("sentence_space", defaults.SENTENCE_SPACE))
     )
 
-def _statement_end(data):
+def _statement_end(data: dict[str, Any]) -> str:
     return _statement_end_marker(data) + _yield_marker(data)
 
-def _statement_end_marker(data):
-    return data.get("statement_end", defaults.STATEMENT_END_MARKER)
+def _statement_end_marker(data: dict[str, Any]) -> str:
+    return cast(str, data.get("statement_end", defaults.STATEMENT_END_MARKER))
 
-def _yield_marker(data):
-    return data.get("yield", defaults.YIELD_MARKER)
+def _yield_marker(data: dict[str, Any]) -> str:
+    return cast(str, data.get("yield", defaults.YIELD_MARKER))

@@ -63,14 +63,14 @@ class QAndA:
             self._machine_state_changed
         )
 
-    def _q_and_a(self, ctx: _Context, args: str) -> _Action:
+    def _q_and_a(self, ctx: _Context, command: str) -> _Action:
         """
         Delegates to meta module to generate the sign to assign to an action.
         """
-        if not args:
+        if not command:
             raise ValueError("No command provided")
 
-        args = args.split(ARGUMENT_DIVIDER)
+        args = command.split(ARGUMENT_DIVIDER)
         command, *command_args = args
         command = command.strip().upper()
 
