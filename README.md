@@ -1,6 +1,6 @@
 # Plover Q&A
 
-[![Build Status][Build Status image]][Build Status url] [![linting: pylint][linting image]][linting url]
+[![Build Status][Build Status image]][Build Status url] [![PyPI - Version][PyPI version image]][PyPI url] [![PyPI - Downloads][PyPI downloads image]][PyPI url] [![linting: pylint][linting image]][linting url]
 
 This [Plover][] [extension][] [plugin][] contains [metas][] for your
 dictionaries that can assist with [Q&A][] (Question and Answer): the process of
@@ -120,6 +120,9 @@ plover -s plover_plugins install .
 [Plover For the Record]: https://www.paulfioravanti.com/blog/plover-for-the-record/
 [plugin]: https://plover.readthedocs.io/en/latest/plugins.html#types-of-plugins
 [Pylint]: https://github.com/pylint-dev/pylint
+[PyPI downloads image]:https://img.shields.io/pypi/dm/plover-q-and-a
+[PyPI version image]: https://img.shields.io/pypi/v/plover-q-and-a
+[PyPI url]: https://pypi.org/project/plover-q-and-a/
 [Pytest]: https://pytest.org/
 [pytest-cov]: https://github.com/pytest-dev/pytest-cov/
 [Q&A]: http://ilovesteno.com/2014/02/03/the-different-types-of-q-a/
