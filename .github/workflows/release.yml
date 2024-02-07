@@ -63,4 +63,3 @@ jobs:
             --repo="$GITHUB_REPOSITORY" \
             --title="$TAG" \
             --generate-notes
-
