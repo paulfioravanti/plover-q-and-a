@@ -40,7 +40,7 @@ class QAndA:
 
     def __init__(self, engine: StenoEngine) -> None:
         self._engine = engine
-        self._config = config.load(_CONFIG_FILEPATH)
+        self._config = {}
 
     def start(self) -> None:
         """
@@ -52,6 +52,7 @@ class QAndA:
             "machine_state_changed",
             self._machine_state_changed
         )
+        self._config = config.load(_CONFIG_FILEPATH)
 
     def stop(self) -> None:
         """
