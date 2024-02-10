@@ -40,7 +40,7 @@ class QAndA:
 
     def __init__(self, engine: StenoEngine) -> None:
         self._engine = engine
-        self._config = {}
+        self._config: dict[str, str] = {}
 
     def start(self) -> None:
         """
