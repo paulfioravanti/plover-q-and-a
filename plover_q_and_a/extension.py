@@ -8,14 +8,20 @@ Plover entry point extension module.
 from pathlib import Path
 
 from plover.engine import StenoEngine
-from plover.formatting import _Action, Case, _Context
+from plover.formatting import (
+    _Action,
+    Case,
+    _Context
+)
 from plover.machine.base import STATE_RUNNING
 from plover.oslayer.config import CONFIG_DIR
 from plover.registry import registry
 
-from . import config
-from . import sign
-from . import speaker
+from . import (
+    config,
+    sign,
+    speaker
+)
 from .arguments import (
     ARGUMENT_DIVIDER,
     RESET_CONFIG,

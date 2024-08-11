@@ -4,7 +4,11 @@ Module to handle reading in the application JSON config file.
 import json
 import re
 from pathlib import Path
-from typing import Any, Callable, cast
+from typing import (
+    Any,
+    Callable,
+    cast
+)
 
 from . import defaults
 

@@ -11,7 +11,10 @@ list of `SPEAKER_TYPES`.
 """
 from typing import Any
 
-from plover.formatting import _Action, _Context
+from plover.formatting import (
+    _Action,
+    _Context
+)
 
 from ..arguments import SPEAKER_TYPES
 from .arguments import DONE

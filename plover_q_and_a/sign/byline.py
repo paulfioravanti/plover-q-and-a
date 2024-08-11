@@ -6,7 +6,10 @@ Byline module to handle commands that look like:
     - {:Q_AND_A:BYLINE:DEFENSE_1:FOLLOWING_QUESTION}
     - {:Q_AND_A:BYLINE:DEFENSE_2:FOLLOWING_STATEMENT}
 """
-from typing import Any, cast
+from typing import (
+    Any,
+    cast
+)
 
 from ..arguments import BYLINE_SPEAKER_TYPES
 from .arguments import (

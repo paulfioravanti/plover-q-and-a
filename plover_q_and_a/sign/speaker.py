@@ -9,7 +9,11 @@ Speaker module to handle commands that look like:
     - {:Q_AND_A:CLERK:FOLLOWING_QUESTION}
     - {:Q_AND_A:BAILIFF:FOLLOWING_STATEMENT}
 """
-from typing import Any, Tuple, cast
+from typing import (
+    Any,
+    Tuple,
+    cast
+)
 
 from .arguments import (
     FOLLOWING_QUESTION,
