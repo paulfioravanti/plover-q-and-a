@@ -22,14 +22,13 @@ from . import (
     sign,
     speaker
 )
-from .arguments import (
-    ARGUMENT_DIVIDER,
-    RESET_CONFIG,
-    SET_NAME
-)
 
 
+_ARGUMENT_DIVIDER = ":"
 _CONFIG_FILEPATH = Path(CONFIG_DIR) / "q_and_a.json"
+_RESET_CONFIG = "RESET_CONFIG"
+_SET_CONFIG = "SET_CONFIG"
+_SET_NAME = "SET_NAME"
 
 class QAndA:
     """
@@ -77,7 +76,7 @@ class QAndA:
         if not command:
             raise ValueError("No command provided")
 
-        args = command.split(ARGUMENT_DIVIDER)
+        args = command.split(_ARGUMENT_DIVIDER)
         command, *command_args = args
         command = command.strip().upper()
 
@@ -86,9 +85,9 @@ class QAndA:
 
         action = ctx.new_action()
 
-        if command == RESET_CONFIG:
+        if command == _RESET_CONFIG:
             self._config = config.load(_CONFIG_FILEPATH)
-        elif command == SET_NAME:
+        elif command == _SET_NAME:
             speaker.set_name(command_args, ctx, action, self._config)
         else:
             text = sign.text(args, self._config)
@@ -122,5 +121,5 @@ class QAndA:
             return
 
         action = new[0]
-        if action.command and action.command.upper() == "SET_CONFIG":
+        if action.command and action.command.upper() == _SET_CONFIG:
             self._config = config.reload(_CONFIG_FILEPATH, self._config)

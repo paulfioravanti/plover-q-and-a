@@ -16,7 +16,7 @@ from plover.formatting import (
     _Context
 )
 
-from ..arguments import SPEAKER_TYPES
+from .. import SPEAKER_TYPES
 from .arguments import DONE
 from .formatting import iter_last_fragments
 

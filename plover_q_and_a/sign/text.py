@@ -15,7 +15,7 @@ list of `SPEAKER_TYPES`.
 """
 from typing import Any
 
-from ..arguments import SPEAKER_TYPES
+from .. import SPEAKER_TYPES
 from . import (
     answer,
     byline,

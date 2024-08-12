@@ -11,7 +11,7 @@ from typing import (
     cast
 )
 
-from ..arguments import BYLINE_SPEAKER_TYPES
+from .. import BYLINE_SPEAKER_TYPES
 from .arguments import (
     FOLLOWING_QUESTION,
     FOLLOWING_STATEMENT,

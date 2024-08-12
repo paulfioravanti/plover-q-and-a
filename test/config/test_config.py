@@ -82,12 +82,20 @@ def default_config_path():
 def speaker_name():
     return "SPEAKER_NAME"
 
+@pytest.fixture
+def config_with_local_speaker_name_changes():
+    return {
+        "speaker_names": {
+            "PLAINTIFF_1": "MR. CUSTOM NAME"
+        }
+    }
+
 # Tests
 
 def test_bad_config(bad_config_path):
     with pytest.raises(
         ValueError,
-        match="Config file must contain a JSON object"
+        match="Unable to decode file contents as JSON"
     ):
         config.load(bad_config_path)
 
@@ -165,3 +173,16 @@ def test_lower_case_speaker_names_stay_lowercased_when_formatting_upcase_false(
 ):
     loaded_config = config.load(lower_case_without_upcase_config_path)
     assert loaded_config["speaker_names"]["PLAINTIFF_1"] == "mr. johnson"
+
+def test_reloading_does_not_overwrite_local_changes_to_speaker_names(
+    default_config_path,
+    config_with_local_speaker_name_changes,
+):
+    reloaded_config = config.reload(
+        default_config_path,
+        config_with_local_speaker_name_changes
+    )
+    # Custom value stays
+    assert reloaded_config["speaker_names"]["PLAINTIFF_1"] == "MR. CUSTOM NAME"
+    # Default values inserted
+    assert reloaded_config["speaker_names"]["PLAINTIFF_2"] == "MR. SKWRAO"
