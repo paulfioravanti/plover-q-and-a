@@ -17,10 +17,10 @@ from plover.formatting import (
 )
 
 from .. import SPEAKER_TYPES
-from .arguments import DONE
 from .formatting import iter_last_fragments
 
 
+_DONE = "DONE"
 _SET_NAME_SPEAKER_TYPE_ATTR = "set_name_speaker_type"
 
 def set_name(
@@ -42,7 +42,7 @@ def set_name(
 
     if set_name_command in SPEAKER_TYPES:
         _begin_set_speaker_name(set_name_command, action, config)
-    elif set_name_command == DONE:
+    elif set_name_command == _DONE:
         _end_set_speaker_name(ctx, action, config)
     else:
         raise ValueError(
