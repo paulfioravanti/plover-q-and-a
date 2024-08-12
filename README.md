@@ -95,12 +95,19 @@ After making any code changes, install the plugin into Plover with the following
 command:
 
 ```sh
-plover -s plover_plugins install .
+plover --script plover_plugins install --editable .
 ```
 
 > Where `plover` in the command is a reference to your locally installed version
 > of Plover. See the [Invoke Plover from the command line][] page for details on
 > how to create that reference.
+
+When necessary, the plugin can be uninstalled via the command line with the
+following command:
+
+```console
+plover --script plover_plugins uninstall plover-q-and-a
+```
 
 [Build Status image]: https://github.com/paulfioravanti/plover-q-and-a/actions/workflows/ci.yml/badge.svg
 [Build Status url]: https://github.com/paulfioravanti/plover-q-and-a/actions/workflows/ci.yml
