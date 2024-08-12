@@ -1,13 +1,9 @@
 """
-This is the set of valid arguments that can be included in a meta command.
+This is the set of common valid arguments that can be included in a meta
+command.
 """
 
-ANSWER = "ANSWER"
-BYLINE = "BYLINE"
-ELABORATE_AFTER = "ELABORATE_AFTER"
 FOLLOWING_QUESTION = "FOLLOWING_QUESTION"
 FOLLOWING_STATEMENT = "FOLLOWING_STATEMENT"
 INITIAL = "INITIAL"
 INTERRUPTING = "INTERRUPTING"
-QUESTION = "QUESTION"
-YIELD_AFTER = "YIELD_AFTER"

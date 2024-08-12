@@ -22,12 +22,11 @@ from . import (
     question,
     speaker
 )
-from .arguments import (
-    ANSWER,
-    BYLINE,
-    QUESTION
-)
 
+
+_ANSWER = "ANSWER"
+_BYLINE = "BYLINE"
+_QUESTION = "QUESTION"
 
 def text(args: list[str], config: dict[str, Any]) -> str:
     """
@@ -42,11 +41,11 @@ def text(args: list[str], config: dict[str, Any]) -> str:
     if not sign_type:
         raise ValueError("No sign type provided")
 
-    if sign_type == QUESTION:
+    if sign_type == _QUESTION:
         sign_text = question.sign(sign_type_args, config)
-    elif sign_type == ANSWER:
+    elif sign_type == _ANSWER:
         sign_text = answer.sign(sign_type_args, config)
-    elif sign_type == BYLINE:
+    elif sign_type == _BYLINE:
         sign_text = byline.sign(sign_type_args, config)
     elif sign_type in SPEAKER_TYPES:
         sign_text = speaker.sign(args, config)

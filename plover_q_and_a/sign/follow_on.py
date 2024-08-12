@@ -8,11 +8,9 @@ Follow on module to handle the final part of commands that look like:
 """
 from typing import Any
 
-from .arguments import (
-    ELABORATE_AFTER,
-    YIELD_AFTER
-)
 
+_ELABORATE_AFTER = "ELABORATE_AFTER"
+_YIELD_AFTER = "YIELD_AFTER"
 
 def handle_follow_on(
     follow_on_args: list[str],
@@ -39,9 +37,9 @@ def handle_follow_on(
     follow_on_action, user_string = follow_on_args
     follow_on_action = follow_on_action.upper()
 
-    if follow_on_action == YIELD_AFTER:
+    if follow_on_action == _YIELD_AFTER:
         sign += user_string + config[yield_key]
-    elif follow_on_action == ELABORATE_AFTER:
+    elif follow_on_action == _ELABORATE_AFTER:
         sign += user_string + config["STATEMENT_ELABORATE"]
     else:
         raise ValueError(
