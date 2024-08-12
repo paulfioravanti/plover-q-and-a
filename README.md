@@ -49,7 +49,7 @@ See the [`INSTRUCTIONS`][] page.
 
 Clone from GitHub with [git][]:
 
-```sh
+```console
 git clone git@github.com:paulfioravanti/plover-q-and-a.git
 cd plover-q-and-a
 ```
@@ -94,7 +94,7 @@ open htmlcov/index.html
 After making any code changes, install the plugin into Plover with the following
 command:
 
-```sh
+```console
 plover --script plover_plugins install --editable .
 ```
 
