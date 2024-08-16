@@ -91,7 +91,7 @@ are:
 - Plaintiff Lawyer 1 (`PLAINTIFF_1`)
 - Defense Lawyer 1 (`DEFENSE_1`)
 - Plaintiff Lawyer 2 (`PLAINTIFF_2`)
-- Defense Lawyer 2 (`DEFENSE_1`)
+- Defense Lawyer 2 (`DEFENSE_2`)
 - The Court \[ie the presiding judge\] (`COURT`)
 - The Witness (`WITNESS`)
 - The Videographer (`VIDEOGRAPHER`)
