@@ -37,7 +37,15 @@ Therefore, if you are happy to use the defaults, there is _**no need for you to
 create your own configuration file**_, and you can happily skip reading this
 section.
 
-If you are still here, the available options for configuration are:
+If you are still here, you can find the configuration file in your [Plover
+configuration directory][], which is located in one of the following locations,
+depending on your operating system:
+
+- Windows: `%USERPROFILE%\AppData\Local\plover\q_and_a.json`
+- macOS: `~/Library/Application Support/plover/q_and_a.json`
+- Linux: `~/.config/plover/q_and_a.json`
+
+The available options for configuration are:
 
 ### Speaker
 
@@ -238,6 +246,7 @@ Use whichever outlines feel comfortable to you, or make up entirely new ones!
 [Platinum Steno]: https://www.youtube.com/@PlatinumSteno
 [Platinum Steno Lesson 27 lesson materials]: https://platinumsteno.com/downloads/theory-lesson-27/
 [Platinum Steno Theory Dictionary (NCRS Theory)]: https://platinumsteno.com/downloads/platinum-steno-ncrs-theory-dictionary/
+[Plover configuration directory]: https://plover.readthedocs.io/en/latest/api/oslayer_config.html#plover.oslayer.config.CONFIG_DIR
 [Plover For the Record]: https://www.paulfioravanti.com/blog/plover-for-the-record/
 [`q-and-a.json`]: ./dictionaries/q-and-a.json
 [`q_and_a.json`]: ./q_and_a.json
