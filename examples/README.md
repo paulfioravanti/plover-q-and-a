@@ -37,19 +37,11 @@ Therefore, if you are happy to use the defaults, there is _**no need for you to
 create your own configuration file**_, and you can happily skip reading this
 section.
 
-If you are still here, you can find the configuration file in your [Plover
-configuration directory][], which is located in one of the following locations,
-depending on your operating system:
-
-- Windows: `%USERPROFILE%\AppData\Local\plover\q_and_a.json`
-- macOS: `~/Library/Application Support/plover/q_and_a.json`
-- Linux: `~/.config/plover/q_and_a.json`
-
 The available options for configuration are:
 
 ### Speaker
 
-Under the `"speaker"` key, you will find the a set of named types of people who
+Under the `"speaker"` key, you will find a set of named types of people who
 could potentially become speakers (or discussion participants) during Q&A:
 
 | Key              | Meaning           | Default Value                 |
@@ -160,16 +152,17 @@ Configuration details for the prompt are:
 ### Customisation
 
 If you want to customise how the signs output, create your own `q_and_a.json`
-file and place it under Plover's configuration directory:
+file and place it under the [Plover configuration directory][]:
 
 - Windows: `C:\Users\<your username>\AppData\Local\plover\plover`
 - macOS: `~/Library/Application Support/plover`
 - Linux: `~/.config/plover`
 
-You do not need to add a full suite of entries as per the example config file.
-If, say, you just want to change how the question and answer markers display by
-putting the full words `QUESTION` and `ANSWER`, rather than the defaults of `Q`
-and `A`, you could create a config file that just contains the following:
+You do not need to add a full suite of entries as per the [example config
+file][`q_and_a.json`]. If, say, you only want to change how the question and
+answer markers display by putting the full words `QUESTION` and `ANSWER`, rather
+than the defaults of `Q` and `A`, you could create a config file that just
+contains the following:
 
 `q_and_a.json`
 
