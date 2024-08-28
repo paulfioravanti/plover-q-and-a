@@ -52,7 +52,11 @@ Clone from GitHub with [git][]:
 ```console
 git clone git@github.com:paulfioravanti/plover-q-and-a.git
 cd plover-q-and-a
+python -m pip install --editable ".[test]"
 ```
+
+If you are a [Tmuxinator][] user, you may find my [plover_local_env_var project
+file][] of reference.
 
 ### Python Version
 
@@ -89,6 +93,14 @@ coverage html
 open htmlcov/index.html
 ```
 
+If you are a [`just`][] user, you may find the [`justfile`][] useful during
+development in running multiple test commands. You can run the following command
+from the project root directory:
+
+```console
+just --working-directory . --justfile test/justfile
+```
+
 ### Deploying Changes
 
 After making any code changes, install the plugin into Plover with the following
@@ -117,6 +129,8 @@ plover --script plover_plugins uninstall plover-q-and-a
 [git]: https://git-scm.com/
 [Invoke Plover from the command line]: https://github.com/openstenoproject/plover/wiki/Invoke-Plover-from-the-command-line
 [`INSTRUCTIONS`]: ./INSTRUCTIONS.md
+[`just`]: https://github.com/casey/just
+[`justfile`]: ./test/justfile
 [linting image]: https://img.shields.io/badge/linting-pylint-yellowgreen
 [linting url]: https://github.com/pylint-dev/pylint
 [metas]: https://plover.readthedocs.io/en/latest/plugin-dev/metas.html
@@ -125,6 +139,7 @@ plover --script plover_plugins uninstall plover-q-and-a
 [Platinum Steno Lesson 27 QA video]: https://www.youtube.com/watch?v=tEgaJ7hWIvg
 [Plover]: https://www.openstenoproject.org/
 [Plover For the Record]: https://www.paulfioravanti.com/blog/plover-for-the-record/
+[plover_q_and_a project file]: https://github.com/paulfioravanti/dotfiles/blob/master/tmuxinator/plover_q_and_a.yml
 [plugin]: https://plover.readthedocs.io/en/latest/plugins.html#types-of-plugins
 [Pylint]: https://github.com/pylint-dev/pylint
 [PyPI downloads image]:https://img.shields.io/pypi/dm/plover-q-and-a
@@ -134,6 +149,7 @@ plover --script plover_plugins uninstall plover-q-and-a
 [pytest-cov]: https://github.com/pytest-dev/pytest-cov/
 [Q&A]: http://ilovesteno.com/2014/02/03/the-different-types-of-q-a/
 [Steno Legal Q&A Test with Plover and Vim]: https://www.youtube.com/watch?v=wZFj0q0d9uo
+[Tmuxinator]: https://github.com/tmuxinator/tmuxinator
 [Vim]: https://www.vim.org/
 [Vim Steno Q&A]: https://github.com/paulfioravanti/vim-steno-q-and-a
 [`workflow_context.yml`]: https://github.com/openstenoproject/plover/blob/master/.github/workflows/ci/workflow_context.yml
