@@ -2,6 +2,7 @@ import pytest
 
 from plover_q_and_a import sign
 
+
 @pytest.fixture
 def blank_config():
     return {}

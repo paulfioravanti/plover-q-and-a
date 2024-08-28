@@ -2,6 +2,7 @@ import pytest
 
 from plover_q_and_a import sign
 
+
 # Command Arguments
 
 @pytest.fixture

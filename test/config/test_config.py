@@ -4,6 +4,7 @@ import pytest
 
 from plover_q_and_a import config
 
+
 _NON_LAMBDA_CONFIG_KEYS = [
     "ANSWER_FOLLOWING_INTERRUPT",
     "ANSWER_FOLLOWING_QUESTION",

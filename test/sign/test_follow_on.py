@@ -2,6 +2,7 @@ import pytest
 
 from plover_q_and_a import sign
 
+
 # Command Arguments
 
 @pytest.fixture
@@ -46,7 +47,10 @@ def test_too_few_follow_on_args(
 ):
     with pytest.raises(
         ValueError,
-        match="Two follow on arguments must be provided. You gave: ELABORATE_AFTER"
+        match=(
+            "Two follow on arguments must be provided. "
+            "You gave: ELABORATE_AFTER"
+        )
     ):
         sign.text(too_few_follow_on_args_type, follow_on_args_config)
 
@@ -56,7 +60,10 @@ def test_too_many_follow_on_args(
 ):
     with pytest.raises(
         ValueError,
-        match="Two follow on arguments must be provided. You gave: ELABORATE_AFTER:Foo:Bar"
+        match=(
+            "Two follow on arguments must be provided. "
+            "You gave: ELABORATE_AFTER:Foo:Bar"
+        )
     ):
         sign.text(too_many_follow_on_args_type, follow_on_args_config)
 

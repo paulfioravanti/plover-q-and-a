@@ -2,6 +2,7 @@ import pytest
 
 from plover_q_and_a import sign
 
+
 # Command Arguments
 
 @pytest.fixture
@@ -119,7 +120,10 @@ def test_too_few_byline_args(too_few_byline_args, blank_config):
 def test_too_many_byline_args(too_many_byline_args, blank_config):
     with pytest.raises(
         ValueError,
-        match="Two byline arguments must be provided. You gave: PLAINTIFF_1:Foo:Bar"
+        match=(
+            "Two byline arguments must be provided. "
+            "You gave: PLAINTIFF_1:Foo:Bar"
+        )
     ):
         sign.text(too_many_byline_args, blank_config)
 
