@@ -55,7 +55,7 @@ cd plover-q-and-a
 python -m pip install --editable ".[test]"
 ```
 
-If you are a [Tmuxinator][] user, you may find my [plover_local_env_var project
+If you are a [Tmuxinator][] user, you may find my [plover_q_and_a project
 file][] of reference.
 
 ### Python Version
