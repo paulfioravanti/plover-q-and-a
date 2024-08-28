@@ -49,7 +49,7 @@ jobs:
         uses: pypa/gh-action-pypi-publish@release/v1
 
   github-release:
-    name: Release pushed tag on GitHub
+    name: GitHub Release
     runs-on: ubuntu-latest
     permissions:
       contents: write
