@@ -2,7 +2,10 @@
 Module to handle reading in the application JSON config file.
 """
 from pathlib import Path
-from typing import Any
+from typing import (
+    Any,
+    Callable
+)
 
 from . import (
     file,
@@ -17,7 +20,18 @@ def load(config_path: Path) -> dict[str, Any]:
 
     Raises an error if the specified config file is not JSON format.
     """
-    data = file.load(config_path)
+    data: dict[str, Any] = file.load(config_path)
+    formatted_question: str
+    question_end: str
+    formatted_answer: str
+    statement_end: str
+    statement_elaborate: str
+    interrupt: str
+    formatted_byline: Callable[[str], str]
+    set_name_prompt: str
+    speaker_upcase: bool
+    speaker_names: list[str]
+    formatted_speaker: Callable[[str], str]
     (
         formatted_question,
         question_end,
@@ -74,7 +88,7 @@ def reload(
     Reloads config from defaults, but making sure to keep any speaker name
     changes that have been made.
     """
-    new_config = load(config_filepath)
+    new_config: dict[str, Any] = load(config_filepath)
     new_config["speaker_names"] = (
         new_config["speaker_names"] | current_config["speaker_names"]
     )

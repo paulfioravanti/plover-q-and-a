@@ -9,7 +9,10 @@ Examples:
 In the first example above, PLAINTIFF_1 is included in the recognised
 list of `SPEAKER_TYPES`.
 """
-from typing import Any
+from typing import (
+    Any,
+    Union
+)
 
 from plover.formatting import (
     _Action,
@@ -20,8 +23,8 @@ from .. import SPEAKER_TYPES
 from .formatting import iter_last_fragments
 
 
-_DONE = "DONE"
-_SET_NAME_SPEAKER_TYPE_ATTR = "set_name_speaker_type"
+_DONE: str = "DONE"
+_SET_NAME_SPEAKER_TYPE_ATTR: str = "set_name_speaker_type"
 
 def set_name(
     command_args: list[str],
@@ -38,7 +41,7 @@ def set_name(
     if not command_args:
         raise ValueError("No SET_NAME command arguments provided")
 
-    set_name_command = command_args[0].strip().upper()
+    set_name_command: str = command_args[0].strip().upper()
 
     if set_name_command in SPEAKER_TYPES:
         _begin_set_speaker_name(set_name_command, action, config)
@@ -62,7 +65,7 @@ def _begin_set_speaker_name(
     # and is *not* part of the `_Action` API (but doing this kind of dynamic
     # attribute assignment seems to be allowed).
     setattr(action, _SET_NAME_SPEAKER_TYPE_ATTR, speaker_type.strip())
-    current_speaker_name = config["speaker_names"][speaker_type]
+    current_speaker_name: str = config["speaker_names"][speaker_type]
     action.text = config["SET_NAME_PROMPT"].format(
         speaker_type=speaker_type,
         current_speaker_name=current_speaker_name
@@ -79,8 +82,8 @@ def _end_set_speaker_name(
     name prompt began. Once found, take the text entered after the prompt, set
     that name in the config, and delete the prompt text from the current action.
     """
-    begin_action = None
-    name = ""
+    begin_action: Union[_Action, None] = None
+    name: str = ""
     for prev_action, fragment in iter_last_fragments(ctx):
         if fragment:
             name = fragment + name
@@ -93,7 +96,7 @@ def _end_set_speaker_name(
     if not begin_action:
         return
 
-    speaker_type = getattr(begin_action, _SET_NAME_SPEAKER_TYPE_ATTR)
+    speaker_type: str = getattr(begin_action, _SET_NAME_SPEAKER_TYPE_ATTR)
 
     if config["SPEAKER_UPCASE"]:
         name = name.upper()

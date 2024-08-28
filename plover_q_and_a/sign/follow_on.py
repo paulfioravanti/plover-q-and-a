@@ -29,11 +29,13 @@ def handle_follow_on(
         return sign
 
     if not len(follow_on_args) == 2:
-        given_args = ":".join(follow_on_args)
+        given_args: str = ":".join(follow_on_args)
         raise ValueError(
             f"Two follow on arguments must be provided. You gave: {given_args}"
         )
 
+    follow_on_action: str
+    user_string: str
     follow_on_action, user_string = follow_on_args
     follow_on_action = follow_on_action.upper()
 

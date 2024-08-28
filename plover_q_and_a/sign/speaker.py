@@ -11,8 +11,7 @@ Speaker module to handle commands that look like:
 """
 from typing import (
     Any,
-    Tuple,
-    cast
+    Tuple
 )
 
 from .arguments import (
@@ -30,15 +29,18 @@ def sign(args: list[str], config: dict[str, Any]) -> str:
     Raises an error if the speaker is not recognised, or if the sign type is
     blank or not recognised.
     """
+    speaker_type: str
+    sign_type: str
     speaker_type, sign_type = extract_speaker_and_sign(args)
 
     try:
-        speaker_name = config["speaker_names"][speaker_type]
+        speaker_name: str = config["speaker_names"][speaker_type]
     except KeyError as exc:
         raise ValueError(
             f"Unknown speaker type provided: {speaker_type}"
         ) from exc
 
+    speaker: str
     if sign_type == INITIAL:
         speaker = config["SPEAKER_FOR"](speaker_name)
     elif sign_type == INTERRUPTING:
@@ -50,7 +52,7 @@ def sign(args: list[str], config: dict[str, Any]) -> str:
             f"Unknown sign type provided for {speaker_type}: {sign_type}"
         )
 
-    return cast(str, speaker)
+    return speaker
 
 def extract_speaker_and_sign(args: list[str]) -> Tuple[str, str]:
     """
@@ -58,6 +60,8 @@ def extract_speaker_and_sign(args: list[str]) -> Tuple[str, str]:
 
     Raises an error if no speaker or sign type provided.
     """
+    speaker_type: str
+    sign_type: str
     speaker_type, sign_type = [arg.strip().upper() for arg in args]
 
     if not speaker_type:

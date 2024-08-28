@@ -24,11 +24,11 @@ from . import (
 )
 
 
-_ARGUMENT_DIVIDER = ":"
-_CONFIG_FILEPATH = Path(CONFIG_DIR) / "q_and_a.json"
-_RESET_CONFIG = "RESET_CONFIG"
-_SET_CONFIG = "SET_CONFIG"
-_SET_NAME = "SET_NAME"
+_ARGUMENT_DIVIDER: str = ":"
+_CONFIG_FILEPATH: Path = Path(CONFIG_DIR) / "q_and_a.json"
+_RESET_CONFIG: str = "RESET_CONFIG"
+_SET_CONFIG: str = "SET_CONFIG"
+_SET_NAME: str = "SET_NAME"
 
 class QAndA:
     """
@@ -42,22 +42,23 @@ class QAndA:
             - The Plover UI "Reconnect" button is pressed
             - a SET_CONFIG command is send via a chord
     """
+    _engine: StenoEngine
+    _config: dict[str, str]
 
     def __init__(self, engine: StenoEngine) -> None:
         self._engine = engine
-        self._config: dict[str, str] = {}
 
     def start(self) -> None:
         """
         Sets up the meta plugin and steno engine hooks
         """
+        self._config = config.load(_CONFIG_FILEPATH)
         registry.register_plugin("meta", "Q_AND_A", self._q_and_a)
         self._engine.hook_connect("translated", self._translated)
         self._engine.hook_connect(
             "machine_state_changed",
             self._machine_state_changed
         )
-        self._config = config.load(_CONFIG_FILEPATH)
 
     def stop(self) -> None:
         """
@@ -69,28 +70,30 @@ class QAndA:
             self._machine_state_changed
         )
 
-    def _q_and_a(self, ctx: _Context, command: str) -> _Action:
+    def _q_and_a(self, ctx: _Context, argument: str) -> _Action:
         """
         Delegates to meta module to generate the sign to assign to an action.
         """
-        if not command:
+        if not argument:
             raise ValueError("No command provided")
 
-        args = command.split(_ARGUMENT_DIVIDER)
+        args: list[str] = argument.split(_ARGUMENT_DIVIDER)
+        command: str
+        command_args: list[str]
         command, *command_args = args
         command = command.strip().upper()
 
         if not command:
             raise ValueError("No command arguments provided")
 
-        action = ctx.new_action()
+        action: _Action = ctx.new_action()
 
         if command == _RESET_CONFIG:
             self._config = config.load(_CONFIG_FILEPATH)
         elif command == _SET_NAME:
             speaker.set_name(command_args, ctx, action, self._config)
         else:
-            text = sign.text(args, self._config)
+            text: str = sign.text(args, self._config)
             action.text = text
             action.prev_attach = True
             action.next_attach = True
@@ -120,6 +123,6 @@ class QAndA:
         if len(new) == 0:
             return
 
-        action = new[0]
+        action: _Action = new[0]
         if action.command and action.command.upper() == _SET_CONFIG:
             self._config = config.reload(_CONFIG_FILEPATH, self._config)

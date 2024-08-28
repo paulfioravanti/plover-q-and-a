@@ -10,10 +10,7 @@ Answer module to handle commands that look like:
 ELABORATE_AFTER and YIELD_AFTER are considered follow on arguments, and are
 handled by the `follow_on` module.
 """
-from typing import (
-    Any,
-    cast
-)
+from typing import Any
 
 from .arguments import (
     FOLLOWING_QUESTION,
@@ -32,12 +29,15 @@ def sign(args: list[str], config: dict[str, Any]) -> str:
     if not args:
         raise ValueError("No answer args provided")
 
+    answer_type: str
+    follow_on_args: list[str]
     answer_type, *follow_on_args = args
     answer_type = answer_type.strip().upper()
 
     if not answer_type:
         raise ValueError("No answer type provided")
 
+    answer: str
     if answer_type == INTERRUPTING:
         answer = config["ANSWER_FOLLOWING_INTERRUPT"]
     elif answer_type in (FOLLOWING_STATEMENT, FOLLOWING_QUESTION):
@@ -48,4 +48,4 @@ def sign(args: list[str], config: dict[str, Any]) -> str:
     else:
         raise ValueError(f"Unknown answer type provided: {answer_type}")
 
-    return cast(str, answer)
+    return answer

@@ -24,9 +24,9 @@ from . import (
 )
 
 
-_ANSWER = "ANSWER"
-_BYLINE = "BYLINE"
-_QUESTION = "QUESTION"
+_ANSWER: str = "ANSWER"
+_BYLINE: str = "BYLINE"
+_QUESTION: str = "QUESTION"
 
 def text(args: list[str], config: dict[str, Any]) -> str:
     """
@@ -35,12 +35,15 @@ def text(args: list[str], config: dict[str, Any]) -> str:
 
     Raises an error if the sign type is blank or not recognised.
     """
+    sign_type: str
+    sign_type_args: list[str]
     sign_type, *sign_type_args = args
     sign_type = sign_type.strip().upper()
 
     if not sign_type:
         raise ValueError("No sign type provided")
 
+    sign_text: str
     if sign_type == _QUESTION:
         sign_text = question.sign(sign_type_args, config)
     elif sign_type == _ANSWER:
