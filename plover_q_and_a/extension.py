@@ -25,7 +25,7 @@ from . import (
 
 
 _ARGUMENT_DIVIDER: str = ":"
-_CONFIG_FILEPATH: Path = Path(CONFIG_DIR) / "q_and_a.json"
+_CONFIG_FILE: Path = Path(CONFIG_DIR) / config.CONFIG_BASENAME
 _RESET_CONFIG: str = "RESET_CONFIG"
 _SET_CONFIG: str = "SET_CONFIG"
 _SET_NAME: str = "SET_NAME"
@@ -52,7 +52,7 @@ class QAndA:
         """
         Sets up the meta plugin and steno engine hooks
         """
-        self._config = config.load(_CONFIG_FILEPATH)
+        self._config = config.load(_CONFIG_FILE)
         registry.register_plugin("meta", "Q_AND_A", self._q_and_a)
         self._engine.hook_connect("translated", self._translated)
         self._engine.hook_connect(
@@ -89,7 +89,7 @@ class QAndA:
         action: _Action = ctx.new_action()
 
         if command == _RESET_CONFIG:
-            self._config = config.load(_CONFIG_FILEPATH)
+            self._config = config.load(_CONFIG_FILE)
         elif command == _SET_NAME:
             speaker.set_name(command_args, ctx, action, self._config)
         else:
@@ -111,7 +111,7 @@ class QAndA:
         pressed, so also reload the config when that happens.
         """
         if machine_state == STATE_RUNNING:
-            self._config = config.reload(_CONFIG_FILEPATH, self._config)
+            self._config = config.reload(_CONFIG_FILE, self._config)
 
     def _translated(self, _old: list[_Action], new: list[_Action]) -> None:
         """
@@ -125,4 +125,4 @@ class QAndA:
 
         action: _Action = new[0]
         if action.command and action.command.upper() == _SET_CONFIG:
-            self._config = config.reload(_CONFIG_FILEPATH, self._config)
+            self._config = config.reload(_CONFIG_FILE, self._config)

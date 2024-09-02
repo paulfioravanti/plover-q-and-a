@@ -7,8 +7,10 @@ from .actions import (
     load,
     reload
 )
+from .file import CONFIG_BASENAME
 
 __all__ = [
+    "CONFIG_BASENAME",
     "load",
     "reload"
 ]

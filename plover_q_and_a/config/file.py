@@ -6,6 +6,8 @@ from pathlib import Path
 from typing import Any
 
 
+CONFIG_BASENAME: str = "q_and_a.json"
+
 def load(filepath: Path) -> dict[str, Any]:
     """
     Reads in data from a JSON file
