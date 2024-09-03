@@ -21,6 +21,7 @@ def load(config_path: Path) -> dict[str, Any]:
     Raises an error if the specified config file is not JSON format.
     """
     data: dict[str, Any] = file.load(config_path)
+
     formatted_question: str
     question_end: str
     formatted_answer: str

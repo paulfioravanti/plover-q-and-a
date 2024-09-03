@@ -2,6 +2,7 @@
 Speaker module to handle commands that look like:
 
     - {:Q_AND_A:PLAINTIFF_1:INITIAL}
+    - {:Q_AND_A:DEFENSE_2:INITIAL}
     - {:Q_AND_A:WITNESS:FOLLOWING_QUESTION}
     - {:Q_AND_A:COURT:FOLLOWING_STATEMENT}
     - {:Q_AND_A:VIDEOGRAPHER:INTERRUPTING}
