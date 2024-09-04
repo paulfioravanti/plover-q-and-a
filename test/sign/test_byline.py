@@ -173,7 +173,7 @@ def test_initial_byline(initial_byline_type, initial_byline_config):
         sign.text(
             initial_byline_type,
             initial_byline_config
-        ) == "BY MR. STPHAO:\n\tQ\t"
+        ) == ("QUESTION", "BY MR. STPHAO:\n\tQ\t")
     )
 
 def test_interrupting_byline(
@@ -184,7 +184,7 @@ def test_interrupting_byline(
         sign.text(
             interrupting_byline_type,
             interrupting_byline_config
-        ) == "--\nBY MR. STPHAO:\n\tQ\t"
+        ) == ("QUESTION", "--\nBY MR. STPHAO:\n\tQ\t")
     )
 
 def test_byline_following_statement(
@@ -195,7 +195,7 @@ def test_byline_following_statement(
         sign.text(
             byline_following_statement_type,
             byline_following_statement_config
-        ) == ".\nBY MR. STPHAO:\n\tQ\t"
+        ) == ("QUESTION", ".\nBY MR. STPHAO:\n\tQ\t")
     )
 
 def test_byline_following_question(
@@ -206,5 +206,5 @@ def test_byline_following_question(
         sign.text(
             byline_following_question_type,
             byline_following_question_config
-        ) == "?\nBY MR. STPHAO:\n\tQ\t"
+        ) == ("QUESTION", "?\nBY MR. STPHAO:\n\tQ\t")
     )

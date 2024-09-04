@@ -15,10 +15,10 @@ from .arguments import (
     INITIAL,
     INTERRUPTING
 )
-from .speaker import extract_speaker_and_sign
+from . import speaker
 
 
-def sign(args: list[str], config: dict[str, Any]) -> str:
+def sign(args: list[str], config: dict[str, Any]) -> tuple[str, str]:
     """
     Returns the text for a byline type.
 
@@ -33,7 +33,7 @@ def sign(args: list[str], config: dict[str, Any]) -> str:
 
     speaker_type: str
     sign_type: str
-    speaker_type, sign_type = extract_speaker_and_sign(args)
+    speaker_type, sign_type = speaker.extract_speaker_and_sign(args)
 
     if not speaker_type in BYLINE_SPEAKER_TYPES:
         raise ValueError(
@@ -59,4 +59,4 @@ def sign(args: list[str], config: dict[str, Any]) -> str:
             f"Unknown sign type provided for {speaker_type} byline: {sign_type}"
         )
 
-    return byline
+    return ("QUESTION", byline)

@@ -19,10 +19,14 @@ from .arguments import (
     INITIAL,
     INTERRUPTING,
 )
-from .follow_on import handle_follow_on
+from . import follow_on
 
 
-def sign(args: list[str], config: dict[str, Any]) -> str:
+def sign(
+    sign_type: str,
+    args: list[str],
+    config: dict[str, Any]
+) -> tuple[str, str]:
     """
     Assigns the text for a question type.
 
@@ -46,10 +50,14 @@ def sign(args: list[str], config: dict[str, Any]) -> str:
         question = config["QUESTION_FOLLOWING_INTERRUPT"]
     elif question_type in (FOLLOWING_STATEMENT, FOLLOWING_QUESTION):
         question = config[f"QUESTION_{question_type}"]
-        question = handle_follow_on(
-            follow_on_args, question, config, "ANSWER_FOLLOWING_QUESTION"
+        (sign_type, question) = follow_on.handle_follow_on(
+            sign_type,
+            follow_on_args,
+            question,
+            config,
+            "ANSWER_FOLLOWING_QUESTION"
         )
     else:
         raise ValueError(f"Unknown question type provided: {question_type}")
 
-    return question
+    return (sign_type, question)

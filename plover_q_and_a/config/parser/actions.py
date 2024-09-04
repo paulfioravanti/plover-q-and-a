@@ -1,10 +1,7 @@
 """
 Module to collate parsed application JSON config file.
 """
-from typing import (
-    Any,
-    Tuple
-)
+from typing import Any
 from . import (
     answer,
     byline,
@@ -14,7 +11,7 @@ from . import (
     speaker
 )
 
-def parse(data: dict[str, Any]) -> Tuple[Any, ...]:
+def parse(data: dict[str, Any]) -> tuple[Any, ...]:
     """
     Parse config data, providing defaults values where not provided.
     """

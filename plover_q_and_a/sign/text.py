@@ -28,7 +28,7 @@ _ANSWER: str = "ANSWER"
 _BYLINE: str = "BYLINE"
 _QUESTION: str = "QUESTION"
 
-def text(args: list[str], config: dict[str, Any]) -> str:
+def text(args: list[str], config: dict[str, Any]) -> tuple[str, str]:
     """
     Checks the sign type and delegates handling to the appropriate module to
     generate the correct sign text.
@@ -43,16 +43,28 @@ def text(args: list[str], config: dict[str, Any]) -> str:
     if not sign_type:
         raise ValueError("No sign type provided")
 
+    current_sign_type: str
     sign_text: str
     if sign_type == _QUESTION:
-        sign_text = question.sign(sign_type_args, config)
+        (current_sign_type, sign_text) = question.sign(
+            sign_type,
+            sign_type_args,
+            config
+        )
     elif sign_type == _ANSWER:
-        sign_text = answer.sign(sign_type_args, config)
+        (current_sign_type, sign_text) = answer.sign(
+            sign_type,
+            sign_type_args,
+            config
+        )
     elif sign_type == _BYLINE:
-        sign_text = byline.sign(sign_type_args, config)
+        (current_sign_type, sign_text) = byline.sign(
+            sign_type_args,
+            config
+        )
     elif sign_type in SPEAKER_TYPES:
-        sign_text = speaker.sign(args, config)
+        (current_sign_type, sign_text) = speaker.sign(args, config)
     else:
         raise ValueError(f"Unknown sign type provided: {sign_type}")
 
-    return sign_text
+    return (current_sign_type, sign_text)

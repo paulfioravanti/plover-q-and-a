@@ -17,10 +17,14 @@ from .arguments import (
     FOLLOWING_STATEMENT,
     INTERRUPTING,
 )
-from .follow_on import handle_follow_on
+from . import follow_on
 
 
-def sign(args: list[str], config: dict[str, Any]) -> str:
+def sign(
+    sign_type: str,
+    args: list[str],
+    config: dict[str, Any]
+) -> tuple[str, str]:
     """
     Returns the text for an answer type.
 
@@ -42,10 +46,14 @@ def sign(args: list[str], config: dict[str, Any]) -> str:
         answer = config["ANSWER_FOLLOWING_INTERRUPT"]
     elif answer_type in (FOLLOWING_STATEMENT, FOLLOWING_QUESTION):
         answer = config[f"ANSWER_{answer_type}"]
-        answer = handle_follow_on(
-            follow_on_args, answer, config, "QUESTION_FOLLOWING_STATEMENT"
+        (sign_type, answer) = follow_on.handle_follow_on(
+            sign_type,
+            follow_on_args,
+            answer,
+            config,
+            "QUESTION_FOLLOWING_STATEMENT"
         )
     else:
         raise ValueError(f"Unknown answer type provided: {answer_type}")
 
-    return answer
+    return (sign_type, answer)

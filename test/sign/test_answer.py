@@ -125,7 +125,8 @@ def test_blank_answer_type(blank_answer_type, blank_config):
 
 def test_unknown_answer_type(unknown_answer_type, blank_config):
     with pytest.raises(
-        ValueError, match="Unknown answer type provided: UNKNOWN"
+        ValueError,
+        match="Unknown answer type provided: UNKNOWN"
     ):
         sign.text(unknown_answer_type, blank_config)
 
@@ -134,10 +135,8 @@ def test_answer_following_interrupt(
     interrupting_answer_config
 ):
     assert (
-        sign.text(
-            interrupting_answer_type,
-            interrupting_answer_config
-        ) == " --\n\tA\t"
+        sign.text(interrupting_answer_type, interrupting_answer_config)
+        == ("ANSWER", " --\n\tA\t")
    )
 
 def test_answer_following_statement(
@@ -148,7 +147,7 @@ def test_answer_following_statement(
         sign.text(
           answer_following_statement_type,
           answer_following_statement_config
-        ) == ".\n\tA\t"
+        ) == ("ANSWER", ".\n\tA\t")
    )
 
 def test_answer_following_statement_then_yield_to_question(
@@ -159,7 +158,7 @@ def test_answer_following_statement_then_yield_to_question(
         sign.text(
           answer_following_statement_then_yield_to_question_type,
           answer_following_statement_then_yield_to_question_config
-        ) == ".\n\tA\tOkay.\n\tQ\t"
+        ) == ("QUESTION", ".\n\tA\tOkay.\n\tQ\t")
    )
 
 def test_answer_following_statement_then_elaborate(
@@ -170,7 +169,7 @@ def test_answer_following_statement_then_elaborate(
         sign.text(
             answer_following_statement_then_elaborate_type,
             answer_following_statement_then_elaborate_config
-        ) == ".\n\tA\tAll right. "
+        ) == ("ANSWER", ".\n\tA\tAll right. ")
    )
 
 def test_answer_following_question(
@@ -181,7 +180,7 @@ def test_answer_following_question(
         sign.text(
           answer_following_question_type,
           answer_following_question_config
-        ) == "?\n\tA\t"
+        ) == ("ANSWER", "?\n\tA\t")
    )
 
 def test_answer_following_question_then_yield_to_question(
@@ -192,7 +191,7 @@ def test_answer_following_question_then_yield_to_question(
         sign.text(
           answer_following_question_then_yield_to_question_type,
           answer_following_question_then_yield_to_question_config
-        ) == "?\n\tA\tOkay.\n\tQ\t"
+        ) == ("QUESTION", "?\n\tA\tOkay.\n\tQ\t")
    )
 
 def test_answer_following_question_then_elaborate(
@@ -203,5 +202,5 @@ def test_answer_following_question_then_elaborate(
         sign.text(
           answer_following_question_then_elaborate_type,
           answer_following_question_then_elaborate_config
-        ) == "?\n\tA\tAll right. "
+        ) == ("ANSWER", "?\n\tA\tAll right. ")
    )

@@ -113,7 +113,7 @@ def test_initial_speaker(initial_speaker_type, initial_speaker_config):
         sign.text(
             initial_speaker_type,
             initial_speaker_config
-        ) == "\tTHE WITNESS:  "
+        ) == ("SPEAKER", "\tTHE WITNESS:  ")
     )
 
 def test_interrupting_speaker(
@@ -124,7 +124,7 @@ def test_interrupting_speaker(
         sign.text(
             interrupting_speaker_type,
             interrupting_speaker_config
-        ) == "--\n\tTHE WITNESS:  "
+        ) == ("SPEAKER", "--\n\tTHE WITNESS:  ")
     )
 
 def test_speaker_following_statement(
@@ -135,7 +135,7 @@ def test_speaker_following_statement(
         sign.text(
             speaker_following_statement_type,
             speaker_following_statement_config
-        ) == ".\n\tTHE WITNESS:  "
+        ) == ("SPEAKER", ".\n\tTHE WITNESS:  ")
     )
 
 def test_speaker_following_question(
@@ -146,5 +146,5 @@ def test_speaker_following_question(
         sign.text(
             speaker_following_question_type,
             speaker_following_question_config
-        ) == "?\n\tTHE WITNESS:  "
+        ) == ("SPEAKER", "?\n\tTHE WITNESS:  ")
     )

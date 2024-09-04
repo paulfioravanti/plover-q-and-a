@@ -38,7 +38,7 @@ def follow_on_args_config(no_follow_on_args_config):
 def test_no_follow_on_args(no_follow_on_args_type, no_follow_on_args_config):
     assert (
         sign.text(no_follow_on_args_type, no_follow_on_args_config)
-        == ".\n\tQ\t"
+        == ("QUESTION", ".\n\tQ\t")
     )
 
 def test_too_few_follow_on_args(

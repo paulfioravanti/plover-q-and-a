@@ -4,8 +4,8 @@ Plover entry point extension module.
     - https://plover.readthedocs.io/en/latest/plugin-dev/extensions.html
     - https://plover.readthedocs.io/en/latest/plugin-dev/metas.html
 """
-
 from pathlib import Path
+from typing import Optional
 
 from plover.engine import StenoEngine
 from plover.formatting import (
@@ -44,6 +44,7 @@ class QAndA:
     """
     _engine: StenoEngine
     _config: dict[str, str]
+    _current_sign_type: Optional[str]
 
     def __init__(self, engine: StenoEngine) -> None:
         self._engine = engine
@@ -53,6 +54,7 @@ class QAndA:
         Sets up the meta plugin and steno engine hooks
         """
         self._config = config.load(_CONFIG_FILE)
+        self._current_sign_type = None
         registry.register_plugin("meta", "Q_AND_A", self._q_and_a)
         self._engine.hook_connect("translated", self._translated)
         self._engine.hook_connect(
@@ -93,7 +95,10 @@ class QAndA:
         elif command == _SET_NAME:
             speaker.set_name(command_args, ctx, action, self._config)
         else:
-            text: str = sign.text(args, self._config)
+            current_sign_type: str
+            text: str
+            (current_sign_type, text) = sign.text(args, self._config)
+            self._current_sign_type = current_sign_type
             action.text = text
             action.prev_attach = True
             action.next_attach = True

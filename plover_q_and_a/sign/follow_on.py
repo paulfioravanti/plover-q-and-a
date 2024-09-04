@@ -13,11 +13,12 @@ _ELABORATE_AFTER = "ELABORATE_AFTER"
 _YIELD_AFTER = "YIELD_AFTER"
 
 def handle_follow_on(
+    sign_type: str,
     follow_on_args: list[str],
     sign: str,
     config: dict[str, Any],
     yield_key: str
-) -> str:
+) -> tuple[str, str]:
     """
     Generates the text for when there is an extra action performed after a
     question or answer sign change.
@@ -26,7 +27,7 @@ def handle_follow_on(
     the follow on commands are not recognised.
     """
     if not follow_on_args:
-        return sign
+        return (sign_type, sign)
 
     if not len(follow_on_args) == 2:
         given_args: str = ":".join(follow_on_args)
@@ -41,6 +42,10 @@ def handle_follow_on(
 
     if follow_on_action == _YIELD_AFTER:
         sign += user_string + config[yield_key]
+        if sign_type == "QUESTION":
+            sign_type = "ANSWER"
+        else:
+            sign_type = "QUESTION"
     elif follow_on_action == _ELABORATE_AFTER:
         sign += user_string + config["STATEMENT_ELABORATE"]
     else:
@@ -48,4 +53,4 @@ def handle_follow_on(
             f"Unknown follow on action provided: {follow_on_action}"
         )
 
-    return sign
+    return (sign_type, sign)
