@@ -9,8 +9,12 @@ Follow on module to handle the final part of commands that look like:
 from typing import Any
 
 
-_ELABORATE_AFTER = "ELABORATE_AFTER"
-_YIELD_AFTER = "YIELD_AFTER"
+_ARGUMENT_DIVIDER: str = ":"
+_ELABORATE_AFTER: str = "ELABORATE_AFTER"
+_ELABORATE_AFTER_CONFIG_KEY: str = "STATEMENT_ELABORATE"
+_YIELD_AFTER: str = "YIELD_AFTER"
+_QUESTION_SIGN_TYPE: str = "QUESTION"
+_ANSWER_SIGN_TYPE: str = "ANSWER"
 
 def handle_follow_on(
     sign_type: str,
@@ -30,7 +34,7 @@ def handle_follow_on(
         return (sign_type, sign)
 
     if not len(follow_on_args) == 2:
-        given_args: str = ":".join(follow_on_args)
+        given_args: str = _ARGUMENT_DIVIDER.join(follow_on_args)
         raise ValueError(
             f"Two follow on arguments must be provided. You gave: {given_args}"
         )
@@ -42,12 +46,12 @@ def handle_follow_on(
 
     if follow_on_action == _YIELD_AFTER:
         sign += user_string + config[yield_key]
-        if sign_type == "QUESTION":
-            sign_type = "ANSWER"
+        if sign_type == _QUESTION_SIGN_TYPE:
+            sign_type = _ANSWER_SIGN_TYPE
         else:
-            sign_type = "QUESTION"
+            sign_type = _QUESTION_SIGN_TYPE
     elif follow_on_action == _ELABORATE_AFTER:
-        sign += user_string + config["STATEMENT_ELABORATE"]
+        sign += user_string + config[_ELABORATE_AFTER_CONFIG_KEY]
     else:
         raise ValueError(
             f"Unknown follow on action provided: {follow_on_action}"

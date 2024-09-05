@@ -58,10 +58,7 @@ def text(args: list[str], config: dict[str, Any]) -> tuple[str, str]:
             config
         )
     elif sign_type == _BYLINE:
-        (current_sign_type, sign_text) = byline.sign(
-            sign_type_args,
-            config
-        )
+        (current_sign_type, sign_text) = byline.sign(sign_type_args, config)
     elif sign_type in SPEAKER_TYPES:
         (current_sign_type, sign_text) = speaker.sign(args, config)
     else:
