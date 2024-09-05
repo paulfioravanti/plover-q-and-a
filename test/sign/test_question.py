@@ -43,7 +43,7 @@ def question_following_statement_then_elaborate_type(
 
 @pytest.fixture
 def question_following_question_type(question_arg):
-    return question_arg + ["FOLLOWING_QUESTION"]
+    return question_arg + ["FOLLOWING_INTERROGATIVE"]
 
 @pytest.fixture
 def question_following_question_then_yield_to_answer_type(
@@ -77,7 +77,7 @@ def question_following_statement_config():
 
 @pytest.fixture
 def answer_following_question_config():
-    return { "ANSWER_FOLLOWING_QUESTION": "?\n\tA\t" }
+    return { "ANSWER_FOLLOWING_INTERROGATIVE": "?\n\tA\t" }
 
 @pytest.fixture
 def question_following_statement_then_yield_to_answer_config(
@@ -102,7 +102,7 @@ def question_following_statement_then_elaborate_config(
 
 @pytest.fixture
 def question_following_question_config():
-    return { "QUESTION_FOLLOWING_QUESTION": "?\n\tQ\t" }
+    return { "QUESTION_FOLLOWING_INTERROGATIVE": "?\n\tQ\t" }
 
 @pytest.fixture
 def question_following_question_then_yield_to_answer_config(

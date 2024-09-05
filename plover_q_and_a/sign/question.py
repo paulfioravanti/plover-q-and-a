@@ -14,7 +14,7 @@ handled by the `follow_on` module.
 from typing import Any
 
 from .arguments import (
-    FOLLOWING_QUESTION,
+    FOLLOWING_INTERROGATIVE,
     FOLLOWING_STATEMENT,
     INITIAL,
     INTERRUPTING,
@@ -48,14 +48,14 @@ def sign(
         question = config["QUESTION"]
     elif question_type == INTERRUPTING:
         question = config["QUESTION_FOLLOWING_INTERRUPT"]
-    elif question_type in (FOLLOWING_STATEMENT, FOLLOWING_QUESTION):
+    elif question_type in (FOLLOWING_STATEMENT, FOLLOWING_INTERROGATIVE):
         question = config[f"QUESTION_{question_type}"]
         (sign_type, question) = follow_on.handle_follow_on(
             sign_type,
             follow_on_args,
             question,
             config,
-            "ANSWER_FOLLOWING_QUESTION"
+            "ANSWER_FOLLOWING_INTERROGATIVE"
         )
     else:
         raise ValueError(f"Unknown question type provided: {question_type}")

@@ -31,7 +31,7 @@ def speaker_following_statement_type(speaker_arg):
 
 @pytest.fixture
 def speaker_following_question_type(speaker_arg):
-    return speaker_arg + ["FOLLOWING_QUESTION"]
+    return speaker_arg + ["FOLLOWING_INTERROGATIVE"]
 
 # Config
 
@@ -80,7 +80,7 @@ def speaker_following_statement_config(speaker_config):
 @pytest.fixture
 def speaker_following_question_config(speaker_config):
     return speaker_config | {
-        "SPEAKER_FOLLOWING_QUESTION_FOR": lambda speaker_name: (
+        "SPEAKER_FOLLOWING_INTERROGATIVE_FOR": lambda speaker_name: (
             f"?\n\t{speaker_name}:  "
         )
     }

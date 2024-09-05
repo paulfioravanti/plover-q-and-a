@@ -22,59 +22,59 @@ def load(config_path: Path) -> dict[str, Any]:
     """
     data: dict[str, Any] = file.load(config_path)
 
-    formatted_question: str
-    question_end: str
-    formatted_answer: str
-    statement_end: str
-    statement_elaborate: str
-    interrupt: str
-    formatted_byline: Callable[[str], str]
-    set_name_prompt: str
-    speaker_upcase: bool
+    question_marker: str
+    answer_marker: str
+    byline_marker: Callable[[str], str]
+    speaker_marker: Callable[[str], str]
     speaker_names: list[str]
-    formatted_speaker: Callable[[str], str]
+    speaker_upcase: bool
+    interrogative_yield: str
+    statement_yield: str
+    statement_elaborate: str
+    interrupt_yield: str
+    set_name_prompt: str
     (
-        formatted_question,
-        question_end,
-        formatted_answer,
-        statement_end,
-        statement_elaborate,
-        interrupt,
-        formatted_byline,
-        set_name_prompt,
-        speaker_upcase,
+        question_marker,
+        answer_marker,
+        byline_marker,
+        speaker_marker,
         speaker_names,
-        formatted_speaker
+        speaker_upcase,
+        interrogative_yield,
+        statement_yield,
+        statement_elaborate,
+        interrupt_yield,
+        set_name_prompt
     ) = parser.parse(data)
 
     return {
-        "ANSWER_FOLLOWING_INTERRUPT": interrupt + formatted_answer,
-        "ANSWER_FOLLOWING_QUESTION": question_end + formatted_answer,
-        "ANSWER_FOLLOWING_STATEMENT": statement_end + formatted_answer,
-        "BYLINE_FOR": formatted_byline,
+        "QUESTION": question_marker,
+        "QUESTION_FOLLOWING_INTERRUPT": interrupt_yield + question_marker,
+        "QUESTION_FOLLOWING_INTERROGATIVE": interrogative_yield + question_marker,
+        "QUESTION_FOLLOWING_STATEMENT": statement_yield + question_marker,
+        "ANSWER_FOLLOWING_INTERRUPT": interrupt_yield + answer_marker,
+        "ANSWER_FOLLOWING_INTERROGATIVE": interrogative_yield + answer_marker,
+        "ANSWER_FOLLOWING_STATEMENT": statement_yield + answer_marker,
+        "BYLINE_FOR": byline_marker,
         "BYLINE_FOLLOWING_INTERRUPT_FOR": lambda speaker_name: (
-            interrupt + formatted_byline(speaker_name)
+            interrupt_yield + byline_marker(speaker_name)
         ),
-        "BYLINE_FOLLOWING_QUESTION_FOR": lambda speaker_name: (
-            question_end + formatted_byline(speaker_name)
+        "BYLINE_FOLLOWING_INTERROGATIVE_FOR": lambda speaker_name: (
+            interrogative_yield + byline_marker(speaker_name)
         ),
         "BYLINE_FOLLOWING_STATEMENT_FOR": lambda speaker_name: (
-            statement_end + formatted_byline(speaker_name)
+            statement_yield + byline_marker(speaker_name)
         ),
-        "QUESTION": formatted_question,
-        "QUESTION_FOLLOWING_INTERRUPT": interrupt + formatted_question,
-        "QUESTION_FOLLOWING_QUESTION": question_end + formatted_question,
-        "QUESTION_FOLLOWING_STATEMENT": statement_end + formatted_question,
         "SET_NAME_PROMPT": set_name_prompt,
-        "SPEAKER_FOR": formatted_speaker,
+        "SPEAKER_FOR": speaker_marker,
         "SPEAKER_FOLLOWING_INTERRUPT_FOR": lambda speaker_name: (
-            interrupt + formatted_speaker(speaker_name)
+            interrupt_yield + speaker_marker(speaker_name)
         ),
-        "SPEAKER_FOLLOWING_QUESTION_FOR": lambda speaker_name: (
-            question_end + formatted_speaker(speaker_name)
+        "SPEAKER_FOLLOWING_INTERROGATIVE_FOR": lambda speaker_name: (
+            interrogative_yield + speaker_marker(speaker_name)
         ),
         "SPEAKER_FOLLOWING_STATEMENT_FOR": lambda speaker_name: (
-            statement_end + formatted_speaker(speaker_name)
+            statement_yield + speaker_marker(speaker_name)
         ),
         "speaker_names": speaker_names,
         "SPEAKER_UPCASE": speaker_upcase,

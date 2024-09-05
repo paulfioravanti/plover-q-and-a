@@ -34,5 +34,5 @@ def formatted_byline(data: dict[str, Any]) -> Callable[[str], str]:
         + cast(str, byline.get("marker", _BYLINE_MARKER))
         + speaker_name
         + byline_formatting.get("post", _BYLINE_POST_FORMATTING)
-        + question.formatted_question(data)
+        + question.marker(data)
     )

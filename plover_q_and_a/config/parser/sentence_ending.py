@@ -8,11 +8,11 @@ from typing import (
 
 
 # Default values
-_INTERRUPT_MARKER: str = " --"
-_QUESTION_END_MARKER: str = "?"
-_SENTENCE_SPACE: str = " "
+_INTERROGATIVE_END_MARKER: str = "?"
 _STATEMENT_END_MARKER: str = "."
+_INTERRUPT_MARKER: str = " --"
 _YIELD_MARKER: str = "\n"
+_SENTENCE_SPACE: str = " "
 
 def interrupt_yield(data: dict[str, Any]) -> str:
     """
@@ -20,12 +20,12 @@ def interrupt_yield(data: dict[str, Any]) -> str:
     """
     return cast(str, data.get("interrupt", _INTERRUPT_MARKER)) + _yield(data)
 
-def question_yield(data: dict[str, Any]) -> str:
+def interrogative_yield(data: dict[str, Any]) -> str:
     """
-    Format a sentence ending question from config.
+    Format a sentence ending interrogative from config.
     """
     return (
-        cast(str, data.get("question_end", _QUESTION_END_MARKER))
+        cast(str, data.get("question_end", _INTERROGATIVE_END_MARKER))
         + _yield(data)
     )
 

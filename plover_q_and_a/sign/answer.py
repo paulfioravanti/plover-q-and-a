@@ -13,7 +13,7 @@ handled by the `follow_on` module.
 from typing import Any
 
 from .arguments import (
-    FOLLOWING_QUESTION,
+    FOLLOWING_INTERROGATIVE,
     FOLLOWING_STATEMENT,
     INTERRUPTING,
 )
@@ -44,7 +44,7 @@ def sign(
     answer: str
     if answer_type == INTERRUPTING:
         answer = config["ANSWER_FOLLOWING_INTERRUPT"]
-    elif answer_type in (FOLLOWING_STATEMENT, FOLLOWING_QUESTION):
+    elif answer_type in (FOLLOWING_STATEMENT, FOLLOWING_INTERROGATIVE):
         answer = config[f"ANSWER_{answer_type}"]
         (sign_type, answer) = follow_on.handle_follow_on(
             sign_type,

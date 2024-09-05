@@ -47,7 +47,7 @@ def byline_following_statement_type(byline_arg):
 
 @pytest.fixture
 def byline_following_question_type(byline_arg):
-    return byline_arg + ["PLAINTIFF_1", "FOLLOWING_QUESTION"]
+    return byline_arg + ["PLAINTIFF_1", "FOLLOWING_INTERROGATIVE"]
 
 # Config
 
@@ -96,7 +96,7 @@ def byline_following_statement_config(byline_speaker_config):
 @pytest.fixture
 def byline_following_question_config(byline_speaker_config):
     return byline_speaker_config | {
-        "BYLINE_FOLLOWING_QUESTION_FOR": lambda speaker_name: (
+        "BYLINE_FOLLOWING_INTERROGATIVE_FOR": lambda speaker_name: (
             f"?\nBY {speaker_name}:\n\tQ\t"
         )
     }

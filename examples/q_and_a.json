@@ -17,10 +17,16 @@
     }
   },
   "question": {
-    "marker": "Q",
-    "formatting": {
+    "marker": {
       "pre": "\t",
+      "text": "Q",
       "post": "\t"
+    },
+    "ending": {
+      "question": "?",
+      "statement": ".",
+      "interrupt": " --",
+      "yield": "\n"
     }
   },
   "answer": {

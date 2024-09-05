@@ -13,7 +13,7 @@ Speaker module to handle commands that look like:
 from typing import Any
 
 from .arguments import (
-    FOLLOWING_QUESTION,
+    FOLLOWING_INTERROGATIVE,
     FOLLOWING_STATEMENT,
     INITIAL,
     INTERRUPTING
@@ -42,7 +42,7 @@ def sign(args: list[str], config: dict[str, Any]) -> tuple[str, str]:
         speaker = config["SPEAKER_FOR"](speaker_name)
     elif sign_type == INTERRUPTING:
         speaker = config["SPEAKER_FOLLOWING_INTERRUPT_FOR"](speaker_name)
-    elif sign_type in (FOLLOWING_STATEMENT, FOLLOWING_QUESTION):
+    elif sign_type in (FOLLOWING_STATEMENT, FOLLOWING_INTERROGATIVE):
         speaker = config[f"SPEAKER_{sign_type}_FOR"](speaker_name)
     else:
         raise ValueError(

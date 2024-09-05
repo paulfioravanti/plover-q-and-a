@@ -10,7 +10,7 @@ from typing import Any
 
 from .. import BYLINE_SPEAKER_TYPES
 from .arguments import (
-    FOLLOWING_QUESTION,
+    FOLLOWING_INTERROGATIVE,
     FOLLOWING_STATEMENT,
     INITIAL,
     INTERRUPTING
@@ -52,7 +52,7 @@ def sign(args: list[str], config: dict[str, Any]) -> tuple[str, str]:
         byline = config["BYLINE_FOR"](speaker_name)
     elif sign_type == INTERRUPTING:
         byline = config["BYLINE_FOLLOWING_INTERRUPT_FOR"](speaker_name)
-    elif sign_type in (FOLLOWING_STATEMENT, FOLLOWING_QUESTION):
+    elif sign_type in (FOLLOWING_STATEMENT, FOLLOWING_INTERROGATIVE):
         byline = config[f"BYLINE_{sign_type}_FOR"](speaker_name)
     else:
         raise ValueError(
