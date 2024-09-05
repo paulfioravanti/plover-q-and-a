@@ -18,8 +18,8 @@ def unknown_answer_type(answer_arg):
     return answer_arg + ["UNKNOWN"]
 
 @pytest.fixture
-def interrupting_answer_type(answer_arg):
-    return answer_arg + ["INTERRUPTING"]
+def answer_following_interrupt_type(answer_arg):
+    return answer_arg + ["FOLLOWING_INTERRUPT"]
 
 @pytest.fixture
 def answer_following_statement_type(answer_arg):
@@ -60,7 +60,7 @@ def blank_config():
     return {}
 
 @pytest.fixture
-def interrupting_answer_config():
+def answer_following_interrupt_config():
     return { "ANSWER_FOLLOWING_INTERRUPT": " --\n\tA\t" }
 
 @pytest.fixture
@@ -131,11 +131,14 @@ def test_unknown_answer_type(unknown_answer_type, blank_config):
         sign.text(unknown_answer_type, blank_config)
 
 def test_answer_following_interrupt(
-    interrupting_answer_type,
-    interrupting_answer_config
+    answer_following_interrupt_type,
+    answer_following_interrupt_config
 ):
     assert (
-        sign.text(interrupting_answer_type, interrupting_answer_config)
+        sign.text(
+            answer_following_interrupt_type,
+            answer_following_interrupt_config
+        )
         == ("ANSWER", " --\n\tA\t")
    )
 

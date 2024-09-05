@@ -38,8 +38,8 @@ def initial_byline_type(byline_arg):
     return byline_arg + ["PLAINTIFF_1", "INITIAL"]
 
 @pytest.fixture
-def interrupting_byline_type(byline_arg):
-    return byline_arg + ["PLAINTIFF_1", "INTERRUPTING"]
+def byline_following_interrupt_type(byline_arg):
+    return byline_arg + ["PLAINTIFF_1", "FOLLOWING_INTERRUPT"]
 
 @pytest.fixture
 def byline_following_statement_type(byline_arg):
@@ -78,7 +78,7 @@ def initial_byline_config(byline_speaker_config):
     }
 
 @pytest.fixture
-def interrupting_byline_config(byline_speaker_config):
+def byline_following_interrupt_config(byline_speaker_config):
     return byline_speaker_config | {
         "BYLINE_FOLLOWING_INTERRUPT_FOR": lambda speaker_name: (
             f"--\nBY {speaker_name}:\n\tQ\t"
@@ -176,14 +176,14 @@ def test_initial_byline(initial_byline_type, initial_byline_config):
         ) == ("QUESTION", "BY MR. STPHAO:\n\tQ\t")
     )
 
-def test_interrupting_byline(
-    interrupting_byline_type,
-    interrupting_byline_config
+def test_byline_following_interrupt(
+    byline_following_interrupt_type,
+    byline_following_interrupt_config
 ):
     assert (
         sign.text(
-            interrupting_byline_type,
-            interrupting_byline_config
+            byline_following_interrupt_type,
+            byline_following_interrupt_config
         ) == ("QUESTION", "--\nBY MR. STPHAO:\n\tQ\t")
     )
 

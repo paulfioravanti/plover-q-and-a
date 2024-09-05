@@ -2,7 +2,7 @@
 Byline module to handle commands that look like:
 
     - {:Q_AND_A:BYLINE:PLAINTIFF_1:INITIAL}
-    - {:Q_AND_A:BYLINE:PLAINTIFF_2:INTERRUPTING}
+    - {:Q_AND_A:BYLINE:PLAINTIFF_2:FOLLOWING_INTERRUPT}
     - {:Q_AND_A:BYLINE:DEFENSE_1:FOLLOWING_QUESTION}
     - {:Q_AND_A:BYLINE:DEFENSE_2:FOLLOWING_STATEMENT}
 """
@@ -11,9 +11,9 @@ from typing import Any
 from .. import BYLINE_SPEAKER_TYPES
 from .arguments import (
     FOLLOWING_INTERROGATIVE,
+    FOLLOWING_INTERRUPT,
     FOLLOWING_STATEMENT,
-    INITIAL,
-    INTERRUPTING
+    INITIAL
 )
 from . import speaker
 
@@ -50,9 +50,11 @@ def sign(args: list[str], config: dict[str, Any]) -> tuple[str, str]:
     byline: str
     if sign_type == INITIAL:
         byline = config["BYLINE_FOR"](speaker_name)
-    elif sign_type == INTERRUPTING:
-        byline = config["BYLINE_FOLLOWING_INTERRUPT_FOR"](speaker_name)
-    elif sign_type in (FOLLOWING_STATEMENT, FOLLOWING_INTERROGATIVE):
+    elif sign_type in (
+        FOLLOWING_INTERROGATIVE,
+        FOLLOWING_INTERRUPT,
+        FOLLOWING_STATEMENT
+    ):
         byline = config[f"BYLINE_{sign_type}_FOR"](speaker_name)
     else:
         raise ValueError(

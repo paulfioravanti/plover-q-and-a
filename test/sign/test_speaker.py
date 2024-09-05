@@ -22,8 +22,8 @@ def initial_speaker_type(speaker_arg):
     return speaker_arg + ["INITIAL"]
 
 @pytest.fixture
-def interrupting_speaker_type(speaker_arg):
-    return speaker_arg + ["INTERRUPTING"]
+def speaker_following_interrupt_type(speaker_arg):
+    return speaker_arg + ["FOLLOWING_INTERRUPT"]
 
 @pytest.fixture
 def speaker_following_statement_type(speaker_arg):
@@ -62,7 +62,7 @@ def initial_speaker_config(speaker_config):
     }
 
 @pytest.fixture
-def interrupting_speaker_config(speaker_config):
+def speaker_following_interrupt_config(speaker_config):
     return speaker_config | {
         "SPEAKER_FOLLOWING_INTERRUPT_FOR": lambda speaker_name: (
             f"--\n\t{speaker_name}:  "
@@ -117,13 +117,13 @@ def test_initial_speaker(initial_speaker_type, initial_speaker_config):
     )
 
 def test_interrupting_speaker(
-    interrupting_speaker_type,
-    interrupting_speaker_config
+    speaker_following_interrupt_type,
+    speaker_following_interrupt_config
 ):
     assert (
         sign.text(
-            interrupting_speaker_type,
-            interrupting_speaker_config
+            speaker_following_interrupt_type,
+            speaker_following_interrupt_config
         ) == ("SPEAKER", "--\n\tTHE WITNESS:  ")
     )
 

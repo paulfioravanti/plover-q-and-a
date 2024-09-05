@@ -22,8 +22,8 @@ def initial_question_type(question_arg):
     return question_arg + ["INITIAL"]
 
 @pytest.fixture
-def interrupting_question_type(question_arg):
-    return question_arg + ["INTERRUPTING"]
+def question_following_interrupt_type(question_arg):
+    return question_arg + ["FOLLOWING_INTERRUPT"]
 
 @pytest.fixture
 def question_following_statement_type(question_arg):
@@ -68,7 +68,7 @@ def initial_question_config():
     return { "QUESTION": "\tQ\t" }
 
 @pytest.fixture
-def interrupting_question_config():
+def question_following_interrupt_config():
     return { "QUESTION_FOLLOWING_INTERRUPT": "--\n\tQ\t" }
 
 @pytest.fixture
@@ -145,13 +145,13 @@ def test_initial_question(initial_question_type, initial_question_config):
     )
 
 def test_question_following_interrupt(
-    interrupting_question_type,
-    interrupting_question_config
+    question_following_interrupt_type,
+    question_following_interrupt_config
 ):
     assert (
         sign.text(
-            interrupting_question_type,
-            interrupting_question_config
+            question_following_interrupt_type,
+            question_following_interrupt_config
         ) == ("QUESTION", "--\n\tQ\t")
    )
 

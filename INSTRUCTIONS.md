@@ -50,14 +50,14 @@ Question commands start with a `QUESTION` argument, followed by one of:
 - `INITIAL`
 - `FOLLOWING_STATEMENT`
 - `FOLLOWING_QUESTION`
-- `INTERRUPTING`
+- `FOLLOWING_INTERRUPT`
 
 | Command                                 | Meaning                                                               | Suggested Outlines  |
 |:----------------------------------------|:----------------------------------------------------------------------|:--------------------|
 |`{:Q_AND_A:QUESTION:INITIAL}`            |Signs in the first lawyer question asked (no previous answer/statement)|`STKPWHR*`           |
 |`{:Q_AND_A:QUESTION:FOLLOWING_STATEMENT}`|Ends a witness statement and signs in a lawyer question                |`STKPWHR`,`STKPWHR-R`|
 |`{:Q_AND_A:QUESTION:FOLLOWING_QUESTION}` |Ends a witness question and signs in a lawyer question                 |`STKPWHR-F`          |
-|`{:Q_AND_A:QUESTION:INTERRUPTING}`       |Signs in a lawyer question when they interrupt a witness               |`STKPWHR-RB`         |
+|`{:Q_AND_A:QUESTION:FOLLOWING_INTERRUPT}`         |Signs in a lawyer question when they interrupt a witness      |`STKPWHR-RB`         |
 
 ### Answers
 
@@ -67,13 +67,13 @@ Answer commands start with a `ANSWER` argument, followed by one of:
 
 - `FOLLOWING_QUESTION`
 - `FOLLOWING_STATEMENT`
-- `INTERRUPTING`
+- `FOLLOWING_INTERRUPT`
 
 | Command                               | Meaning                                                               | Suggested Outlines     |
 |:--------------------------------------|:----------------------------------------------------------------------|:-----------------------|
 |`{:Q_AND_A:ANSWER:FOLLOWING_QUESTION}` |Ends a lawyer question and signs in a witness answer                   |`-FRPBLGTS`,`H-FRPBLGTS`|
 |`{:Q_AND_A:ANSWER:FOLLOWING_STATEMENT}`|Ends a lawyer's question as a statement, and signs in a witness answer |`R-FRPBLGTS`            |
-|`{:Q_AND_A:ANSWER:INTERRUPTING}`       |Signs in a witness answer when they interrupt a lawyer                 |`WR-FRPBLGTS`           |
+|`{:Q_AND_A:ANSWER:FOLLOWING_INTERRUPT}`|Signs in a witness answer when they interrupt a lawyer                 |`WR-FRPBLGTS`           |
 
 > No Initial Answer command exists since it would seem that there are never
 > answers given without a question in Q&A.
@@ -104,7 +104,7 @@ Speaker commands start with the speaker command argument, followed by one of:
 - `INITIAL`
 - `FOLLOWING_QUESTION`
 - `FOLLOWING_STATEMENT`
-- `INTERRUPTING`
+- `FOLLOWING_INTERRUPT`
 
 As an example of a set of known speaker commands, the following is a full list
 of the commands and suggested outlines for The Court:
@@ -114,12 +114,12 @@ of the commands and suggested outlines for The Court:
 |`{:Q_AND_A:COURT:INITIAL}`               |Signs in The Court as the first speaker (no previous speaker) |`STPHAOEUFPLT`       |
 |`{:Q_AND_A:COURT:FOLLOWING_QUESTION}`    |Ends the previous speaker's question and signs in The Court   |`STPHAO*EUFPLT`      |
 |`{:Q_AND_A:COURT:FOLLOWING_STATEMENT}`   |Ends the previous speaker's statement and signs in The Court  |`STPHAOEUFRPLT`      |
-|`{:Q_AND_A:COURT:INTERRUPTING}`          |Signs in The Court when they interrupt a speaker              |`STPHAOEUFRPBLT`     |
+|`{:Q_AND_A:COURT:FOLLOWING_INTERRUPT}    |Signs in The Court when they interrupt a speaker              |`STPHAOEUFRPBLT`     |
 
 The following is the set of `INITIAL` commands and suggested outlines for all of
 the other known speaker types, who all also have their equivalent commands for
-`FOLLOWING_QUESTION`, `FOLLOWING_STATEMENT`, and `INTERRUPTING` variations (see
-the [`lawyers.json`][], [`other-speakers.json`][] and
+`FOLLOWING_QUESTION`, `FOLLOWING_STATEMENT`, and `FOLLOWING_INTERRUPT`
+variations (see the [`lawyers.json`][], [`other-speakers.json`][] and
 [`other-speakers-ncra-style.json`][] dictionaries for those commands and their
 example outlines):
 
@@ -199,7 +199,7 @@ Then, followed by one of the following arguments:
 - `INITIAL`
 - `FOLLOWING_STATEMENT`
 - `FOLLOWING_QUESTION`
-- `INTERRUPTING`
+- `FOLLOWING_INTERRUPT`
 
 The following is a full list of the byline commands and suggested outlines for
 Plaintiff Lawyer 1 (see the [`lawyers.json`][] example dictionary for the
@@ -211,7 +211,7 @@ types):
 |`{:Q_AND_A:BYLINE:PLAINTIFF_1:INITIAL}`            |Signs in Plaintiff Lawyer 1's byline (no previous answer/statement)           |`STPHAO*`           |
 |`{:Q_AND_A:BYLINE:PLAINTIFF_1:FOLLOWING_STATEMENT}`|Ends the previous speaker's statement and signs in Plaintiff Lawyer 1's byline|`STPHAO*R`          |
 |`{:Q_AND_A:BYLINE:PLAINTIFF_1:FOLLOWING_QUESTION}` |Ends the previous speaker's question and signs in Plaintiff Lawyer 1's byline |`STPHAO*F`          |
-|`{:Q_AND_A:BYLINE:PLAINTIFF_1:INTERRUPTING}`       |Signs in Plaintiff Lawyer 1's byline when they interrupt a speaker            |`STPHAO*RB`         |
+|`{:Q_AND_A:BYLINE:PLAINTIFF_1:FOLLOWING_INTERRUPT}`|Signs in Plaintiff Lawyer 1's byline when they interrupt a speaker            |`STPHAO*RB`         |
 
 ### Immediate Responses
 

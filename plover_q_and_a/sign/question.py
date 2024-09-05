@@ -2,9 +2,9 @@
 Question module to handle commands that look like:
 
     - {:Q_AND_A:QUESTION:INITIAL}
-    - {:Q_AND_A:QUESTION:INTERRUPTING}
     - {:Q_AND_A:QUESTION:FOLLOWING_QUESTION}
     - {:Q_AND_A:QUESTION:FOLLOWING_STATEMENT}
+    - {:Q_AND_A:QUESTION:FOLLOWING_INTERRUPT}
     - {:Q_AND_A:QUESTION:FOLLOWING_STATEMENT:ELABORATE_AFTER:Okay}
     - {:Q_AND_A:QUESTION:FOLLOWING_STATEMENT:YIELD_AFTER:All right}
 
@@ -15,9 +15,9 @@ from typing import Any
 
 from .arguments import (
     FOLLOWING_INTERROGATIVE,
+    FOLLOWING_INTERRUPT,
     FOLLOWING_STATEMENT,
-    INITIAL,
-    INTERRUPTING,
+    INITIAL
 )
 from . import follow_on
 
@@ -45,11 +45,13 @@ def sign(
 
     question: str
     if question_type == INITIAL:
-        question = config["QUESTION"]
-    elif question_type == INTERRUPTING:
-        question = config["QUESTION_FOLLOWING_INTERRUPT"]
-    elif question_type in (FOLLOWING_STATEMENT, FOLLOWING_INTERROGATIVE):
-        question = config[f"QUESTION_{question_type}"]
+        question = config[sign_type]
+    elif question_type in (
+        FOLLOWING_INTERROGATIVE,
+        FOLLOWING_INTERRUPT,
+        FOLLOWING_STATEMENT
+    ):
+        question = config[f"{sign_type}_{question_type}"]
         (sign_type, question) = follow_on.handle_follow_on(
             sign_type,
             follow_on_args,

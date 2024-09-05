@@ -1,7 +1,7 @@
 """
 Answer module to handle commands that look like:
 
-    - {:Q_AND_A:ANSWER:INTERRUPTING}
+    - {:Q_AND_A:ANSWER:FOLLOWING_INTERRUPT}
     - {:Q_AND_A:ANSWER:FOLLOWING_QUESTION}
     - {:Q_AND_A:ANSWER:FOLLOWING_STATEMENT}
     - {:Q_AND_A:ANSWER:FOLLOWING_QUESTION:ELABORATE_AFTER:Uh-huh}
@@ -14,8 +14,8 @@ from typing import Any
 
 from .arguments import (
     FOLLOWING_INTERROGATIVE,
-    FOLLOWING_STATEMENT,
-    INTERRUPTING,
+    FOLLOWING_INTERRUPT,
+    FOLLOWING_STATEMENT
 )
 from . import follow_on
 
@@ -42,9 +42,11 @@ def sign(
         raise ValueError("No answer type provided")
 
     answer: str
-    if answer_type == INTERRUPTING:
-        answer = config["ANSWER_FOLLOWING_INTERRUPT"]
-    elif answer_type in (FOLLOWING_STATEMENT, FOLLOWING_INTERROGATIVE):
+    if answer_type in (
+        FOLLOWING_INTERROGATIVE,
+        FOLLOWING_STATEMENT,
+        FOLLOWING_INTERRUPT
+    ):
         answer = config[f"ANSWER_{answer_type}"]
         (sign_type, answer) = follow_on.handle_follow_on(
             sign_type,

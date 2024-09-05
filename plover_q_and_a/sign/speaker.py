@@ -5,7 +5,7 @@ Speaker module to handle commands that look like:
     - {:Q_AND_A:DEFENSE_2:INITIAL}
     - {:Q_AND_A:WITNESS:FOLLOWING_QUESTION}
     - {:Q_AND_A:COURT:FOLLOWING_STATEMENT}
-    - {:Q_AND_A:VIDEOGRAPHER:INTERRUPTING}
+    - {:Q_AND_A:VIDEOGRAPHER:FOLLOWING_INTERRUPT}
     - {:Q_AND_A:COURT_REPORTER:INITIAL}
     - {:Q_AND_A:CLERK:FOLLOWING_QUESTION}
     - {:Q_AND_A:BAILIFF:FOLLOWING_STATEMENT}
@@ -14,9 +14,9 @@ from typing import Any
 
 from .arguments import (
     FOLLOWING_INTERROGATIVE,
+    FOLLOWING_INTERRUPT,
     FOLLOWING_STATEMENT,
-    INITIAL,
-    INTERRUPTING
+    INITIAL
 )
 
 
@@ -40,9 +40,11 @@ def sign(args: list[str], config: dict[str, Any]) -> tuple[str, str]:
     speaker: str
     if sign_type == INITIAL:
         speaker = config["SPEAKER_FOR"](speaker_name)
-    elif sign_type == INTERRUPTING:
-        speaker = config["SPEAKER_FOLLOWING_INTERRUPT_FOR"](speaker_name)
-    elif sign_type in (FOLLOWING_STATEMENT, FOLLOWING_INTERROGATIVE):
+    elif sign_type in (
+        FOLLOWING_INTERROGATIVE,
+        FOLLOWING_STATEMENT,
+        FOLLOWING_INTERRUPT
+    ):
         speaker = config[f"SPEAKER_{sign_type}_FOR"](speaker_name)
     else:
         raise ValueError(
