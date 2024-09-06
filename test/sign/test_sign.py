@@ -17,8 +17,8 @@ def unknown_args():
 
 def test_blank_args(blank_args, blank_config):
     with pytest.raises(ValueError, match="No sign type provided"):
-        sign.text(blank_args, blank_config)
+        sign.text(None, blank_args, blank_config)
 
 def test_unknown_args(unknown_args, blank_config):
     with pytest.raises(ValueError, match="Unknown sign type provided: UNKNOWN"):
-        sign.text(unknown_args, blank_config)
+        sign.text(None, unknown_args, blank_config)

@@ -10,7 +10,11 @@ Answer module to handle commands that look like:
 ELABORATE_AFTER and YIELD_AFTER are considered follow on arguments, and are
 handled by the `follow_on` module.
 """
-from typing import Any
+from typing import (
+    Any,
+    Callable,
+    Optional
+)
 
 from .arguments import (
     FOLLOWING_INTERROGATIVE,
@@ -21,6 +25,7 @@ from . import follow_on
 
 
 def sign(
+    current_sign_type: Optional[str],
     sign_type: str,
     args: list[str],
     config: dict[str, Any]
@@ -41,14 +46,16 @@ def sign(
     if not answer_type:
         raise ValueError("No answer type provided")
 
-    answer: str
+    answer: Callable[[Optional[str]], str]
+    answer_value: str
     if answer_type in (
         FOLLOWING_INTERROGATIVE,
         FOLLOWING_STATEMENT,
         FOLLOWING_INTERRUPT
     ):
         answer = config[f"ANSWER_{answer_type}"]
-        (sign_type, answer) = follow_on.handle_follow_on(
+        (sign_type, answer_value) = follow_on.handle_follow_on(
+            current_sign_type,
             sign_type,
             follow_on_args,
             answer,
@@ -58,4 +65,4 @@ def sign(
     else:
         raise ValueError(f"Unknown answer type provided: {answer_type}")
 
-    return (sign_type, answer)
+    return (sign_type, answer_value)

@@ -1,5 +1,7 @@
 {
   "speaker": {
-    "plaintiff_1": "mr. johnson"
+    "marker": {
+      "plaintiff_1": "mr. johnson"
+    }
   }
 }

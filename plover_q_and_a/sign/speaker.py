@@ -10,7 +10,10 @@ Speaker module to handle commands that look like:
     - {:Q_AND_A:CLERK:FOLLOWING_QUESTION}
     - {:Q_AND_A:BAILIFF:FOLLOWING_STATEMENT}
 """
-from typing import Any
+from typing import (
+    Any,
+    Optional
+)
 
 from .arguments import (
     FOLLOWING_INTERROGATIVE,
@@ -20,7 +23,11 @@ from .arguments import (
 )
 
 
-def sign(args: list[str], config: dict[str, Any]) -> tuple[str, str]:
+def sign(
+    current_sign_type: Optional[str],
+    args: list[str],
+    config: dict[str, Any]
+) -> tuple[str, str]:
     """
     Returns the text for a known speaker.
 
@@ -45,7 +52,9 @@ def sign(args: list[str], config: dict[str, Any]) -> tuple[str, str]:
         FOLLOWING_STATEMENT,
         FOLLOWING_INTERRUPT
     ):
-        speaker = config[f"SPEAKER_{sign_type}_FOR"](speaker_name)
+        speaker = (
+            config[f"SPEAKER_{sign_type}_FOR"](current_sign_type, speaker_name)
+        )
     else:
         raise ValueError(
             f"Unknown sign type provided for {speaker_type}: {sign_type}"

@@ -11,7 +11,11 @@ Question module to handle commands that look like:
 ELABORATE_AFTER and YIELD_AFTER are considered follow on arguments, and are
 handled by the `follow_on` module.
 """
-from typing import Any
+from typing import (
+    Any,
+    Callable,
+    Optional
+)
 
 from .arguments import (
     FOLLOWING_INTERROGATIVE,
@@ -23,6 +27,7 @@ from . import follow_on
 
 
 def sign(
+    current_sign_type: Optional[str],
     sign_type: str,
     args: list[str],
     config: dict[str, Any]
@@ -43,16 +48,18 @@ def sign(
     if not question_type:
         raise ValueError("No question type provided")
 
-    question: str
+    question: Callable[[Optional[str]], str]
+    question_value: str
     if question_type == INITIAL:
-        question = config[sign_type]
+        question_value = config[sign_type]
     elif question_type in (
         FOLLOWING_INTERROGATIVE,
         FOLLOWING_INTERRUPT,
         FOLLOWING_STATEMENT
     ):
         question = config[f"{sign_type}_{question_type}"]
-        (sign_type, question) = follow_on.handle_follow_on(
+        (sign_type, question_value) = follow_on.handle_follow_on(
+            current_sign_type,
             sign_type,
             follow_on_args,
             question,
@@ -62,4 +69,4 @@ def sign(
     else:
         raise ValueError(f"Unknown question type provided: {question_type}")
 
-    return (sign_type, question)
+    return (sign_type, question_value)

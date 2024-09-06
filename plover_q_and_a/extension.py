@@ -97,7 +97,11 @@ class QAndA:
         else:
             current_sign_type: str
             text: str
-            (current_sign_type, text) = sign.text(args, self._config)
+            (current_sign_type, text) = sign.text(
+                self._current_sign_type,
+                args,
+                self._config
+            )
             self._current_sign_type = current_sign_type
             action.text = text
             action.prev_attach = True

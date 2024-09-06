@@ -30,25 +30,23 @@ _COURT_REPORTER_NAME: str = "THE COURT REPORTER"
 _CLERK_NAME: str = "THE CLERK"
 _BAILIFF_NAME: str = "THE BAILIFF"
 
-def formatted_speaker(data: dict[str, Any]) -> Callable[[str], str]:
+def marker(data: dict[str, Any]) -> Callable[[str], str]:
     """
     Format a speaker from config.
     """
-    speaker_formatting: dict[str, Union[str, bool]] = _speaker_formatting(data)
+    speaker_marker: dict[str, Union[str, bool]] = _speaker_marker(data)
 
     return lambda speaker_name: (
-        cast(str, speaker_formatting.get("pre", _SPEAKER_NAME_PRE_FORMATTING))
+        cast(str, speaker_marker.get("pre", _SPEAKER_NAME_PRE_FORMATTING))
         + speaker_name
-        + cast(str,
-            speaker_formatting.get("post", _SPEAKER_NAME_POST_FORMATTING)
-        )
+        + cast(str, speaker_marker.get("post", _SPEAKER_NAME_POST_FORMATTING))
     )
 
 def names(data: dict[str, Any]) -> dict[str, str]:
     """
     Format speaker names from config.
     """
-    speaker: dict[str, Union[str, dict[str, Union[str, bool]]]] = _speaker(data)
+    speaker: dict[str, Union[str, bool]] = _speaker_marker(data)
     speaker_names: dict[str, str] = {
         "BAILIFF": cast(str, speaker.get("bailiff", _BAILIFF_NAME)),
         "CLERK": cast(str, speaker.get("clerk", _CLERK_NAME)),
@@ -90,19 +88,11 @@ def should_upcase(data: dict[str, Any]) -> bool:
     """
     return cast(
         bool,
-        _speaker_formatting(data).get("upcase", _SPEAKER_NAME_UPCASE_FORMATTING)
+        _speaker_marker(data).get("upcase", _SPEAKER_NAME_UPCASE_FORMATTING)
     )
 
-def _speaker_formatting(data: dict[str, Any]) -> dict[str, Union[str, bool]]:
-    return cast(
-        dict[str, Union[str, bool]],
-        _speaker(data).get("formatting", {})
-    )
+def _speaker_marker(data: dict[str, Any]) -> dict[str, Union[str, bool]]:
+    return _speaker(data).get("marker", {})
 
-def _speaker(
-    data: dict[str, Any]
-) -> dict[str, Union[str, dict[str, Union[str, bool]]]]:
-    return cast(
-        dict[str, Union[str, dict[str, Union[str, bool]]]],
-        data.get("speaker", {})
-    )
+def _speaker(data: dict[str, Any]) -> dict[str, dict[str, Union[str, bool]]]:
+    return cast(dict[str, dict[str, Union[str, bool]]], data.get("speaker", {}))

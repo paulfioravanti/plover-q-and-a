@@ -1,8 +1,8 @@
 {
   "speaker": {
-    "plaintiff_1": "PLAINTIFF 1",
-    "formatting": {
+    "marker": {
       "pre": "> ",
+      "plaintiff_1": "PLAINTIFF 1",
       "post": " ->"
     }
   },

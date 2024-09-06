@@ -6,7 +6,10 @@ Byline module to handle commands that look like:
     - {:Q_AND_A:BYLINE:DEFENSE_1:FOLLOWING_QUESTION}
     - {:Q_AND_A:BYLINE:DEFENSE_2:FOLLOWING_STATEMENT}
 """
-from typing import Any
+from typing import (
+    Any,
+    Optional
+)
 
 from .. import BYLINE_SPEAKER_TYPES
 from .arguments import (
@@ -18,7 +21,13 @@ from .arguments import (
 from . import speaker
 
 
-def sign(args: list[str], config: dict[str, Any]) -> tuple[str, str]:
+_ARGUMENT_DIVIDER: str = ":"
+
+def sign(
+    current_sign_type: Optional[str],
+    args: list[str],
+    config: dict[str, Any]
+) -> tuple[str, str]:
     """
     Returns the text for a byline type.
 
@@ -26,9 +35,9 @@ def sign(args: list[str], config: dict[str, Any]) -> tuple[str, str]:
     recognised.
     """
     if not len(args) == 2:
-        given_args: str = ":".join(args)
         raise ValueError(
-            f"Two byline arguments must be provided. You gave: {given_args}"
+            "Two byline arguments must be provided. "
+            f"You gave: {_ARGUMENT_DIVIDER.join(args)}"
         )
 
     speaker_type: str
@@ -55,7 +64,9 @@ def sign(args: list[str], config: dict[str, Any]) -> tuple[str, str]:
         FOLLOWING_INTERRUPT,
         FOLLOWING_STATEMENT
     ):
-        byline = config[f"BYLINE_{sign_type}_FOR"](speaker_name)
+        byline = (
+            config[f"BYLINE_{sign_type}_FOR"](current_sign_type, speaker_name)
+        )
     else:
         raise ValueError(
             f"Unknown sign type provided for {speaker_type} byline: {sign_type}"

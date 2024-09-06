@@ -6,23 +6,25 @@ from plover_q_and_a import config
 
 
 _NON_LAMBDA_CONFIG_KEYS = [
-    "ANSWER_FOLLOWING_INTERRUPT",
-    "ANSWER_FOLLOWING_INTERROGATIVE",
-    "ANSWER_FOLLOWING_STATEMENT",
     "QUESTION",
-    "QUESTION_FOLLOWING_INTERRUPT",
-    "QUESTION_FOLLOWING_INTERROGATIVE",
-    "QUESTION_FOLLOWING_STATEMENT",
     "SET_NAME_PROMPT",
     "speaker_names",
+]
+_ONE_ARG_LAMBDA_CONFIG_KEYS = [
+    "QUESTION_FOLLOWING_INTERROGATIVE",
+    "QUESTION_FOLLOWING_STATEMENT",
+    "QUESTION_FOLLOWING_INTERRUPT",
+    "ANSWER_FOLLOWING_INTERROGATIVE",
+    "ANSWER_FOLLOWING_STATEMENT",
+    "ANSWER_FOLLOWING_INTERRUPT",
+    "BYLINE_FOR",
+    "SPEAKER_FOR",
     "STATEMENT_ELABORATE"
 ]
-_LAMBDA_CONFIG_KEYS = [
-    "BYLINE_FOR",
-    "BYLINE_FOLLOWING_INTERRUPT_FOR",
+_TWO_ARG_LAMBDA_CONFIG_KEYS = [
     "BYLINE_FOLLOWING_INTERROGATIVE_FOR",
     "BYLINE_FOLLOWING_STATEMENT_FOR",
-    "SPEAKER_FOR",
+    "BYLINE_FOLLOWING_INTERRUPT_FOR",
     "SPEAKER_FOLLOWING_INTERRUPT_FOR",
     "SPEAKER_FOLLOWING_INTERROGATIVE_FOR",
     "SPEAKER_FOLLOWING_STATEMENT_FOR"
@@ -133,10 +135,15 @@ def test_non_existent_config_loads_defaults(
     default_config = config.load(default_config_path)
     for key in _NON_LAMBDA_CONFIG_KEYS:
         assert loaded_config[key] == default_config[key]
-    for key in _LAMBDA_CONFIG_KEYS:
+    for key in _ONE_ARG_LAMBDA_CONFIG_KEYS:
         assert (
             loaded_config[key](speaker_name)
             == default_config[key](speaker_name)
+        )
+    for key in _TWO_ARG_LAMBDA_CONFIG_KEYS:
+        assert (
+            loaded_config[key]("", speaker_name)
+            == default_config[key]("", speaker_name)
         )
 
 def test_specified_config_overwrites_defaults(

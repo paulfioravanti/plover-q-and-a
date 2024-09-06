@@ -28,10 +28,10 @@ def load(config_path: Path) -> dict[str, Any]:
     speaker_marker: Callable[[str], str]
     speaker_names: list[str]
     speaker_upcase: bool
-    interrogative_yield: str
-    statement_yield: str
-    statement_elaborate: str
-    interrupt_yield: str
+    interrogative_yield: Callable[[str], str]
+    statement_yield: Callable[[str], str]
+    statement_elaborate: Callable[[str], str]
+    interrupt_yield: Callable[[str], str]
     set_name_prompt: str
     (
         question_marker,
@@ -49,36 +49,70 @@ def load(config_path: Path) -> dict[str, Any]:
 
     return {
         "QUESTION": question_marker,
-        "QUESTION_FOLLOWING_INTERRUPT": interrupt_yield + question_marker,
-        "QUESTION_FOLLOWING_INTERROGATIVE": interrogative_yield + question_marker,
-        "QUESTION_FOLLOWING_STATEMENT": statement_yield + question_marker,
-        "ANSWER_FOLLOWING_INTERRUPT": interrupt_yield + answer_marker,
-        "ANSWER_FOLLOWING_INTERROGATIVE": interrogative_yield + answer_marker,
-        "ANSWER_FOLLOWING_STATEMENT": statement_yield + answer_marker,
+        "QUESTION_FOLLOWING_INTERROGATIVE": lambda current_sign_type: (
+            interrogative_yield(current_sign_type) + question_marker
+        ),
+        "QUESTION_FOLLOWING_STATEMENT": lambda current_sign_type: (
+            statement_yield(current_sign_type) + question_marker
+        ),
+        "QUESTION_FOLLOWING_INTERRUPT": lambda current_sign_type: (
+            interrupt_yield(current_sign_type) + question_marker
+        ),
+        "ANSWER_FOLLOWING_INTERROGATIVE": lambda current_sign_type: (
+            interrogative_yield(current_sign_type) + answer_marker
+        ),
+        "ANSWER_FOLLOWING_STATEMENT": lambda current_sign_type: (
+            statement_yield(current_sign_type) + answer_marker
+        ),
+        "ANSWER_FOLLOWING_INTERRUPT": lambda current_sign_type: (
+            interrupt_yield(current_sign_type) + answer_marker
+        ),
         "BYLINE_FOR": byline_marker,
-        "BYLINE_FOLLOWING_INTERRUPT_FOR": lambda speaker_name: (
-            interrupt_yield + byline_marker(speaker_name)
+        "BYLINE_FOLLOWING_INTERROGATIVE_FOR": (
+            lambda current_sign_type, speaker_name: (
+                interrogative_yield(current_sign_type)
+                + byline_marker(speaker_name)
+            )
         ),
-        "BYLINE_FOLLOWING_INTERROGATIVE_FOR": lambda speaker_name: (
-            interrogative_yield + byline_marker(speaker_name)
+        "BYLINE_FOLLOWING_STATEMENT_FOR": (
+            lambda current_sign_type, speaker_name: (
+                statement_yield(current_sign_type)
+                + byline_marker(speaker_name)
+            )
         ),
-        "BYLINE_FOLLOWING_STATEMENT_FOR": lambda speaker_name: (
-            statement_yield + byline_marker(speaker_name)
+        "BYLINE_FOLLOWING_INTERRUPT_FOR": (
+            lambda current_sign_type, speaker_name: (
+                interrupt_yield(current_sign_type)
+                + byline_marker(speaker_name)
+            )
         ),
-        "SET_NAME_PROMPT": set_name_prompt,
         "SPEAKER_FOR": speaker_marker,
-        "SPEAKER_FOLLOWING_INTERRUPT_FOR": lambda speaker_name: (
-            interrupt_yield + speaker_marker(speaker_name)
+        "SPEAKER_FOLLOWING_INTERROGATIVE_FOR": (
+            lambda current_sign_type, speaker_name: (
+                interrogative_yield(current_sign_type)
+                + speaker_marker(speaker_name)
+            )
         ),
-        "SPEAKER_FOLLOWING_INTERROGATIVE_FOR": lambda speaker_name: (
-            interrogative_yield + speaker_marker(speaker_name)
+        "SPEAKER_FOLLOWING_STATEMENT_FOR": (
+            lambda current_sign_type, speaker_name: (
+                statement_yield(current_sign_type)
+                + speaker_marker(speaker_name)
+            )
         ),
-        "SPEAKER_FOLLOWING_STATEMENT_FOR": lambda speaker_name: (
-            statement_yield + speaker_marker(speaker_name)
+        "SPEAKER_FOLLOWING_INTERRUPT_FOR": (
+            lambda current_sign_type, speaker_name: (
+                interrupt_yield(current_sign_type)
+                + speaker_marker(speaker_name)
+            )
         ),
         "speaker_names": speaker_names,
         "SPEAKER_UPCASE": speaker_upcase,
-        "STATEMENT_ELABORATE": statement_elaborate,
+        # NOTE: Not sure what's going on with pylint with the warning below...
+        # pylint: disable-next=unnecessary-lambda
+        "STATEMENT_ELABORATE": lambda current_sign_type: (
+            statement_elaborate(current_sign_type)
+        ),
+        "SET_NAME_PROMPT": set_name_prompt
     }
 
 def reload(

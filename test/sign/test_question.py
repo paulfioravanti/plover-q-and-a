@@ -22,8 +22,23 @@ def initial_question_type(question_arg):
     return question_arg + ["INITIAL"]
 
 @pytest.fixture
-def question_following_interrupt_type(question_arg):
-    return question_arg + ["FOLLOWING_INTERRUPT"]
+def question_following_interrogative_type(question_arg):
+    return question_arg + ["FOLLOWING_INTERROGATIVE"]
+
+@pytest.fixture
+def question_following_interrogative_then_yield_to_answer_type(
+    question_following_interrogative_type
+):
+    return question_following_interrogative_type + ["YIELD_AFTER", "Okay"]
+
+@pytest.fixture
+def question_following_interrogative_then_elaborate_type(
+    question_following_interrogative_type
+):
+    return (
+        question_following_interrogative_type
+        + ["ELABORATE_AFTER", "All right"]
+    )
 
 @pytest.fixture
 def question_following_statement_type(question_arg):
@@ -42,20 +57,8 @@ def question_following_statement_then_elaborate_type(
     return question_following_statement_type + ["ELABORATE_AFTER", "All right"]
 
 @pytest.fixture
-def question_following_question_type(question_arg):
-    return question_arg + ["FOLLOWING_INTERROGATIVE"]
-
-@pytest.fixture
-def question_following_question_then_yield_to_answer_type(
-    question_following_question_type
-):
-    return question_following_question_type + ["YIELD_AFTER", "Okay"]
-
-@pytest.fixture
-def question_following_question_then_elaborate_type(
-    question_following_question_type
-):
-    return question_following_question_type + ["ELABORATE_AFTER", "All right"]
+def question_following_interrupt_type(question_arg):
+    return question_arg + ["FOLLOWING_INTERRUPT"]
 
 # Config
 
@@ -69,29 +72,35 @@ def initial_question_config():
 
 @pytest.fixture
 def question_following_interrupt_config():
-    return { "QUESTION_FOLLOWING_INTERRUPT": "--\n\tQ\t" }
+    return {
+        "QUESTION_FOLLOWING_INTERRUPT": lambda _current_sign_type: "--\n\tQ\t"
+    }
 
 @pytest.fixture
 def question_following_statement_config():
-    return { "QUESTION_FOLLOWING_STATEMENT": ".\n\tQ\t" }
+    return {
+        "QUESTION_FOLLOWING_STATEMENT": lambda _current_sign_type: ".\n\tQ\t"
+    }
 
 @pytest.fixture
-def answer_following_question_config():
-    return { "ANSWER_FOLLOWING_INTERROGATIVE": "?\n\tA\t" }
+def answer_following_interrogative_config():
+    return {
+        "ANSWER_FOLLOWING_INTERROGATIVE": lambda _current_sign_type: "?\n\tA\t"
+    }
 
 @pytest.fixture
 def question_following_statement_then_yield_to_answer_config(
     question_following_statement_config,
-    answer_following_question_config
+    answer_following_interrogative_config
 ):
     return (
         question_following_statement_config
-        | answer_following_question_config
+        | answer_following_interrogative_config
     )
 
 @pytest.fixture
 def statement_elaborate_config():
-    return { "STATEMENT_ELABORATE": ". " }
+    return { "STATEMENT_ELABORATE": lambda _current_sign_type: ". " }
 
 @pytest.fixture
 def question_following_statement_then_elaborate_config(
@@ -101,58 +110,87 @@ def question_following_statement_then_elaborate_config(
     return question_following_statement_config | statement_elaborate_config
 
 @pytest.fixture
-def question_following_question_config():
-    return { "QUESTION_FOLLOWING_INTERROGATIVE": "?\n\tQ\t" }
+def question_following_interrogative_config():
+    return {
+        "QUESTION_FOLLOWING_INTERROGATIVE": (
+            lambda _current_sign_type: "?\n\tQ\t"
+        )
+    }
 
 @pytest.fixture
-def question_following_question_then_yield_to_answer_config(
-    question_following_question_config,
-    answer_following_question_config
+def question_following_interrogative_then_yield_to_answer_config(
+    question_following_interrogative_config,
+    answer_following_interrogative_config
 ):
     return (
-        question_following_question_config
-        | answer_following_question_config
+        question_following_interrogative_config
+        | answer_following_interrogative_config
     )
 
 @pytest.fixture
-def question_following_question_then_elaborate_config(
-    question_following_question_config,
+def question_following_interrogative_then_elaborate_config(
+    question_following_interrogative_config,
     statement_elaborate_config
 ):
-    return question_following_question_config | statement_elaborate_config
+    return question_following_interrogative_config | statement_elaborate_config
 
 # Tests
 
 def test_missing_question_args(question_arg, blank_config):
     with pytest.raises(ValueError, match="No question args provided"):
-        sign.text(question_arg, blank_config)
+        sign.text(None, question_arg, blank_config)
 
 def test_blank_question_type(blank_question_type, blank_config):
     with pytest.raises(ValueError, match="No question type provided"):
-        sign.text(blank_question_type, blank_config)
+        sign.text(None, blank_question_type, blank_config)
 
 def test_unknown_question_type(unknown_question_type, blank_config):
     with pytest.raises(
         ValueError,
         match="Unknown question type provided: UNKNOWN"
     ):
-        sign.text(unknown_question_type, blank_config)
+        sign.text(None, unknown_question_type, blank_config)
 
 def test_initial_question(initial_question_type, initial_question_config):
     assert (
-        sign.text(initial_question_type, initial_question_config)
+        sign.text(None, initial_question_type, initial_question_config)
         == ("QUESTION", "\tQ\t")
     )
 
-def test_question_following_interrupt(
-    question_following_interrupt_type,
-    question_following_interrupt_config
+def test_question_following_interrogative(
+    question_following_interrogative_type,
+    question_following_interrogative_config
 ):
     assert (
         sign.text(
-            question_following_interrupt_type,
-            question_following_interrupt_config
-        ) == ("QUESTION", "--\n\tQ\t")
+            None,
+            question_following_interrogative_type,
+            question_following_interrogative_config
+        ) == ("QUESTION", "?\n\tQ\t")
+   )
+
+def test_question_following_interrogative_then_yield_to_answer(
+    question_following_interrogative_then_yield_to_answer_type,
+    question_following_interrogative_then_yield_to_answer_config
+):
+    assert (
+        sign.text(
+            None,
+            question_following_interrogative_then_yield_to_answer_type,
+            question_following_interrogative_then_yield_to_answer_config
+        ) == ("ANSWER", "?\n\tQ\tOkay?\n\tA\t")
+   )
+
+def test_question_following_interrogative_then_elaborate(
+    question_following_interrogative_then_elaborate_type,
+    question_following_interrogative_then_elaborate_config
+):
+    assert (
+        sign.text(
+            None,
+            question_following_interrogative_then_elaborate_type,
+            question_following_interrogative_then_elaborate_config
+        ) == ("QUESTION", "?\n\tQ\tAll right. ")
    )
 
 def test_question_following_statement(
@@ -161,8 +199,9 @@ def test_question_following_statement(
 ):
     assert (
         sign.text(
-          question_following_statement_type,
-          question_following_statement_config
+            None,
+            question_following_statement_type,
+            question_following_statement_config
         ) == ("QUESTION", ".\n\tQ\t")
    )
 
@@ -172,8 +211,9 @@ def test_question_following_statement_then_yield_to_answer(
 ):
     assert (
         sign.text(
-          question_following_statement_then_yield_to_answer_type,
-          question_following_statement_then_yield_to_answer_config
+            None,
+            question_following_statement_then_yield_to_answer_type,
+            question_following_statement_then_yield_to_answer_config
         ) == ("ANSWER", ".\n\tQ\tOkay?\n\tA\t")
    )
 
@@ -183,40 +223,20 @@ def test_question_following_statement_then_elaborate(
 ):
     assert (
         sign.text(
+            None,
             question_following_statement_then_elaborate_type,
             question_following_statement_then_elaborate_config
         ) == ("QUESTION", ".\n\tQ\tAll right. ")
    )
 
-def test_question_following_question(
-    question_following_question_type,
-    question_following_question_config
+def test_question_following_interrupt(
+    question_following_interrupt_type,
+    question_following_interrupt_config
 ):
     assert (
         sign.text(
-          question_following_question_type,
-          question_following_question_config
-        ) == ("QUESTION", "?\n\tQ\t")
-   )
-
-def test_question_following_question_then_yield_to_answer(
-    question_following_question_then_yield_to_answer_type,
-    question_following_question_then_yield_to_answer_config
-):
-    assert (
-        sign.text(
-          question_following_question_then_yield_to_answer_type,
-          question_following_question_then_yield_to_answer_config
-        ) == ("ANSWER", "?\n\tQ\tOkay?\n\tA\t")
-   )
-
-def test_question_following_question_then_elaborate(
-    question_following_question_then_elaborate_type,
-    question_following_question_then_elaborate_config
-):
-    assert (
-        sign.text(
-            question_following_question_then_elaborate_type,
-            question_following_question_then_elaborate_config
-        ) == ("QUESTION", "?\n\tQ\tAll right. ")
+            None,
+            question_following_interrupt_type,
+            question_following_interrupt_config
+        ) == ("QUESTION", "--\n\tQ\t")
    )

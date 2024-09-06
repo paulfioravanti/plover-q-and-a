@@ -2,6 +2,7 @@
 Module to collate parsed application JSON config file.
 """
 from typing import Any
+
 from . import (
     answer,
     byline,
@@ -17,9 +18,9 @@ def parse(data: dict[str, Any]) -> tuple[Any, ...]:
     """
     return (
         question.marker(data),
-        answer.formatted_answer(data),
-        byline.formatted_byline(data),
-        speaker.formatted_speaker(data),
+        answer.marker(data),
+        byline.marker(data),
+        speaker.marker(data),
         speaker.names(data),
         speaker.should_upcase(data),
         sentence_ending.interrogative_yield(data),

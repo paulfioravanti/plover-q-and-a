@@ -22,16 +22,16 @@ def initial_speaker_type(speaker_arg):
     return speaker_arg + ["INITIAL"]
 
 @pytest.fixture
-def speaker_following_interrupt_type(speaker_arg):
-    return speaker_arg + ["FOLLOWING_INTERRUPT"]
+def speaker_following_interrogative_type(speaker_arg):
+    return speaker_arg + ["FOLLOWING_INTERROGATIVE"]
 
 @pytest.fixture
 def speaker_following_statement_type(speaker_arg):
     return speaker_arg + ["FOLLOWING_STATEMENT"]
 
 @pytest.fixture
-def speaker_following_question_type(speaker_arg):
-    return speaker_arg + ["FOLLOWING_INTERROGATIVE"]
+def speaker_following_interrupt_type(speaker_arg):
+    return speaker_arg + ["FOLLOWING_INTERRUPT"]
 
 # Config
 
@@ -62,26 +62,32 @@ def initial_speaker_config(speaker_config):
     }
 
 @pytest.fixture
-def speaker_following_interrupt_config(speaker_config):
+def speaker_following_interrogative_config(speaker_config):
     return speaker_config | {
-        "SPEAKER_FOLLOWING_INTERRUPT_FOR": lambda speaker_name: (
-            f"--\n\t{speaker_name}:  "
+        "SPEAKER_FOLLOWING_INTERROGATIVE_FOR": (
+            lambda _current_sign_type, speaker_name: (
+                f"?\n\t{speaker_name}:  "
+            )
         )
     }
 
 @pytest.fixture
 def speaker_following_statement_config(speaker_config):
     return speaker_config | {
-        "SPEAKER_FOLLOWING_STATEMENT_FOR": lambda speaker_name: (
-            f".\n\t{speaker_name}:  "
+        "SPEAKER_FOLLOWING_STATEMENT_FOR": (
+            lambda _current_sign_type, speaker_name: (
+                f".\n\t{speaker_name}:  "
+            )
         )
     }
 
 @pytest.fixture
-def speaker_following_question_config(speaker_config):
+def speaker_following_interrupt_config(speaker_config):
     return speaker_config | {
-        "SPEAKER_FOLLOWING_INTERROGATIVE_FOR": lambda speaker_name: (
-            f"?\n\t{speaker_name}:  "
+        "SPEAKER_FOLLOWING_INTERRUPT_FOR": (
+            lambda _current_sign_type, speaker_name: (
+                f"--\n\t{speaker_name}:  "
+            )
         )
     }
 
@@ -89,14 +95,14 @@ def speaker_following_question_config(speaker_config):
 
 def test_blank_sign_type_args(blank_sign_type_speaker_args, blank_config):
     with pytest.raises(ValueError, match="No sign type provided"):
-        sign.text(blank_sign_type_speaker_args, blank_config)
+        sign.text("", blank_sign_type_speaker_args, blank_config)
 
 def test_unknown_speaker_type(initial_speaker_type, unknown_speaker_config):
     with pytest.raises(
         ValueError,
         match="Unknown speaker type provided: WITNESS"
     ):
-        sign.text(initial_speaker_type, unknown_speaker_config)
+        sign.text("", initial_speaker_type, unknown_speaker_config)
 
 def test_unknown_sign_type_args(
     unknown_sign_type_speaker_args,
@@ -106,11 +112,12 @@ def test_unknown_sign_type_args(
         ValueError,
         match="Unknown sign type provided for WITNESS: UNKNOWN"
     ):
-        sign.text(unknown_sign_type_speaker_args, speaker_config)
+        sign.text("", unknown_sign_type_speaker_args, speaker_config)
 
 def test_initial_speaker(initial_speaker_type, initial_speaker_config):
     assert (
         sign.text(
+            "",
             initial_speaker_type,
             initial_speaker_config
         ) == ("SPEAKER", "\tTHE WITNESS:  ")
@@ -122,6 +129,7 @@ def test_interrupting_speaker(
 ):
     assert (
         sign.text(
+            "",
             speaker_following_interrupt_type,
             speaker_following_interrupt_config
         ) == ("SPEAKER", "--\n\tTHE WITNESS:  ")
@@ -133,18 +141,20 @@ def test_speaker_following_statement(
 ):
     assert (
         sign.text(
+            "",
             speaker_following_statement_type,
             speaker_following_statement_config
         ) == ("SPEAKER", ".\n\tTHE WITNESS:  ")
     )
 
-def test_speaker_following_question(
-    speaker_following_question_type,
-    speaker_following_question_config
+def test_speaker_following_interrogative(
+    speaker_following_interrogative_type,
+    speaker_following_interrogative_config
 ):
     assert (
         sign.text(
-            speaker_following_question_type,
-            speaker_following_question_config
+            "QUESTION",
+            speaker_following_interrogative_type,
+            speaker_following_interrogative_config
         ) == ("SPEAKER", "?\n\tTHE WITNESS:  ")
     )
