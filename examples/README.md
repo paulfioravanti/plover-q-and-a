@@ -1,11 +1,11 @@
 # Config and Dictionaries
 
 This plugin might only really be applicable for court reporting, but since
-there are Q&A exercises in the [Platinum Steno][] lessons, this plugin attempts
-to port the formatting used there to Plover (download the
+there are Q&A exercises in the [Platinum Steno][] lessons, this plugin was
+originally created to port the formatting used there to Plover (download the
 [lesson 27 materials][Platinum Steno Lesson 27 lesson materials] for free to see
 the briefs they use), but also allow you to customise every aspect of the output
-to your liking.
+so it can adapt to different Q&A formats.
 
 Config and dictionary entries form the backbone of being able to use this
 plugin, so examples of each are provided here in hopes they can get you started.
@@ -25,7 +25,7 @@ plugin, so examples of each are provided here in hopes they can get you started.
 
 ## Config
 
-[`q_and_a.json`][] is an example config [JSON][] file containing all the
+[`platinum_steno.json`][] is an example config [JSON][] file containing all the
 customisable parts of the various Q&A-related sign outputs. 
 
 They are based on the formatting used in the [Platinum Steno][] Q&A exercises.
@@ -41,8 +41,9 @@ The available options for configuration are:
 
 ### Speaker
 
-Under the `"speaker"` key, you will find a set of named types of people who
-could potentially become speakers (or discussion participants) during Q&A:
+Under the `"speaker"` key, within the `"marker"` settings, you will find a set
+of named types of people who could potentially become speakers (or discussion
+participants) during Q&A:
 
 | Key              | Meaning           | Default Value                 |
 |:-----------------|:------------------|:------------------------------|
@@ -57,8 +58,7 @@ could potentially become speakers (or discussion participants) during Q&A:
 |`"clerk"`         |The Clerk          |`THE CLERK`                    |
 |`"bailiff"`       |The Bailiff        |`THE BAILIFF`                  |
 
-Each speaker has formatting that goes either side of the speaker name. You can
-find these values under the `"formatting"` key inside the `"speaker"`:
+Each speaker has formatting that goes either side of the speaker name:
 
 | Key      | Meaning            | Default Value                |
 |:---------|:-------------------|:-----------------------------|
@@ -81,7 +81,7 @@ default values could look like the following:
 
 Platinum Steno Q&A formatting has all names uppercased. By default, this plugin
 follows that convention: when you either specify a speaker name in config, or
-change it yourself using the `SET_NAME` command, the resulting value will
+change it yourself using the [`SET_NAME` command][], the resulting value will
 automatically be upcased.
 
 If you want to keep lowercase characters in your speaker names, set
@@ -89,25 +89,26 @@ If you want to keep lowercase characters in your speaker names, set
 
 ### Questions, Answers, and Bylines
 
-Questions, answers, and bylines have similar sets of configuration under their
-respective `"question"`, `"answer"`, and `"byline"` keys.
+Questions, answers, and bylines have similar sets of configuration in the
+`"marker"` settings under their respective `"question"`, `"answer"`, and
+`"byline"` keys.
 
-Each set of configuration has a `"marker"`, meaning the characters marking the
-question, answer, or byline. They also each have a set of `"formatting"`,
-same as speakers.
+Each set of configuration has a `"text"` value, meaning the characters marking
+the question, answer, or byline. They also each have a set of `"ending"`
+formatting, same as speakers.
 
 ### Other Formatting
 
 For the very discerning Q&A-er, other more minute configuration is available for
-the following values:
+the following values under the `"ending"` settings of each sign type entry:
 
-| Key              | Meaning                                 | Default Value    |
-|:-----------------|:----------------------------------------|:-----------------|
-|`"question_end"`  |Marks the end of a question              |`?`               |
-|`"statement_end"` |Marks the end of a statement             |`.`               |
-|`"interrupt"`     |Marks a speaker interruption             |` --`             |
-|`"yield"`         |Marks yielding control to another speaker|`\n` (line break) |
-|`"sentence_space"`|Marker for directly after a sentence end |` ` (single space)|
+| Key              | Meaning                                                                          | Default Value    |
+|:-----------------|:---------------------------------------------------------------------------------|:-----------------|
+|`"interrogative"` |Marks the end of a interrogative sentence or question                             |`?`               |
+|`"statement"`     |Marks the end of a declarative, imperative, or exclamatory sentence or statement  |`.`               |
+|`"interrupt"`     |Marks a speaker interruption                                                      |` --`             |
+|`"yield"`         |Marks yielding control to another speaker                                         |`\n` (line break) |
+|`"sentence_space"`|Marker for directly after a sentence end (top level key, same across all speakers)|` ` (single space)|
 
 Putting all of this together, we could have a 4-voice dialogue using default
 values that outputs like the following:
@@ -159,20 +160,24 @@ file and place it under the [Plover configuration directory][]:
 - Linux: `~/.config/plover`
 
 You do not need to add a full suite of entries as per the [example config
-file][`q_and_a.json`]. If, say, you only want to change how the question and
-answer markers display by putting the full words `QUESTION` and `ANSWER`, rather
-than the defaults of `Q` and `A`, you could create a config file that just
-contains the following:
+file][`platinum_steno.json`]. If, say, you only want to change how the question
+and answer markers display by putting the full words `QUESTION` and `ANSWER`,
+rather than the defaults of `Q` and `A`, you could create a config file that
+just contains the following:
 
 `q_and_a.json`
 
 ```json
 {
   "question": {
-    "marker": "QUESTION"
+    "marker": {
+      "text": "QUESTION"
+    }
   },
   "answer": {
-    "marker": "ANSWER"
+    "marker": {
+      "text": "ANSWER"
+    }
   }
 }
 ```
@@ -183,8 +188,8 @@ For all of the other values, the defaults will be used.
 
 The [`dictionaries`][] directory contains a selection of JSON dictionaries
 containing sample outlines that are drawn from, or take inspiration by,
-[Platinum Steno][], but all the values output `plover-q-and-a` commands so they
-can be used with this plugin.
+[Platinum Steno][]. All the values output `plover-q-and-a` commands so they can
+be used with this plugin.
 
 Feel free to copy them into your own Plover dictionary sets, merge them all into
 a single dictionary, or change them up a bit to make them your own.
@@ -241,5 +246,6 @@ Use whichever outlines feel comfortable to you, or make up entirely new ones!
 [Platinum Steno Theory Dictionary (NCRS Theory)]: https://platinumsteno.com/downloads/platinum-steno-ncrs-theory-dictionary/
 [Plover configuration directory]: https://plover.readthedocs.io/en/latest/api/oslayer_config.html#plover.oslayer.config.CONFIG_DIR
 [Plover For the Record]: https://www.paulfioravanti.com/blog/plover-for-the-record/
+[`platinum_steno.json`]: ./config/platinum_steno.json
 [`q-and-a.json`]: ./dictionaries/q-and-a.json
-[`q_and_a.json`]: ./q_and_a.json
+[`SET_NAME` command]: ./#prompts

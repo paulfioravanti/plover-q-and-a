@@ -77,7 +77,9 @@ def set_name_prompt_no_current_speaker_name_config_path():
 
 @pytest.fixture
 def default_config_path():
-    return (Path(__file__).parent / "../../examples/q_and_a.json").resolve()
+    return (
+        Path(__file__).parent / "../../examples/config/platinum_steno.json"
+    ).resolve()
 
 # Arguments
 
