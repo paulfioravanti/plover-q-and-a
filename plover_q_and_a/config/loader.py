@@ -23,62 +23,62 @@ def load(config_path: Path) -> dict[str, Any]:
     Raises an error if the specified config file is not JSON format.
     """
     config_data: dict[str, Any] = extractor.load(config_path)
-    data: transformer.TransformedData = transformer.transform(config_data)
+    config: transformer.TransformedData = transformer.transform(config_data)
 
     return {
-        "QUESTION": data["question_marker"],
+        "QUESTION": config["question_marker"],
         "QUESTION_FOLLOWING_INTERROGATIVE": lambda current_sign_type: (
             cast(
                 Callable[[Optional[str]], str],
-                data["interrogative_yield"]
+                config["interrogative_yield"]
             )(current_sign_type)
-            + cast(str, data["question_marker"])
+            + cast(str, config["question_marker"])
         ),
         "QUESTION_FOLLOWING_STATEMENT": lambda current_sign_type: (
             cast(
                 Callable[[Optional[str]], str],
-                data["statement_yield"]
+                config["statement_yield"]
             )(current_sign_type)
-            + cast(str, data["question_marker"])
+            + cast(str, config["question_marker"])
         ),
         "QUESTION_FOLLOWING_INTERRUPT": lambda current_sign_type: (
             cast(
                 Callable[[Optional[str]], str],
-                data["interrupt_yield"]
+                config["interrupt_yield"]
             )(current_sign_type)
-            + cast(str, data["question_marker"])
+            + cast(str, config["question_marker"])
         ),
         "ANSWER_FOLLOWING_INTERROGATIVE": lambda current_sign_type: (
             cast(
                 Callable[[Optional[str]], str],
-                data["interrogative_yield"]
+                config["interrogative_yield"]
             )(current_sign_type)
-            + cast(str, data["answer_marker"])
+            + cast(str, config["answer_marker"])
         ),
         "ANSWER_FOLLOWING_STATEMENT": lambda current_sign_type: (
             cast(
                 Callable[[Optional[str]], str],
-                data["statement_yield"]
+                config["statement_yield"]
             )(current_sign_type)
-            + cast(str, data["answer_marker"])
+            + cast(str, config["answer_marker"])
         ),
         "ANSWER_FOLLOWING_INTERRUPT": lambda current_sign_type: (
             cast(
                 Callable[[Optional[str]], str],
-                data["interrupt_yield"]
+                config["interrupt_yield"]
             )(current_sign_type)
-            + cast(str, data["answer_marker"])
+            + cast(str, config["answer_marker"])
         ),
-        "BYLINE_FOR": data["byline_marker"],
+        "BYLINE_FOR": config["byline_marker"],
         "BYLINE_FOLLOWING_INTERROGATIVE_FOR": (
             lambda current_sign_type, speaker_name: (
                 cast(
                     Callable[[Optional[str]], str],
-                    data["interrogative_yield"]
+                    config["interrogative_yield"]
                 )(current_sign_type)
                 + cast(
                     Callable[[str], str],
-                    data["byline_marker"]
+                    config["byline_marker"]
                 )(speaker_name)
             )
         ),
@@ -86,11 +86,11 @@ def load(config_path: Path) -> dict[str, Any]:
             lambda current_sign_type, speaker_name: (
                 cast(
                     Callable[[Optional[str]], str],
-                    data["statement_yield"]
+                    config["statement_yield"]
                 )(current_sign_type)
                 + cast(
                     Callable[[str], str],
-                    data["byline_marker"]
+                    config["byline_marker"]
                 )(speaker_name)
             )
         ),
@@ -98,24 +98,24 @@ def load(config_path: Path) -> dict[str, Any]:
             lambda current_sign_type, speaker_name: (
                 cast(
                     Callable[[Optional[str]], str],
-                    data["interrupt_yield"]
+                    config["interrupt_yield"]
                 )(current_sign_type)
                 + cast(
                     Callable[[str], str],
-                    data["byline_marker"]
+                    config["byline_marker"]
                 )(speaker_name)
             )
         ),
-        "SPEAKER_FOR": data["speaker_marker"],
+        "SPEAKER_FOR": config["speaker_marker"],
         "SPEAKER_FOLLOWING_INTERROGATIVE_FOR": (
             lambda current_sign_type, speaker_name: (
                 cast(
                     Callable[[Optional[str]], str],
-                    data["interrogative_yield"]
+                    config["interrogative_yield"]
                 )(current_sign_type)
                 + cast(
                     Callable[[str], str],
-                    data["speaker_marker"]
+                    config["speaker_marker"]
                 )(speaker_name)
             )
         ),
@@ -123,11 +123,11 @@ def load(config_path: Path) -> dict[str, Any]:
             lambda current_sign_type, speaker_name: (
                 cast(
                     Callable[[Optional[str]], str],
-                    data["statement_yield"]
+                    config["statement_yield"]
                 )(current_sign_type)
                 + cast(
                     Callable[[str], str],
-                    data["speaker_marker"]
+                    config["speaker_marker"]
                 )(speaker_name)
             )
         ),
@@ -135,25 +135,25 @@ def load(config_path: Path) -> dict[str, Any]:
             lambda current_sign_type, speaker_name: (
                 cast(
                     Callable[[Optional[str]], str],
-                    data["interrupt_yield"]
+                    config["interrupt_yield"]
                 )(current_sign_type)
                 + cast(
                     Callable[[str], str],
-                    data["speaker_marker"]
+                    config["speaker_marker"]
                 )(speaker_name)
             )
         ),
-        "speaker_names": data["speaker_names"],
-        "SPEAKER_UPCASE": data["speaker_upcase"],
+        "speaker_names": config["speaker_names"],
+        "SPEAKER_UPCASE": config["speaker_upcase"],
         # NOTE: Not sure what's going on with pylint with the warning below...
         # pylint: disable-next=unnecessary-lambda
         "STATEMENT_ELABORATE": lambda current_sign_type: (
             cast(
                 Callable[[Optional[str]], str],
-                data["statement_elaborate"]
+                config["statement_elaborate"]
             )(current_sign_type)
         ),
-        "SET_NAME_PROMPT": data["set_name_prompt"]
+        "SET_NAME_PROMPT": config["set_name_prompt"]
     }
 
 def reload(
