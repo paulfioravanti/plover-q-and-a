@@ -30,11 +30,13 @@ _COURT_REPORTER_NAME: str = "THE COURT REPORTER"
 _CLERK_NAME: str = "THE CLERK"
 _BAILIFF_NAME: str = "THE BAILIFF"
 
+_SpeakerMarker = dict[str, Union[str, bool]]
+
 def marker(data: dict[str, Any]) -> Callable[[str], str]:
     """
     Format a speaker from config.
     """
-    speaker_marker: dict[str, Union[str, bool]] = _speaker_marker(data)
+    speaker_marker: _SpeakerMarker = _speaker_marker(data)
 
     return lambda speaker_name: (
         cast(str, speaker_marker.get("pre", _SPEAKER_NAME_PRE_FORMATTING))
@@ -46,30 +48,30 @@ def names(data: dict[str, Any]) -> dict[str, str]:
     """
     Format speaker names from config.
     """
-    speaker: dict[str, Union[str, bool]] = _speaker_marker(data)
+    speaker_marker: _SpeakerMarker = _speaker_marker(data)
     speaker_names: dict[str, str] = {
-        "BAILIFF": cast(str, speaker.get("bailiff", _BAILIFF_NAME)),
-        "CLERK": cast(str, speaker.get("clerk", _CLERK_NAME)),
-        "COURT": cast(str, speaker.get("court", _COURT_NAME)),
+        "BAILIFF": cast(str, speaker_marker.get("bailiff", _BAILIFF_NAME)),
+        "CLERK": cast(str, speaker_marker.get("clerk", _CLERK_NAME)),
+        "COURT": cast(str, speaker_marker.get("court", _COURT_NAME)),
         "COURT_REPORTER": cast(str,
-            speaker.get("court_reporter", _COURT_REPORTER_NAME)
+            speaker_marker.get("court_reporter", _COURT_REPORTER_NAME)
         ),
         "DEFENSE_1": cast(str,
-            speaker.get("defense_1", _LAWYER_DEFENSE_1_NAME)
+            speaker_marker.get("defense_1", _LAWYER_DEFENSE_1_NAME)
         ),
         "DEFENSE_2": cast(str,
-            speaker.get("defense_2", _LAWYER_DEFENSE_2_NAME)
+            speaker_marker.get("defense_2", _LAWYER_DEFENSE_2_NAME)
         ),
         "PLAINTIFF_1": cast(str,
-            speaker.get("plaintiff_1", _LAWYER_PLAINTIFF_1_NAME)
+            speaker_marker.get("plaintiff_1", _LAWYER_PLAINTIFF_1_NAME)
         ),
         "PLAINTIFF_2": cast(str,
-             speaker.get("plaintiff_2", _LAWYER_PLAINTIFF_2_NAME)
+             speaker_marker.get("plaintiff_2", _LAWYER_PLAINTIFF_2_NAME)
         ),
         "VIDEOGRAPHER": cast(str,
-            speaker.get("videographer", _VIDEOGRAPHER_NAME)
+            speaker_marker.get("videographer", _VIDEOGRAPHER_NAME)
         ),
-        "WITNESS": cast(str, speaker.get("witness", _WITNESS_NAME))
+        "WITNESS": cast(str, speaker_marker.get("witness", _WITNESS_NAME))
     }
 
     if should_upcase(data):
@@ -91,8 +93,8 @@ def should_upcase(data: dict[str, Any]) -> bool:
         _speaker_marker(data).get("upcase", _SPEAKER_NAME_UPCASE_FORMATTING)
     )
 
-def _speaker_marker(data: dict[str, Any]) -> dict[str, Union[str, bool]]:
+def _speaker_marker(data: dict[str, Any]) -> _SpeakerMarker:
     return _speaker(data).get("marker", {})
 
-def _speaker(data: dict[str, Any]) -> dict[str, dict[str, Union[str, bool]]]:
-    return cast(dict[str, dict[str, Union[str, bool]]], data.get("speaker", {}))
+def _speaker(data: dict[str, Any]) -> dict[str, _SpeakerMarker]:
+    return cast(dict[str, _SpeakerMarker], data.get("speaker", {}))

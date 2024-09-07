@@ -1,5 +1,5 @@
 """
-Module to handle reading and writing to JSON
+Module to handle extracting config from JSON files
 """
 import json
 from pathlib import Path

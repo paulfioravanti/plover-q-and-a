@@ -16,7 +16,7 @@ _INTERRUPT_MARKER: str = " --"
 _YIELD_MARKER: str = "\n"
 _SENTENCE_SPACE: str = " "
 
-def interrogative_yield(data: dict[str, Any]) -> Callable[[str], str]:
+def interrogative_yield(data: dict[str, Any]) -> Callable[[Optional[str]], str]:
     """
     Format a sentence ending interrogative from config.
     """
@@ -28,7 +28,7 @@ def interrogative_yield(data: dict[str, Any]) -> Callable[[str], str]:
 
         return (
             sign_type_ending.get("interrogative", _INTERROGATIVE_END_MARKER)
-            + _yield(sign_type_ending)
+            + _yield_marker(sign_type_ending)
         )
 
     return _function
@@ -62,7 +62,7 @@ def statement_yield(data: dict[str, Any]) -> Callable[[str], str]:
 
         return (
             _statement_end_marker(sign_type_ending)
-            + _yield(sign_type_ending)
+            + _yield_marker(sign_type_ending)
         )
 
     return _function
@@ -79,7 +79,7 @@ def interrupt_yield(data: dict[str, Any]) -> Callable[[str], str]:
 
         return (
             sign_type_ending.get("interrupt", _INTERRUPT_MARKER)
-            + _yield(sign_type_ending)
+            + _yield_marker(sign_type_ending)
         )
 
     return _function
@@ -88,17 +88,14 @@ def _sign_type_ending(
     current_sign_type: Optional[str],
     data: dict[str, Any]
 ) -> dict[str, str]:
-    sign_type_key: str
-    if current_sign_type:
-        sign_type_key = current_sign_type.lower()
-    else:
-        sign_type_key = ""
+    if not current_sign_type:
+        return {}
 
     # REF: https://stackoverflow.com/a/77230846/567863
-    return (data.get(sign_type_key) or {}).get("ending") or {}
+    return (data.get(current_sign_type.lower()) or {}).get("ending") or {}
 
 def _statement_end_marker(sign_type_ending: dict[str, str]) -> str:
     return sign_type_ending.get("statement", _STATEMENT_END_MARKER)
 
-def _yield(sign_type_ending: dict[str, str]) -> str:
+def _yield_marker(sign_type_ending: dict[str, str]) -> str:
     return sign_type_ending.get("yield", _YIELD_MARKER)
