@@ -15,13 +15,6 @@ from typing import (
     Optional
 )
 
-from .arguments import (
-    FOLLOWING_INTERROGATIVE,
-    FOLLOWING_INTERRUPT,
-    FOLLOWING_STATEMENT,
-    INITIAL
-)
-
 
 def sign(
     current_sign_type: Optional[str],
@@ -45,15 +38,16 @@ def sign(
         ) from exc
 
     speaker: str
-    if sign_type == INITIAL:
+    if sign_type == "INITIAL":
         speaker = config["SPEAKER_FOR"](speaker_name)
     elif sign_type in (
-        FOLLOWING_INTERROGATIVE,
-        FOLLOWING_STATEMENT,
-        FOLLOWING_INTERRUPT
+        "FOLLOWING_INTERROGATIVE",
+        "FOLLOWING_STATEMENT",
+        "FOLLOWING_INTERRUPT"
     ):
-        speaker = (
-            config[f"SPEAKER_{sign_type}_FOR"](current_sign_type, speaker_name)
+        speaker = config[f"SPEAKER_{sign_type}_FOR"](
+            current_sign_type,
+            speaker_name
         )
     else:
         raise ValueError(

@@ -16,11 +16,6 @@ from typing import (
     Optional
 )
 
-from .arguments import (
-    FOLLOWING_INTERROGATIVE,
-    FOLLOWING_INTERRUPT,
-    FOLLOWING_STATEMENT
-)
 from . import follow_on
 
 
@@ -49,9 +44,9 @@ def sign(
     answer: Callable[[Optional[str]], str]
     answer_value: str
     if answer_type in (
-        FOLLOWING_INTERROGATIVE,
-        FOLLOWING_STATEMENT,
-        FOLLOWING_INTERRUPT
+        "FOLLOWING_INTERROGATIVE",
+        "FOLLOWING_STATEMENT",
+        "FOLLOWING_INTERRUPT"
     ):
         answer = config[f"ANSWER_{answer_type}"]
         (sign_type, answer_value) = follow_on.handle_follow_on(

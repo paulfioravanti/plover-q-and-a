@@ -23,9 +23,6 @@ from .. import SPEAKER_TYPES
 from .formatting import iter_last_fragments
 
 
-_DONE: str = "DONE"
-_SET_NAME_SPEAKER_TYPE_ATTR: str = "set_name_speaker_type"
-
 def set_name(
     command_args: list[str],
     ctx: _Context,
@@ -45,7 +42,7 @@ def set_name(
 
     if set_name_command in SPEAKER_TYPES:
         _begin_set_speaker_name(set_name_command, action, config)
-    elif set_name_command == _DONE:
+    elif set_name_command == "DONE":
         _end_set_speaker_name(ctx, action, config)
     else:
         raise ValueError(
@@ -64,7 +61,7 @@ def _begin_set_speaker_name(
     # NOTE: This is an arbitrary attr that is being set on an `_Action` object,
     # and is *not* part of the `_Action` API (but doing this kind of dynamic
     # attribute assignment seems to be allowed).
-    setattr(action, _SET_NAME_SPEAKER_TYPE_ATTR, speaker_type.strip())
+    setattr(action, "set_name_speaker_type", speaker_type.strip())
     current_speaker_name: str = config["speaker_names"][speaker_type]
     action.text = config["SET_NAME_PROMPT"].format(
         speaker_type=speaker_type,
@@ -88,7 +85,7 @@ def _end_set_speaker_name(
         if fragment:
             name = fragment + name
 
-        if hasattr(prev_action, _SET_NAME_SPEAKER_TYPE_ATTR):
+        if hasattr(prev_action, "set_name_speaker_type"):
             begin_action = prev_action
             break
 
@@ -96,7 +93,7 @@ def _end_set_speaker_name(
     if not begin_action:
         return
 
-    speaker_type: str = getattr(begin_action, _SET_NAME_SPEAKER_TYPE_ATTR)
+    speaker_type: str = getattr(begin_action, "set_name_speaker_type")
 
     if config["SPEAKER_UPCASE"]:
         name = name.upper()

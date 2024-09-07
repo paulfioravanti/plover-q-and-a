@@ -14,10 +14,6 @@ from typing import (
 
 
 _ARGUMENT_DIVIDER: str = ":"
-_ELABORATE_AFTER: str = "ELABORATE_AFTER"
-_YIELD_AFTER: str = "YIELD_AFTER"
-_QUESTION_SIGN_TYPE: str = "QUESTION"
-_ANSWER_SIGN_TYPE: str = "ANSWER"
 
 # pylint: disable-next=too-many-arguments
 def handle_follow_on(
@@ -48,19 +44,19 @@ def handle_follow_on(
     user_string: str
     follow_on_action, user_string = follow_on_args
     follow_on_action = follow_on_action.upper()
-    sign_value: str
 
-    if follow_on_action == _YIELD_AFTER:
+    sign_value: str
+    if follow_on_action == "YIELD_AFTER":
         sign_value = (
             sign(current_sign_type)
             + user_string
             + config[yield_key](current_sign_type)
         )
-        if sign_type == _QUESTION_SIGN_TYPE:
-            sign_type = _ANSWER_SIGN_TYPE
+        if sign_type == "QUESTION":
+            sign_type = "ANSWER"
         else:
-            sign_type = _QUESTION_SIGN_TYPE
-    elif follow_on_action == _ELABORATE_AFTER:
+            sign_type = "QUESTION"
+    elif follow_on_action == "ELABORATE_AFTER":
         sign_value = (
             sign(current_sign_type)
             + user_string

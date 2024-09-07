@@ -27,10 +27,6 @@ from . import (
 )
 
 
-_ANSWER: str = "ANSWER"
-_BYLINE: str = "BYLINE"
-_QUESTION: str = "QUESTION"
-
 def text(
     current_sign_type: Optional[str],
     args: list[str],
@@ -51,21 +47,21 @@ def text(
         raise ValueError("No sign type provided")
 
     sign_text: str
-    if sign_type == _QUESTION:
+    if sign_type == "QUESTION":
         (current_sign_type, sign_text) = question.sign(
             current_sign_type,
             sign_type,
             sign_type_args,
             config
         )
-    elif sign_type == _ANSWER:
+    elif sign_type == "ANSWER":
         (current_sign_type, sign_text) = answer.sign(
             current_sign_type,
             sign_type,
             sign_type_args,
             config
         )
-    elif sign_type == _BYLINE:
+    elif sign_type == "BYLINE":
         (current_sign_type, sign_text) = byline.sign(
             current_sign_type,
             sign_type_args,

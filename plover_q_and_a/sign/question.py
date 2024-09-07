@@ -17,12 +17,6 @@ from typing import (
     Optional
 )
 
-from .arguments import (
-    FOLLOWING_INTERROGATIVE,
-    FOLLOWING_INTERRUPT,
-    FOLLOWING_STATEMENT,
-    INITIAL
-)
 from . import follow_on
 
 
@@ -50,12 +44,12 @@ def sign(
 
     question: Callable[[Optional[str]], str]
     question_value: str
-    if question_type == INITIAL:
+    if question_type == "INITIAL":
         question_value = config[sign_type]
     elif question_type in (
-        FOLLOWING_INTERROGATIVE,
-        FOLLOWING_INTERRUPT,
-        FOLLOWING_STATEMENT
+        "FOLLOWING_INTERROGATIVE",
+        "FOLLOWING_INTERRUPT",
+        "FOLLOWING_STATEMENT"
     ):
         question = config[f"{sign_type}_{question_type}"]
         (sign_type, question_value) = follow_on.handle_follow_on(

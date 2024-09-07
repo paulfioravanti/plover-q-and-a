@@ -12,12 +12,6 @@ from typing import (
 )
 
 from .. import BYLINE_SPEAKER_TYPES
-from .arguments import (
-    FOLLOWING_INTERROGATIVE,
-    FOLLOWING_INTERRUPT,
-    FOLLOWING_STATEMENT,
-    INITIAL
-)
 from . import speaker
 
 
@@ -57,12 +51,12 @@ def sign(
         ) from exc
 
     byline: str
-    if sign_type == INITIAL:
+    if sign_type == "INITIAL":
         byline = config["BYLINE_FOR"](speaker_name)
     elif sign_type in (
-        FOLLOWING_INTERROGATIVE,
-        FOLLOWING_INTERRUPT,
-        FOLLOWING_STATEMENT
+        "FOLLOWING_INTERROGATIVE",
+        "FOLLOWING_INTERRUPT",
+        "FOLLOWING_STATEMENT"
     ):
         byline = (
             config[f"BYLINE_{sign_type}_FOR"](current_sign_type, speaker_name)
