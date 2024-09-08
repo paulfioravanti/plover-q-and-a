@@ -94,7 +94,9 @@ def no_byline_speaker_name_config_for_speaker_type():
 @pytest.fixture
 def initial_byline_config(question_byline_speaker_config):
     return question_byline_speaker_config | {
-        "BYLINE_FOR": lambda speaker_name: f"BY {speaker_name}:\n\tQ\t"
+        "BYLINE_FOR": (
+            lambda speaker_type, speaker_name: f"BY {speaker_name}:\n\tQ\t"
+        )
     }
 
 @pytest.fixture

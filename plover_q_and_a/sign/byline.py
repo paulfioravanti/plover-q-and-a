@@ -51,7 +51,7 @@ def sign(
 
     byline: str
     if sign_type == "INITIAL":
-        byline = config["BYLINE_FOR"](speaker_name)
+        byline = config["BYLINE_FOR"](speaker_type, speaker_name)
     elif sign_type in (
         "FOLLOWING_INTERROGATIVE",
         "FOLLOWING_INTERRUPT",
