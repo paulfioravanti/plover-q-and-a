@@ -5,6 +5,7 @@ Follow on module to handle the final part of commands that look like:
     - {:Q_AND_A:QUESTION:FOLLOWING_STATEMENT:YIELD_AFTER:All right}
     - {:Q_AND_A:ANSWER:FOLLOWING_INTERROGATIVE:ELABORATE_AFTER:Uh-huh}
     - {:Q_AND_A:ANSWER:FOLLOWING_INTERROGATIVE:YIELD_AFTER:Correct}
+    - {:Q_AND_A:ANSWER:FOLLOWING_INTERROGATIVE:NAMED}
 """
 from typing import (
     Any,

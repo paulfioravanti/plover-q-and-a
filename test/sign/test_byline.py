@@ -27,7 +27,7 @@ def blank_sign_type_byline_args(byline_arg):
 
 @pytest.fixture
 def unknown_speaker_type_byline_args(byline_arg):
-    return byline_arg + ["WITNESS", "INITIAL"]
+    return byline_arg + ["COURT", "INITIAL"]
 
 @pytest.fixture
 def unknown_sign_type_byline_args(byline_arg):
@@ -38,16 +38,28 @@ def initial_byline_type(byline_arg):
     return byline_arg + ["PLAINTIFF_1", "INITIAL"]
 
 @pytest.fixture
-def byline_following_interrogative_type(byline_arg):
+def question_byline_following_interrogative_type(byline_arg):
     return byline_arg + ["PLAINTIFF_1", "FOLLOWING_INTERROGATIVE"]
 
 @pytest.fixture
-def byline_following_statement_type(byline_arg):
+def question_byline_following_statement_type(byline_arg):
     return byline_arg + ["PLAINTIFF_1", "FOLLOWING_STATEMENT"]
 
 @pytest.fixture
-def byline_following_interrupt_type(byline_arg):
+def question_byline_following_interrupt_type(byline_arg):
     return byline_arg + ["PLAINTIFF_1", "FOLLOWING_INTERRUPT"]
+
+@pytest.fixture
+def answer_byline_following_interrogative_type(byline_arg):
+    return byline_arg + ["WITNESS", "FOLLOWING_INTERROGATIVE"]
+
+@pytest.fixture
+def answer_byline_following_statement_type(byline_arg):
+    return byline_arg + ["WITNESS", "FOLLOWING_STATEMENT"]
+
+@pytest.fixture
+def answer_byline_following_interrupt_type(byline_arg):
+    return byline_arg + ["WITNESS", "FOLLOWING_INTERRUPT"]
 
 # Config
 
@@ -56,10 +68,18 @@ def blank_config():
     return {}
 
 @pytest.fixture
-def byline_speaker_config():
+def question_byline_speaker_config():
     return {
         "speaker_names": {
             "PLAINTIFF_1": "MR. STPHAO"
+        }
+    }
+
+@pytest.fixture
+def answer_byline_speaker_config():
+    return {
+        "speaker_names": {
+            "WITNESS": "THE WITNESS"
         }
     }
 
@@ -72,14 +92,16 @@ def no_byline_speaker_name_config_for_speaker_type():
     }
 
 @pytest.fixture
-def initial_byline_config(byline_speaker_config):
-    return byline_speaker_config | {
+def initial_byline_config(question_byline_speaker_config):
+    return question_byline_speaker_config | {
         "BYLINE_FOR": lambda speaker_name: f"BY {speaker_name}:\n\tQ\t"
     }
 
 @pytest.fixture
-def byline_following_interrogative_config(byline_speaker_config):
-    return byline_speaker_config | {
+def question_byline_following_interrogative_config(
+    question_byline_speaker_config
+):
+    return question_byline_speaker_config | {
         "BYLINE_FOLLOWING_INTERROGATIVE_FOR": (
             lambda _current_sign_type, speaker_name: (
                 f"?\nBY {speaker_name}:\n\tQ\t"
@@ -88,8 +110,8 @@ def byline_following_interrogative_config(byline_speaker_config):
     }
 
 @pytest.fixture
-def byline_following_statement_config(byline_speaker_config):
-    return byline_speaker_config | {
+def question_byline_following_statement_config(question_byline_speaker_config):
+    return question_byline_speaker_config | {
         "BYLINE_FOLLOWING_STATEMENT_FOR": (
             lambda _current_sign_type, speaker_name: (
                 f".\nBY {speaker_name}:\n\tQ\t"
@@ -98,11 +120,41 @@ def byline_following_statement_config(byline_speaker_config):
     }
 
 @pytest.fixture
-def byline_following_interrupt_config(byline_speaker_config):
-    return byline_speaker_config | {
+def question_byline_following_interrupt_config(question_byline_speaker_config):
+    return question_byline_speaker_config | {
         "BYLINE_FOLLOWING_INTERRUPT_FOR": (
             lambda _current_sign_type, speaker_name: (
                 f"--\nBY {speaker_name}:\n\tQ\t"
+            )
+        )
+    }
+
+@pytest.fixture
+def answer_byline_following_interrogative_config(answer_byline_speaker_config):
+    return answer_byline_speaker_config | {
+        "BYLINE_FOLLOWING_INTERROGATIVE_FOR": (
+            lambda _current_sign_type, speaker_name: (
+                f"?\n{speaker_name}:\tA\t"
+            )
+        )
+    }
+
+@pytest.fixture
+def answer_byline_following_statement_config(answer_byline_speaker_config):
+    return answer_byline_speaker_config | {
+        "BYLINE_FOLLOWING_STATEMENT_FOR": (
+            lambda _current_sign_type, speaker_name: (
+                f".\n{speaker_name}:\tA\t"
+            )
+        )
+    }
+
+@pytest.fixture
+def answer_byline_following_interrupt_config(answer_byline_speaker_config):
+    return answer_byline_speaker_config | {
+        "BYLINE_FOLLOWING_INTERRUPT_FOR": (
+            lambda _current_sign_type, speaker_name: (
+                f"--\n{speaker_name}:\tA\t"
             )
         )
     }
@@ -143,23 +195,31 @@ def test_blank_sign_type_args(blank_sign_type_byline_args, blank_config):
 
 def test_unknown_speaker_type_args(
     unknown_speaker_type_byline_args,
-    byline_speaker_config
+    question_byline_speaker_config
 ):
     with pytest.raises(
         ValueError,
-        match="Unknown byline speaker type provided: WITNESS"
+        match="Unknown byline speaker type provided: COURT"
     ):
-        sign.text(None, unknown_speaker_type_byline_args, byline_speaker_config)
+        sign.text(
+            None,
+            unknown_speaker_type_byline_args,
+            question_byline_speaker_config
+        )
 
 def test_unknown_sign_type_args(
     unknown_sign_type_byline_args,
-    byline_speaker_config
+    question_byline_speaker_config
 ):
     with pytest.raises(
         ValueError,
         match="Unknown sign type provided for PLAINTIFF_1 byline: UNKNOWN"
     ):
-        sign.text(None, unknown_sign_type_byline_args, byline_speaker_config)
+        sign.text(
+            None,
+            unknown_sign_type_byline_args,
+            question_byline_speaker_config
+        )
 
 def test_no_speaker_name_config_for_speaker_type(
     initial_byline_type,
@@ -175,7 +235,7 @@ def test_no_speaker_name_config_for_speaker_type(
             no_byline_speaker_name_config_for_speaker_type
         )
 
-def test_initial_byline(initial_byline_type, initial_byline_config):
+def test_initial_question_byline(initial_byline_type, initial_byline_config):
     assert (
         sign.text(
             None,
@@ -184,38 +244,74 @@ def test_initial_byline(initial_byline_type, initial_byline_config):
         ) == ("QUESTION", "BY MR. STPHAO:\n\tQ\t")
     )
 
-def test_byline_following_interrogative(
-    byline_following_interrogative_type,
-    byline_following_interrogative_config
+def test_question_byline_following_interrogative(
+    question_byline_following_interrogative_type,
+    question_byline_following_interrogative_config
 ):
     assert (
         sign.text(
             None,
-            byline_following_interrogative_type,
-            byline_following_interrogative_config
+            question_byline_following_interrogative_type,
+            question_byline_following_interrogative_config
         ) == ("QUESTION", "?\nBY MR. STPHAO:\n\tQ\t")
     )
 
-def test_byline_following_statement(
-    byline_following_statement_type,
-    byline_following_statement_config
+def test_question_byline_following_statement(
+    question_byline_following_statement_type,
+    question_byline_following_statement_config
 ):
     assert (
         sign.text(
             None,
-            byline_following_statement_type,
-            byline_following_statement_config
+            question_byline_following_statement_type,
+            question_byline_following_statement_config
         ) == ("QUESTION", ".\nBY MR. STPHAO:\n\tQ\t")
     )
 
-def test_byline_following_interrupt(
-    byline_following_interrupt_type,
-    byline_following_interrupt_config
+def test_question_byline_following_interrupt(
+    question_byline_following_interrupt_type,
+    question_byline_following_interrupt_config
 ):
     assert (
         sign.text(
             None,
-            byline_following_interrupt_type,
-            byline_following_interrupt_config
+            question_byline_following_interrupt_type,
+            question_byline_following_interrupt_config
         ) == ("QUESTION", "--\nBY MR. STPHAO:\n\tQ\t")
+    )
+
+def test_answer_byline_following_interrogative(
+    answer_byline_following_interrogative_type,
+    answer_byline_following_interrogative_config
+):
+    assert (
+        sign.text(
+            None,
+            answer_byline_following_interrogative_type,
+            answer_byline_following_interrogative_config
+        ) == ("ANSWER", "?\nTHE WITNESS:\tA\t")
+    )
+
+def test_answer_byline_following_statement(
+    answer_byline_following_statement_type,
+    answer_byline_following_statement_config
+):
+    assert (
+        sign.text(
+            None,
+            answer_byline_following_statement_type,
+            answer_byline_following_statement_config
+        ) == ("ANSWER", ".\nTHE WITNESS:\tA\t")
+    )
+
+def test_answer_byline_following_interrupt(
+    answer_byline_following_interrupt_type,
+    answer_byline_following_interrupt_config
+):
+    assert (
+        sign.text(
+            None,
+            answer_byline_following_interrupt_type,
+            answer_byline_following_interrupt_config
+        ) == ("ANSWER", "--\nTHE WITNESS:\tA\t")
     )

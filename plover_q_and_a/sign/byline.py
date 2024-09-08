@@ -5,6 +5,7 @@ Byline module to handle commands that look like:
     - {:Q_AND_A:BYLINE:DEFENSE_1:FOLLOWING_INTERROGATIVE}
     - {:Q_AND_A:BYLINE:DEFENSE_2:FOLLOWING_STATEMENT}
     - {:Q_AND_A:BYLINE:PLAINTIFF_2:FOLLOWING_INTERRUPT}
+    - {:Q_AND_A:BYLINE:WITNESS:FOLLOWING_INTERROGATIVE}
 """
 from typing import (
     Any,
@@ -46,9 +47,7 @@ def sign(
     try:
         speaker_name: str = config["speaker_names"][speaker_type]
     except KeyError as exc:
-        raise ValueError(
-            f"No speaker name entry for: {speaker_type}"
-        ) from exc
+        raise ValueError(f"No speaker name entry for: {speaker_type}") from exc
 
     byline: str
     if sign_type == "INITIAL":
@@ -66,4 +65,10 @@ def sign(
             f"Unknown sign type provided for {speaker_type} byline: {sign_type}"
         )
 
-    return ("QUESTION", byline)
+    new_current_sign_type: str
+    if speaker_type == "WITNESS":
+        new_current_sign_type = "ANSWER"
+    else:
+        new_current_sign_type = "QUESTION"
+
+    return (new_current_sign_type, byline)

@@ -28,7 +28,7 @@ before another speaker starts talking.
 They are responsible for marking how the last speaker ended what they said with
 either:
 
-- a question (default: `?`)
+- a question a.k.a. interrogative (default: `?`)
 - an ending statement (default: `.`)
 - an interruption (default: `--`)
 

@@ -84,8 +84,12 @@ def default_config_path():
 # Arguments
 
 @pytest.fixture
-def speaker_name():
-    return "SPEAKER_NAME"
+def speaker_name_questioner():
+    return "PLAINTIFF_1"
+
+@pytest.fixture
+def speaker_name_answerer():
+    return "WITNESS"
 
 @pytest.fixture
 def config_with_local_speaker_name_changes():
@@ -131,7 +135,8 @@ def test_no_current_speaker_name_in_set_name_prompt(
 def test_non_existent_config_loads_defaults(
     non_existent_config_path,
     default_config_path,
-    speaker_name
+    speaker_name_questioner,
+    speaker_name_answerer
 ):
     loaded_config = config.load(non_existent_config_path)
     default_config = config.load(default_config_path)
@@ -139,13 +144,17 @@ def test_non_existent_config_loads_defaults(
         assert loaded_config[key] == default_config[key]
     for key in _ONE_ARG_LAMBDA_CONFIG_KEYS:
         assert (
-            loaded_config[key](speaker_name)
-            == default_config[key](speaker_name)
+            loaded_config[key](speaker_name_questioner)
+            == default_config[key](speaker_name_questioner)
         )
     for key in _TWO_ARG_LAMBDA_CONFIG_KEYS:
         assert (
-            loaded_config[key]("", speaker_name)
-            == default_config[key]("", speaker_name)
+            loaded_config[key]("", speaker_name_questioner)
+            == default_config[key]("", speaker_name_questioner)
+        )
+        assert (
+            loaded_config[key]("", speaker_name_answerer)
+            == default_config[key]("", speaker_name_answerer)
         )
 
 def test_specified_config_overwrites_defaults(

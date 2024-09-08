@@ -1,0 +1,69 @@
+{
+  "question": {
+    "marker": {
+      "pre": "",
+      "text": "Q.",
+      "post": "\t"
+    },
+    "ending": {
+      "interrogative": "?",
+      "statement": ".",
+      "interrupt": " --",
+      "yield": "\n"
+    }
+  },
+  "answer": {
+    "marker": {
+      "pre": "",
+      "text": "A.",
+      "post": "\t"
+    },
+    "ending": {
+      "interrogative": "?",
+      "statement": ".",
+      "interrupt": " --",
+      "yield": "\n\n"
+    }
+  },
+  "byline": {
+    "question": {
+      "marker": {
+        "pre": "",
+        "text": "",
+        "post": ":\t"
+      }
+    },
+    "answer": {
+      "marker": {
+        "pre": "",
+        "text": "",
+        "post": ":\t"
+      }
+    }
+  },
+  "speaker": {
+    "marker": {
+      "pre": "",
+      "plaintiff_1": "MR. STPHAO",
+      "defense_1": "MR. EUFPLT",
+      "plaintiff_2": "MR. SKWRAO",
+      "defense_2": "MR. EURBGS",
+      "court": "THE COURT",
+      "witness": "THE WITNESS",
+      "videographer": "THE VIDEOGRAPHER",
+      "court_reporter": "THE COURT REPORTER",
+      "clerk": "THE CLERK",
+      "bailiff": "THE BAILIFF",
+      "post": ":  ",
+      "upcase": true
+    },
+    "ending": {
+      "interrogative": "?",
+      "statement": ".",
+      "interrupt": " --",
+      "yield": "\n\n"
+    }
+  },
+  "sentence_space": " ",
+  "set_name_prompt": "[Set {speaker_type} ({current_speaker_name}) =>] "
+}

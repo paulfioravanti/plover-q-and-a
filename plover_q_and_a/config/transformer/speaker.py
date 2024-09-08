@@ -37,11 +37,17 @@ def marker(data: dict[str, Any]) -> Callable[[str], str]:
     Format a speaker from config.
     """
     speaker_marker: _SpeakerMarker = _speaker_marker(data)
+    pre_formatting: str = cast(
+        str,
+        speaker_marker.get("pre", _SPEAKER_NAME_PRE_FORMATTING)
+    )
+    post_formatting: str = cast(
+        str,
+        speaker_marker.get("post", _SPEAKER_NAME_POST_FORMATTING)
+    )
 
     return lambda speaker_name: (
-        cast(str, speaker_marker.get("pre", _SPEAKER_NAME_PRE_FORMATTING))
-        + speaker_name
-        + cast(str, speaker_marker.get("post", _SPEAKER_NAME_POST_FORMATTING))
+        pre_formatting + speaker_name + post_formatting
     )
 
 def names(data: dict[str, Any]) -> dict[str, str]:
