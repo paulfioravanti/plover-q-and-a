@@ -26,9 +26,6 @@ from . import (
 
 _ARGUMENT_DIVIDER: str = ":"
 _CONFIG_FILE: Path = Path(CONFIG_DIR) / config.CONFIG_BASENAME
-_RESET_CONFIG: str = "RESET_CONFIG"
-_SET_CONFIG: str = "SET_CONFIG"
-_SET_NAME: str = "SET_NAME"
 
 class QAndA:
     """
@@ -90,9 +87,9 @@ class QAndA:
 
         action: _Action = ctx.new_action()
 
-        if command == _RESET_CONFIG:
+        if command == "RESET_CONFIG":
             self._config = config.load(_CONFIG_FILE)
-        elif command == _SET_NAME:
+        elif command == "SET_NAME":
             speaker.set_name(command_args, ctx, action, self._config)
         else:
             current_sign_type: str
@@ -133,5 +130,5 @@ class QAndA:
             return
 
         action: _Action = new[0]
-        if action.command and action.command.upper() == _SET_CONFIG:
+        if action.command and action.command.upper() == "SET_CONFIG":
             self._config = config.reload(_CONFIG_FILE, self._config)
