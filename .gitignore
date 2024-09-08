@@ -15,3 +15,4 @@ dist/
 # Test coverage
 htmlcov/
 .coverage
+.coverage.*
