@@ -32,6 +32,7 @@ TransformedData = dict[
         list[str],
         dict[str, str],
         Callable[[str], str],
+        Callable[[str, str], str],
         Callable[[Optional[str]], str]
     ]
 ]

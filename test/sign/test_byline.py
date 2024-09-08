@@ -103,7 +103,7 @@ def question_byline_following_interrogative_config(
 ):
     return question_byline_speaker_config | {
         "BYLINE_FOLLOWING_INTERROGATIVE_FOR": (
-            lambda _current_sign_type, speaker_name: (
+            lambda _current_sign_type, _speaker_type, speaker_name: (
                 f"?\nBY {speaker_name}:\n\tQ\t"
             )
         )
@@ -113,7 +113,7 @@ def question_byline_following_interrogative_config(
 def question_byline_following_statement_config(question_byline_speaker_config):
     return question_byline_speaker_config | {
         "BYLINE_FOLLOWING_STATEMENT_FOR": (
-            lambda _current_sign_type, speaker_name: (
+            lambda _current_sign_type, _speaker_type, speaker_name: (
                 f".\nBY {speaker_name}:\n\tQ\t"
             )
         )
@@ -123,7 +123,7 @@ def question_byline_following_statement_config(question_byline_speaker_config):
 def question_byline_following_interrupt_config(question_byline_speaker_config):
     return question_byline_speaker_config | {
         "BYLINE_FOLLOWING_INTERRUPT_FOR": (
-            lambda _current_sign_type, speaker_name: (
+            lambda _current_sign_type, _speaker_type, speaker_name: (
                 f"--\nBY {speaker_name}:\n\tQ\t"
             )
         )
@@ -133,7 +133,7 @@ def question_byline_following_interrupt_config(question_byline_speaker_config):
 def answer_byline_following_interrogative_config(answer_byline_speaker_config):
     return answer_byline_speaker_config | {
         "BYLINE_FOLLOWING_INTERROGATIVE_FOR": (
-            lambda _current_sign_type, speaker_name: (
+            lambda _current_sign_type, _speaker_type, speaker_name: (
                 f"?\n{speaker_name}:\tA\t"
             )
         )
@@ -143,7 +143,7 @@ def answer_byline_following_interrogative_config(answer_byline_speaker_config):
 def answer_byline_following_statement_config(answer_byline_speaker_config):
     return answer_byline_speaker_config | {
         "BYLINE_FOLLOWING_STATEMENT_FOR": (
-            lambda _current_sign_type, speaker_name: (
+            lambda _current_sign_type, _speaker_type, speaker_name: (
                 f".\n{speaker_name}:\tA\t"
             )
         )
@@ -153,7 +153,7 @@ def answer_byline_following_statement_config(answer_byline_speaker_config):
 def answer_byline_following_interrupt_config(answer_byline_speaker_config):
     return answer_byline_speaker_config | {
         "BYLINE_FOLLOWING_INTERRUPT_FOR": (
-            lambda _current_sign_type, speaker_name: (
+            lambda _current_sign_type, _speaker_type, speaker_name: (
                 f"--\n{speaker_name}:\tA\t"
             )
         )

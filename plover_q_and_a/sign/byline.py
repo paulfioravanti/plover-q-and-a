@@ -58,7 +58,11 @@ def sign(
         "FOLLOWING_STATEMENT"
     ):
         byline = (
-            config[f"BYLINE_{sign_type}_FOR"](current_sign_type, speaker_name)
+            config[f"BYLINE_{sign_type}_FOR"](
+                current_sign_type,
+                speaker_type,
+                speaker_name
+            )
         )
     else:
         raise ValueError(

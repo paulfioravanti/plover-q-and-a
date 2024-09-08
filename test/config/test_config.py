@@ -17,17 +17,19 @@ _ONE_ARG_LAMBDA_CONFIG_KEYS = [
     "ANSWER_FOLLOWING_INTERROGATIVE",
     "ANSWER_FOLLOWING_STATEMENT",
     "ANSWER_FOLLOWING_INTERRUPT",
-    "BYLINE_FOR",
     "SPEAKER_FOR",
     "STATEMENT_ELABORATE"
 ]
 _TWO_ARG_LAMBDA_CONFIG_KEYS = [
-    "BYLINE_FOLLOWING_INTERROGATIVE_FOR",
-    "BYLINE_FOLLOWING_STATEMENT_FOR",
-    "BYLINE_FOLLOWING_INTERRUPT_FOR",
+    "BYLINE_FOR",
     "SPEAKER_FOLLOWING_INTERRUPT_FOR",
     "SPEAKER_FOLLOWING_INTERROGATIVE_FOR",
     "SPEAKER_FOLLOWING_STATEMENT_FOR"
+]
+_THREE_ARG_LAMBDA_CONFIG_KEYS = [
+    "BYLINE_FOLLOWING_INTERROGATIVE_FOR",
+    "BYLINE_FOLLOWING_STATEMENT_FOR",
+    "BYLINE_FOLLOWING_INTERRUPT_FOR"
 ]
 
 # Files
@@ -84,12 +86,20 @@ def default_config_path():
 # Arguments
 
 @pytest.fixture
-def speaker_name_questioner():
+def speaker_type_questioner():
     return "PLAINTIFF_1"
 
 @pytest.fixture
-def speaker_name_answerer():
+def speaker_name_questioner():
+    return "MR. STPHAO"
+
+@pytest.fixture
+def speaker_type_answerer():
     return "WITNESS"
+
+@pytest.fixture
+def speaker_name_answerer():
+    return "THE WITNESS"
 
 @pytest.fixture
 def config_with_local_speaker_name_changes():
@@ -136,7 +146,9 @@ def test_non_existent_config_loads_defaults(
     non_existent_config_path,
     default_config_path,
     speaker_name_questioner,
-    speaker_name_answerer
+    speaker_name_answerer,
+    speaker_type_questioner,
+    speaker_type_answerer
 ):
     loaded_config = config.load(non_existent_config_path)
     default_config = config.load(default_config_path)
@@ -152,9 +164,28 @@ def test_non_existent_config_loads_defaults(
             loaded_config[key]("", speaker_name_questioner)
             == default_config[key]("", speaker_name_questioner)
         )
+    for key in _THREE_ARG_LAMBDA_CONFIG_KEYS:
         assert (
-            loaded_config[key]("", speaker_name_answerer)
-            == default_config[key]("", speaker_name_answerer)
+            loaded_config[key](
+                "",
+                speaker_type_questioner,
+                speaker_name_questioner
+            ) == default_config[key](
+                "",
+                speaker_type_questioner,
+                speaker_name_questioner
+            )
+        )
+        assert (
+            loaded_config[key](
+                "",
+                speaker_type_answerer,
+                speaker_name_answerer
+            ) == default_config[key](
+                "",
+                speaker_type_answerer,
+                speaker_name_answerer
+            )
         )
 
 def test_specified_config_overwrites_defaults(

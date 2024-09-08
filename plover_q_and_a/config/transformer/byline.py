@@ -21,15 +21,15 @@ _BYLINE_ANSWER_PRE_FORMATTING: str = ""
 _BYLINE_ANSWER_MARKER_TEXT: str = ""
 _BYLINE_ANSWER_POST_FORMATTING: str = ""
 
-def marker(data: dict[str, Any]) -> Callable[[str], str]:
+def marker(data: dict[str, Any]) -> Callable[[str, str], str]:
     """
     Format an answer from config.
     """
     question_byline: Callable[[str], str] = _question_byline(data)
     answer_byline: Callable[[str], str] = _answer_byline(data)
 
-    def _function(speaker_name: str) -> str:
-        if speaker_name == "WITNESS":
+    def _function(speaker_type: str, speaker_name: str) -> str:
+        if speaker_type == "WITNESS":
             return answer_byline(speaker_name)
 
         return question_byline(speaker_name)

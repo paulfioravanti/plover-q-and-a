@@ -71,39 +71,39 @@ def load(config_path: Path) -> dict[str, Any]:
         ),
         "BYLINE_FOR": config["byline_marker"],
         "BYLINE_FOLLOWING_INTERROGATIVE_FOR": (
-            lambda current_sign_type, speaker_name: (
+            lambda current_sign_type, speaker_type, speaker_name: (
                 cast(
                     Callable[[Optional[str]], str],
                     config["interrogative_yield"]
                 )(current_sign_type)
                 + cast(
-                    Callable[[str], str],
+                    Callable[[str, str], str],
                     config["byline_marker"]
-                )(speaker_name)
+                )(speaker_type, speaker_name)
             )
         ),
         "BYLINE_FOLLOWING_STATEMENT_FOR": (
-            lambda current_sign_type, speaker_name: (
+            lambda current_sign_type, speaker_type, speaker_name: (
                 cast(
                     Callable[[Optional[str]], str],
                     config["statement_yield"]
                 )(current_sign_type)
                 + cast(
-                    Callable[[str], str],
+                    Callable[[str, str], str],
                     config["byline_marker"]
-                )(speaker_name)
+                )(speaker_type, speaker_name)
             )
         ),
         "BYLINE_FOLLOWING_INTERRUPT_FOR": (
-            lambda current_sign_type, speaker_name: (
+            lambda current_sign_type, speaker_type, speaker_name: (
                 cast(
                     Callable[[Optional[str]], str],
                     config["interrupt_yield"]
                 )(current_sign_type)
                 + cast(
-                    Callable[[str], str],
+                    Callable[[str, str], str],
                     config["byline_marker"]
-                )(speaker_name)
+                )(speaker_type, speaker_name)
             )
         ),
         "SPEAKER_FOR": config["speaker_marker"],
