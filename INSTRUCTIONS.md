@@ -178,25 +178,32 @@ than just their titles.
 
 ### Bylines
 
-Bylines are used to indicate the lawyer that owns, or is in charge of, the
-current line of questioning to a witness. Lawyers are the only speakers that get
-bylines.
+Bylines are typically used to indicate the lawyer that owns, or is in charge of,
+the current line of questioning to a witness.
 
 [Platinum Steno][]'s convention is to output the lawyer's title and surname,
 all in capital letters, and then sign in a question. This plugin uses that
 convention as the default output (but this can be changed via configuration).
 
-Byline commands start with a `BYLINE` argument, followed by one of the lawyer
-type command arguments:
+In Platinum Steno-style Q&A, lawyers are the only speakers that get bylines.
+However, the concept of an "answer byline", where a witness under
+cross-examination is "checked back in" by name after another third party speaks,
+would seem to exist in other styles like the one used in [Tasmania][] courts, as
+exemplified in [this document][]. Therefore, this plugin also supports "answer
+bylines" for a witness.
+
+Byline commands start with a `BYLINE` argument, then add one of the following
+command arguments:
 
 - `PLAINTIFF_1`
 - `PLAINTIFF_2`
 - `DEFENSE_1`
 - `DEFENSE_2`
+- `WITNESS`
 
-Then, followed by one of the following arguments:
+Then, add one of the following arguments:
 
-- `INITIAL`
+- `INITIAL` (only used for lawyer byline entries)
 - `FOLLOWING_INTERROGATIVE`
 - `FOLLOWING_STATEMENT`
 - `FOLLOWING_INTERRUPT`
@@ -212,6 +219,9 @@ types):
 |`{:Q_AND_A:BYLINE:PLAINTIFF_1:FOLLOWING_STATEMENT}`     |Ends the previous speaker's statement and signs in Plaintiff Lawyer 1's byline|`STPHAO*R`          |
 |`{:Q_AND_A:BYLINE:PLAINTIFF_1:FOLLOWING_INTERROGATIVE}` |Ends the previous speaker's question and signs in Plaintiff Lawyer 1's byline |`STPHAO*F`          |
 |`{:Q_AND_A:BYLINE:PLAINTIFF_1:FOLLOWING_INTERRUPT}`     |Signs in Plaintiff Lawyer 1's byline when they interrupt a speaker            |`STPHAO*RB`         |
+
+Suggested dictionary entries for "answer bylines" can be found in the
+[`q-and-a.json`][] dictionary.
 
 ### Immediate Responses
 
@@ -261,9 +271,13 @@ Some examples of using these commands could be the following (see the
 |`{:Q_AND_A:ANSWER:FOLLOWING_INTERROGATIVE:YIELD_AFTER:I don't know}`    |Ends a lawyer question, signs in a witness answer, outputs statement "I don't know.", then signs in question|`KWRO*EFRPBLGTS`    |
 
 [`examples`]: ./examples
-[`immediate-responses.json`]: ./examples/immediate-responses.json
-[`lawyers.json`]: ./examples/lawyers.json
-[`other-speakers-ncra-style.json`]: ./examples/other-speakers-ncra-style.json
-[`other-speakers.json`]: ./examples/other-speakers.json
+[`immediate-responses.json`]: ./examples/dictionaries/immediate-responses.json
+[`lawyers.json`]: ./examples/dictionaries/lawyers.json
+[`other-speakers-ncra-style.json`]: ./examples/dictionaries/other-speakers-ncra-style.json
+[`other-speakers.json`]: ./examples/dictionaries/other-speakers.json
+[`q-and-a.json`]: ./examples/dictionaries/q-and-a.json
 [Platinum Steno]: https://www.youtube.com/@PlatinumSteno
 [Plover Speaker ID]: https://github.com/sammdot/plover-speaker-id
+[Tasmania]: https://en.wikipedia.org/wiki/Tasmania
+[`tasmanian_style.json`]: ./examples/config/tasmanian_style.json
+[this document]: https://www.commissionofinquiry.tas.gov.au/__data/assets/pdf_file/0010/658873/Transcript-of-2-May-2022.pdf#page=32

@@ -29,9 +29,9 @@ plugin, so examples of each are provided here in hopes they can get you started.
 customisable parts of the various Q&A-related sign outputs. 
 
 They are based on the formatting used in the [Platinum Steno][] Q&A exercises.
-The values contained in this example config file are also hardcoded into the
-plugin to act as default values when no config file is present, or values in
-the config file are missing.
+The values contained in this example config file are also hard-coded into the
+plugin to act as default values when no config file is present, or specific
+values in the config file are missing.
 
 Therefore, if you are happy to use the defaults, there is _**no need for you to
 create your own configuration file**_, and you can happily skip reading this
@@ -97,6 +97,15 @@ Each set of configuration has a `"text"` value, meaning the characters marking
 the question, answer, or byline. They also each have a set of `"ending"`
 formatting, same as speakers.
 
+Note that the concept of an "answer byline", where a witness under
+cross-examination is "checked back in" by name after another third party speaks,
+does not exist in Platinum Steno-style Q&A. However, it can exist in other
+styles, like the one which would seem to be used in [Tasmania][] courts, as
+exemplified in [this document][].
+
+You can find an example configuration file to get "Tasmanian-style" Q&A here:
+[`tasmanian_style.json`][]
+
 ### Other Formatting
 
 For the very discerning Q&A-er, other more minute configuration is available for
@@ -108,7 +117,13 @@ the following values under the `"ending"` settings of each sign type entry:
 |`"statement"`     |Marks the end of a declarative, imperative, or exclamatory sentence or statement  |`.`               |
 |`"interrupt"`     |Marks a speaker interruption                                                      |` --`             |
 |`"yield"`         |Marks yielding control to another speaker                                         |`\n` (line break) |
-|`"sentence_space"`|Marker for directly after a sentence end (top level key, same across all speakers)|` ` (single space)|
+
+At the top level of configuration, you can find the following formatting
+settings, which are the same across all speakers:
+
+| Key              | Meaning                                | Default Value    |
+|:-----------------|:---------------------------------------|:-----------------|
+|`"sentence_space"`|Marker for directly after a sentence end|` ` (single space)|
 
 Putting all of this together, we could have a 4-voice dialogue using default
 values that outputs like the following:
@@ -249,3 +264,6 @@ Use whichever outlines feel comfortable to you, or make up entirely new ones!
 [`platinum_steno.json`]: ./config/platinum_steno.json
 [`q-and-a.json`]: ./dictionaries/q-and-a.json
 [`SET_NAME` command]: ./#prompts
+[Tasmania]: https://en.wikipedia.org/wiki/Tasmania
+[`tasmanian_style.json`]: ./config/tasmanian_style.json
+[this document]: https://www.commissionofinquiry.tas.gov.au/__data/assets/pdf_file/0010/658873/Transcript-of-2-May-2022.pdf#page=28
