@@ -1,7 +1,7 @@
-[MAIN]
+[TYPECHECK]
 ignored-modules =
-    plover.engine
-    plover.formatting
-    plover.machine.base
-    plover.oslayer
+    plover.engine,
+    plover.formatting,
+    plover.machine.base,
+    plover.oslayer,
     plover.registry
