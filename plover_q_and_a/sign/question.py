@@ -58,7 +58,7 @@ def sign(
             follow_on_args,
             question,
             config,
-            "ANSWER_FOLLOWING_INTERROGATIVE"
+            yield_key="ANSWER_FOLLOWING_INTERROGATIVE"
         )
     else:
         raise ValueError(f"Unknown question type provided: {question_type}")

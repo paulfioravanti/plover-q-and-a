@@ -55,7 +55,7 @@ def sign(
             follow_on_args,
             answer,
             config,
-            "QUESTION_FOLLOWING_STATEMENT"
+            yield_key="QUESTION_FOLLOWING_STATEMENT"
         )
     else:
         raise ValueError(f"Unknown answer type provided: {answer_type}")
