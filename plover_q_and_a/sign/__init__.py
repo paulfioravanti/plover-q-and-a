@@ -4,8 +4,8 @@ in a question or answer, or signing in a lawyer to perform a line of
 questioning etc.
 """
 
-from .text import text
-
 __all__ = [
     "text"
 ]
+
+from .text import text

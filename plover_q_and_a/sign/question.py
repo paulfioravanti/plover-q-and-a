@@ -11,6 +11,7 @@ Question module to handle commands that look like:
 ELABORATE_AFTER and YIELD_AFTER are considered follow on arguments, and are
 handled by the `follow_on` module.
 """
+
 from typing import (
     Any,
     Callable,

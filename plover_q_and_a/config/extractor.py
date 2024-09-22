@@ -1,6 +1,7 @@
 """
 Module to handle extracting config from JSON files
 """
+
 import json
 from pathlib import Path
 from typing import Any

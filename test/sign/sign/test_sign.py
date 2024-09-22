@@ -3,18 +3,6 @@ import pytest
 from plover_q_and_a import sign
 
 
-@pytest.fixture
-def blank_config():
-    return {}
-
-@pytest.fixture
-def blank_args():
-    return [""]
-
-@pytest.fixture
-def unknown_args():
-    return ["UNKNOWN"]
-
 def test_blank_args(blank_args, blank_config):
     with pytest.raises(ValueError, match="No sign type provided"):
         sign.text(None, blank_args, blank_config)

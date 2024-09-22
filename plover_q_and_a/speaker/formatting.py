@@ -4,6 +4,7 @@ The only change made was to to `yield` up the `action`, as well as the
 `fragment`, in order to determine whether a `set_name_speaker_type` property
 had been set.
 """
+
 from typing import Generator
 
 from plover.formatting import _Context

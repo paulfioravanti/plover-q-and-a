@@ -7,6 +7,7 @@ Follow on module to handle the final part of commands that look like:
     - {:Q_AND_A:ANSWER:FOLLOWING_INTERROGATIVE:YIELD_AFTER:Correct}
     - {:Q_AND_A:ANSWER:FOLLOWING_INTERROGATIVE:NAMED}
 """
+
 from typing import (
     Any,
     Callable,
@@ -16,7 +17,7 @@ from typing import (
 
 _ARGUMENT_DIVIDER: str = ":"
 
-# pylint: disable-next=too-many-arguments
+# pylint: disable-next=too-many-arguments,too-many-positional-arguments
 def handle_follow_on(
     current_sign_type: Optional[str],
     sign_type: str,

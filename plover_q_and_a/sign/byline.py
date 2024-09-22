@@ -7,6 +7,7 @@ Byline module to handle commands that look like:
     - {:Q_AND_A:BYLINE:PLAINTIFF_2:FOLLOWING_INTERRUPT}
     - {:Q_AND_A:BYLINE:WITNESS:FOLLOWING_INTERROGATIVE}
 """
+
 from typing import (
     Any,
     Optional
@@ -39,7 +40,7 @@ def sign(
     sign_type: str
     speaker_type, sign_type = speaker.extract_speaker_and_sign(args)
 
-    if not speaker_type in BYLINE_SPEAKER_TYPES:
+    if speaker_type not in BYLINE_SPEAKER_TYPES:
         raise ValueError(
             f"Unknown byline speaker type provided: {speaker_type}"
         )

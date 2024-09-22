@@ -9,6 +9,7 @@ Examples:
 In the first example above, PLAINTIFF_1 is included in the recognised
 list of `SPEAKER_TYPES`.
 """
+
 from typing import (
     Any,
     Union
@@ -91,7 +92,7 @@ def _end_set_speaker_name(
 
     # Ignore SET_NAME:DONE command if called before SET_NAME:<SPEAKER>
     if not begin_action:
-        return
+        return None
 
     speaker_type: str = getattr(begin_action, "set_name_speaker_type")
 
@@ -104,3 +105,5 @@ def _end_set_speaker_name(
     action.prev_replace = f"{begin_action.text} {name}"
     action.prev_attach = True
     action.text = ""
+
+    return None

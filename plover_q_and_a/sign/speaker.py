@@ -10,6 +10,7 @@ Speaker module to handle commands that look like:
     - {:Q_AND_A:CLERK:FOLLOWING_INTERROGATIVE}
     - {:Q_AND_A:BAILIFF:FOLLOWING_STATEMENT}
 """
+
 from typing import (
     Any,
     Optional

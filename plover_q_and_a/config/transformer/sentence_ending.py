@@ -1,6 +1,7 @@
 """
 Module to handle parsing and formatting of sentence endings from config.
 """
+
 from typing import (
     Any,
     Callable,

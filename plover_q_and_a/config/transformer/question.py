@@ -1,6 +1,7 @@
 """
 Module to handle parsing and formatting of a question from config.
 """
+
 from typing import Any
 
 

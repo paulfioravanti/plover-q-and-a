@@ -2,6 +2,7 @@
 Module to handle parsing and formatting of a set speaker name prompt
 from config.
 """
+
 import re
 from typing import (
     Any,

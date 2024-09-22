@@ -2,6 +2,11 @@
 Module to handle transforming information from the application JSON config file
 into a form the application can work with.
 """
+
+__all__ = [
+    "transform"
+]
+
 from typing import (
     Any,
     Callable,
@@ -19,10 +24,6 @@ from . import (
     speaker
 )
 
-
-__all__ = [
-    "transform"
-]
 
 TransformedData = dict[
     str,

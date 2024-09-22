@@ -4,6 +4,7 @@ Plover entry point extension module.
     - https://plover.readthedocs.io/en/latest/plugin-dev/extensions.html
     - https://plover.readthedocs.io/en/latest/plugin-dev/metas.html
 """
+
 from pathlib import Path
 from typing import Optional
 
@@ -39,6 +40,7 @@ class QAndA:
             - The Plover UI "Reconnect" button is pressed
             - a SET_CONFIG command is send via a chord
     """
+
     _engine: StenoEngine
     _config: dict[str, str]
     _current_sign_type: Optional[str]
@@ -127,8 +129,10 @@ class QAndA:
         to also be reloaded at the same time.
         """
         if len(new) == 0:
-            return
+            return None
 
         action: _Action = new[0]
         if action.command and action.command.upper() == "SET_CONFIG":
             self._config = config.reload(_CONFIG_FILE, self._config)
+
+        return None
