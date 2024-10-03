@@ -10,8 +10,8 @@ coverage:
   open htmlcov/index.html
 
 lint:
-  pylint plover_q_and_a
+  pylint src
 
 typecheck:
-  mypy plover_q_and_a
+  mypy src
 
