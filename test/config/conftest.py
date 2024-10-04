@@ -4,52 +4,42 @@ import pytest
 
 @pytest.fixture
 def bad_config_path():
-    return (Path(__file__).parent / "files/bad_json_data.json").resolve()
+    return _path("files/bad_json_data.json")
 
 @pytest.fixture
 def non_existent_config_path():
-    return (Path(__file__).parent / "files/non_existent.json").resolve()
+    return _path("files/non_existent.json")
 
 @pytest.fixture
 def overrides_config_path():
-    return (Path(__file__).parent / "files/overrides.json").resolve()
+    return _path("files/overrides.json")
 
 @pytest.fixture
 def lower_case_with_no_upcase_config_path():
-    return (
-      Path(__file__).parent / "files/lower_case_with_no_upcase_formatting.json"
-    ).resolve()
+    return _path("files/lower_case_with_no_upcase_formatting.json")
 
 @pytest.fixture
 def lower_case_with_upcase_config_path():
-    return (
-      Path(__file__).parent / "files/lower_case_with_upcase_formatting.json"
-    ).resolve()
+    return _path("files/lower_case_with_upcase_formatting.json")
 
 @pytest.fixture
 def lower_case_without_upcase_config_path():
-    return (
-      Path(__file__).parent / "files/lower_case_without_upcase_formatting.json"
-    ).resolve()
+    return _path("files/lower_case_without_upcase_formatting.json")
 
 @pytest.fixture
 def set_name_prompt_no_speaker_type_config_path():
-    return (
-      Path(__file__).parent / "files/set_name_prompt_no_speaker_type.json"
-    ).resolve()
+    return _path("files/set_name_prompt_no_speaker_type.json")
 
 @pytest.fixture
 def set_name_prompt_no_current_speaker_name_config_path():
-    return (
-      Path(__file__).parent
-      / "files/set_name_prompt_no_current_speaker_name.json"
-    ).resolve()
+    return _path("files/set_name_prompt_no_current_speaker_name.json")
 
 @pytest.fixture
 def default_config_path():
-    return (
-        Path(__file__).parent / "../../examples/config/platinum_steno.json"
-    ).resolve()
+    return _path("../../examples/config/platinum_steno.json")
+
+def _path(path):
+    return (Path(__file__).parent / path).resolve()
 
 # Arguments
 
